@@ -44,3 +44,4 @@ node-red/package-lock.json
 node-red/package.json
 node-red/settings.js
 glances/glances.conf
+szkic.yaml
