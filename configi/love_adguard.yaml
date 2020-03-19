@@ -1,0 +1,16 @@
+title: AdGuard
+icon: mdi:police-badge
+cards:
+- type: entities
+  entities:
+  - sensor.adguard_average_processing_speed
+  - sensor.adguard_dns_queries
+  - sensor.adguard_dns_queries_blocked_ratio
+  - sensor.adguard_parental_control_blocked
+  - sensor.adguard_safe_browsing_blocked
+  - sensor.adguard_safe_searches_enforced
+  - switch.adguard_filtering
+  - switch.adguard_parental_control_2
+  - switch.adguard_protection_2
+  - switch.adguard_safe_browsing_2
+  - switch.adguard_safe_search_2

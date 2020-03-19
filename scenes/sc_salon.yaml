@@ -1,0 +1,20 @@
+- name: sc_salon_tryb_normalny
+  entities:
+    light.yl1:
+      state: on
+      #rgb_color: [255,183,123]
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+    light.yl2:
+      state: on
+     # rgb_color: [255,183,123]
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+    light.yl3:
+      state: on
+     # rgb_color: [255,183,123]
+      brightness: 230
+      color_temp: 288
+      # transition: 5

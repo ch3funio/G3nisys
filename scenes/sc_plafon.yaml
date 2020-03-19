@@ -1,0 +1,14 @@
+- name: sc_plafon_tryb_normalny
+  entities:
+    light.yl5:
+      state: on
+      #rgb_color: [255,183,123]
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+    light.yl6:
+      state: on
+      #rgb_color: [255,183,123]
+      brightness: 230
+      color_temp: 288
+      # transition: 5

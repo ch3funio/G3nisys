@@ -1,0 +1,349 @@
+homeassistant:
+  customize:
+    ################################ ŚWIATŁA ################
+    light.yl_bernard:
+      friendly_name: "Sypialnia Bernard"
+      icon: mdi:track-light
+    light.yl5:
+      friendly_name: "Sypialnia Chef"
+      icon: mdi:lamp
+    light.yl6:
+      friendly_name: "Sypialnia JB"
+      icon: mdi:lamp
+    light.yl_maja:
+      friendly_name: "Sypialnia Maja"
+    light.lampa_w_salonie:
+      icon: mdi:ceiling-light
+    light.yl_wc:
+      friendly_name: "WC"
+      icon: mdi:human-male-female
+    light.yl_korytarz:
+      friendly_name: "Korytarz"
+      icon: mdi:shoe-print
+    ################################ SCENY ################
+    scene.sc_bernard_tryb_normalny:
+      friendly_name: "Bernard - tryb normalny"
+      icon: mdi:spotlight-beam
+    scene.sc_bernard_19:
+      friendly_name: "Bernard - tryb spanie od 19"
+      icon: mdi:hotel
+    scene.sc_salon_tryb_normalny:
+      friendly_name: "Salon - tryb normalny"
+      icon: mdi:ceiling-light
+    scene.sc_kodi_playing:
+      friendly_name: "Kodi playing"
+      icon: mdi:play
+    scene.sc_plafon_tryb_normalny:
+      friendly_name: "Plafon - tryb normalny"
+      icon: mdi:hotel
+    scene.sc_kodi_paused:
+      friendly_name: "Kodi paused"
+      icon: mdi:pause
+group:
+  gr_scenes: ### ogolnie sceny
+    entities:
+    - scene.sc_wc_tryb_normalny
+    - scene.sc_wc_tryb_noc
+    - scene.sc_salon_tryb_normalny
+    - scene.sc_redlight_ruch
+    - scene.sc_dusk
+    - scene.sc_dawn
+    - scene.sc_night
+    - scene.sc_bernard_tryb_noc
+    - scene.sc_bernard_tryb_normalny
+    - scene.sc_plafon_tryb_normalny
+    - scene.sc_korytarz_tryb_noc
+    - scene.sc_korytarz_tryb_normalny
+    - scene.sc_kodi_paused
+    - scene.sc_kodi_playing
+yeelight:
+  devices:
+    192.168.2.51:
+      name: yl1 # SALON
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: True #(defaults to True)
+    192.168.2.52:
+      name: yl2 # SALON
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: True #(defaults to True)
+    192.168.2.53:
+      name: yl3 # SALON
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: True #(defaults to True)
+    192.168.2.54:
+      name: yl_bernard #Bernard
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: True #(defaults to True)
+    192.168.2.55:
+      name: yl5 #sypialnia chef
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: True #(defaults to True)
+    192.168.2.56:
+      name: yl6 #sypialnia JB
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: True #(defaults to True)
+    192.168.2.57:
+      name: yl_maja
+      transition: 1000
+      save_on_change: True
+    192.168.2.58:
+      name: yl_wc
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: False #(defaults to True)
+    192.168.2.59:
+      name: yl_korytarz
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: False #(defaults to True)
+light:
+  - platform: mqtt
+    name: Ledy w kuchni
+    state_topic: "stat/sonoff/4/POWER"
+    command_topic: "cmnd/sonoff/4/POWER"
+    availability_topic: "tele/sonoff/4/LWT"
+    optimistic: False
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: False
+  - platform: mqtt
+    name: Lampki na balkonie
+    state_topic: "stat/sonoff/5/POWER"
+    command_topic: "cmnd/sonoff/5/POWER"
+    availability_topic: "tele/sonoff/5/LWT"
+    optimistic: False
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: False
+  - platform: mqtt
+    name: Choinka
+    state_topic: "stat/sonoff/2/POWER"
+    command_topic: "cmnd/sonoff/2/POWER"
+    availability_topic: "tele/sonoff/2/LWT"
+    optimistic: False
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: False
+  - platform: group
+    name: Lampa w salonie
+    entities:
+    - light.yl1
+    - light.yl2
+    - light.yl3
+  - platform: group
+    name: Plafon
+    entities:
+    - light.yl5
+    - light.yl6
+automation:
+## BB pora spadnia - zmien cały dom
+  - alias: au_bb_spanie
+    trigger:
+    - platform: time
+      at: "19:50:00"
+    - platform: state
+      entity_id: input_boolean.bernard_tryb_noc
+      to: "on"
+    action:
+    - condition: or
+      conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: group.gr_who
+          state: "home"
+        - condition: state
+          entity_id: input_boolean.bernard_tryb_noc
+          state: "off"
+        - condition: time
+          before: "19:51:00"
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: group.gr_who
+          state: "home"
+        - condition: state
+          entity_id: input_boolean.bernard_tryb_noc
+          state: "on"
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.isl_pora_dnia
+        option: bernard_tryb_noc
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.bernard_tryb_noc
+# światło w WC na czerwono/biało
+  - alias: au_wc_light_on
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.drzwi_wc_contact
+      to: "on"
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.bernard_tryb_noc
+        state: "off"
+      - condition: state
+        entity_id: light.yl_wc
+        state: "off"
+    action:
+    - service: scene.turn_on
+      entity_id: scene.sc_wc_tryb_normalny
+  - alias: au_wc_light_red
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.drzwi_wc_contact
+      to: "on"
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: input_select.isl_pora_dnia
+        state: "bernard_tryb_noc"
+      - condition: state
+        entity_id: light.yl_wc
+        state: "off"
+    action:
+    - service: scene.turn_on
+      entity_id: scene.sc_wc_tryb_noc
+  - alias: au_wc_light_off
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.drzwi_wc_contact
+      to: "off"
+      for: "00:03:00"
+    action:
+    - condition: state
+      entity_id: light.yl_wc
+      state: "on"
+    - service: light.turn_off
+      entity_id: light.yl_wc
+# korytarz
+  - alias: au_korytarz_light_on
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.ruch_korytarz_occupancy
+      to: "on"
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: group.gr_who
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.bernard_tryb_noc
+        state: "off"
+      - condition: state
+        entity_id: light.yl_korytarz
+        state: "off"
+    action:
+    - service: scene.turn_on
+      entity_id: scene.sc_korytarz_tryb_normalny
+  - alias: au_korytarz_light_red
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.ruch_korytarz_occupancy
+      to: "on"
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: group.gr_who
+        state: "home"
+      - condition: state
+        entity_id: input_select.isl_pora_dnia
+        state: "bernard_tryb_noc"
+      - condition: state
+        entity_id: light.yl_korytarz
+        state: "off"
+    action:
+    - service: scene.turn_on
+      entity_id: scene.sc_korytarz_tryb_noc
+  - alias: au_korytarz_light_off
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.ruch_korytarz_occupancy
+      to: "off"
+    action:
+    - condition: state
+      entity_id: light.yl_korytarz
+      state: "on"
+    - service: light.turn_off
+      entity_id: light.yl_korytarz
+  # kuchnia i salon
+  # jeśli ruch w kuchni i domownicy w domu - włącz ledy
+  - alias: au_kuchnia_ruch_on
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.ruch_kuchnia_occupancy
+      to: "on"
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: group.gr_who
+        state: "home"
+      - condition: time
+        after: "06:00:00"
+        before: "23:00:00"
+    action:
+    - service: light.turn_on
+      entity_id: light.ledy_w_kuchni
+  # jeśli nie ma ruchu w kuchni - wyłącz ledy
+  - alias: au_kuchnia_ruch_off
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.ruch_kuchnia_occupancy
+      to: "off"
+    action:
+    - service: light.turn_off
+      entity_id: light.ledy_w_kuchni
+  ################### REDLIGHT
+  - alias: au_kuchnia_ruch_red_on
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.ruch_kuchnia_occupancy
+      to: "on"
+    condition:
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: light.ledy_w_kuchni
+        state: "off"
+      - condition: state
+        entity_id: group.gr_who
+        state: "home"
+      - condition: time
+        after: "23:01:00"
+        before: "05:59:00"
+    action:
+    - service: scene.turn_on
+      entity_id: scene.sc_redlight_ruch
+  # # jeśli nie ma ruchu w kuchni - wyłącz ledy
+  - alias: au_kuchnia_ruch_red_off
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.ruch_kuchnia_occupancy
+      to: "off"
+    condition:
+      condition: time
+      after: "23:01:00"
+      before: "05:59:00"
+    action:
+    - service: light.turn_off
+      entity_id: light.yl6

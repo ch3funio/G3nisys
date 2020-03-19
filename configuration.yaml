@@ -1,0 +1,59 @@
+homeassistant:
+  name: GENISYS
+  latitude: !secret gps_home_lat
+  longitude: !secret gps_home_lon
+  elevation: 95
+  unit_system: metric
+  temperature_unit: C
+  time_zone: Europe/Warsaw
+  packages: !include_dir_named packages/
+  auth_providers:
+  - type: homeassistant
+http:
+  base_url: !secret base_url
+  ssl_certificate: !secret ssl_cert
+  ssl_key: !secret ssl_priv
+lovelace:
+  mode: yaml
+  resources: !include configi/love_resource.yaml
+discovery:
+  ignore:
+  - yeelight
+google:
+  client_id: !secret g_cal_client_id
+  client_secret: !secret g_cal_key
+tts:
+- platform: google_translate
+  language: "pl"
+  time_memory: 300
+
+breaking_changes:
+config:
+conversation:
+custom_icons:
+hassio:
+mobile_app:
+sun:
+updater:
+wake_on_lan:
+system_health:
+uilogs:
+virtual:
+
+############# includy
+automation: !include_dir_merge_list automations/
+frontend: !include configi/frontend.yaml
+google_assistant: !include configi/google.yaml
+history:
+  include: !include configi/log_include.yaml
+logbook:
+  include: !include configi/log_include.yaml
+mqtt: !include configi/mqtt.yaml
+recorder: !include configi/recorder.yaml
+scene: !include_dir_list scenes/
+script: !include_dir_merge_named scripts/
+sensor: !include configi/sensors.yaml
+zone: !include configi/zones.yaml
+influxdb: !include configi/influx.yaml
+
+panel_iframe: !include configi/iframe.yaml

@@ -1,0 +1,73 @@
+project_id: !secret g_project_id
+expose_by_default: false
+service_account: !include service_account.json
+entity_config:
+  light.lampa_w_salonie:
+    name: Salon light
+    room: "Living room"
+    expose: true
+    aliases:
+    - salon light
+    - salon
+    - living room 
+    - main light
+    - a3
+  light.plafon:
+    name: Second light
+    room: "Living room"
+    expose: true
+    aliases:
+    - second light
+    - a4
+  light.ledy_w_kuchni:
+    name: Kitchen light
+    room: "Kitchen"
+    expose: true
+    aliases:
+    - kitchen
+    - LEDs
+    - a5
+  light.yl_bernard:
+    name: BB light
+    room: "BB room"
+    expose: true
+    aliases:
+    - bb
+    - a6
+  light.yl_maja:
+    name: Maya light
+    room: "Maya room"
+    expose: true
+    aliases:
+    - maya
+    - a7
+  light.lampki_na_balkonie:
+    name: Lampki na balkonie
+    room: "Balcony"
+    expose: true
+    aliases:
+    - balcony
+    - a8
+  light.yl_wc:
+    name: Toilet lamp
+    room: "WC"
+    expose: true
+    aliases:
+    - toilet lamp
+    - a9
+  light.yl_korytarz:
+    name: Korytarz
+    room: "Hallway"
+    expose: true
+    aliases:
+    - hallway light
+    - a10
+  media_player.lg_tv:
+    name: TV
+    room: "Living room"
+    expose: true
+    aliases:
+    - tv
+    - telewizor
+    - lg
+    - a11

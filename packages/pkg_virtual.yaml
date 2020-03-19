@@ -1,0 +1,34 @@
+homeassistant:
+binary_sensor:
+  - platform: virtual
+    name: binary
+    initial_value: 'on'
+    class: presence
+switch:
+  - platform: virtual
+    name: switch1
+  - platform: virtual
+    name: switch2
+sensor:
+  - platform: virtual
+    name: temp
+    class: temperature
+    initial_value: 37
+light:
+  - platform: virtual
+    name: light
+    initial_value: 'on'
+    initial_brightness: 100
+lock:
+  - platform: virtual
+    name: lock
+
+group:
+  gr_virtualne:
+    entities:
+    - binary_sensor.virtual_binary
+    - switch.virtual_switch1
+    - switch.virtual_switch2
+    - sensor.virtual_temp
+    - light.virtual_light
+    - lock.virtual_lock

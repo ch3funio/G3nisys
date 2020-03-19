@@ -1,0 +1,92 @@
+homeassistant:
+  customize:
+    sensor.mokry:
+      friendly_name: "Średnia wilgotność w domu"
+      icon: mdi:water-percent
+    sensor.tempy:
+      friendly_name: "Średnia temperatura w domu"
+      icon: mdi:temperature-celsius
+group:
+  gr_weather: ### ogolnie pogoda
+    entities:
+    - sensor.pora_dnia
+    - sensor.moon
+    - sun.sun
+  gr_climat_srednia:
+    entities:
+    - sensor.mokry
+    - sensor.tempy
+  gr_temp: ### czujniki temperatury w calym domu
+    entities:
+    - sensor.czujnik_salon_temperature
+    - sensor.czujnik_bb_temperature
+    - sensor.czujnik_maja_temperature
+    - sensor.czujnik_kuchnia_temperature
+    - sensor.czujnik_lazienka_temperature
+    - sensor.czujnik_wc_temperature
+    - sensor.czujnik_schowek_temperature
+  gr_humi: ### czujniki wilgotnosci w calym domu
+    entities:
+    - sensor.czujnik_salon_humidity
+    - sensor.czujnik_bb_humidity
+    - sensor.czujnik_maja_humidity
+    - sensor.czujnik_kuchnia_humidity
+    - sensor.czujnik_lazienka_humidity
+    - sensor.czujnik_wc_humidity
+    - sensor.czujnik_schowek_humidity
+sensor:
+#################################################
+###     ŚREDNIE - WILGOTNOŚĆ I TEMP W DOMU    ###
+#################################################
+- platform: min_max
+  name: "Mokry"
+  type: mean
+  round_digits: 1
+  entity_ids:
+  - sensor.czujnik_bb_humidity
+  - sensor.czujnik_salon_humidity
+  - sensor.czujnik_maja_humidity
+- platform: min_max
+  name: "Tempy"
+  type: mean
+  round_digits: 1
+  entity_ids:
+  - sensor.czujnik_bb_temperature
+  - sensor.czujnik_salon_temperature
+  - sensor.czujnik_maja_temperature
+
+#################################################
+###             DATA, FAZY KSIEZYCA           ###
+#################################################
+- platform: moon
+- platform: time_date
+  display_options: "date_time"
+
+#################################################
+###             PORA DNIA                     ###
+#################################################
+  
+- platform: template
+  sensors:
+    pora_dnia:
+      friendly_name: "Pora dnia"
+      value_template: >-
+        {% if (as_timestamp(states.sun.sun.attributes.next_dusk)-900) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+          dusk
+        {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+          dawn
+        {% elif (states.sun.sun.attributes.elevation) < -4 %}
+          night
+        {% else %}
+          day
+        {% endif %}
+      icon_template: >-
+        {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+          mdi:weather-sunset-down
+        {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+          mdi:weather-sunset-up
+        {% elif (states.sun.sun.attributes.elevation) < -4 %}
+          mdi:weather-night
+        {% else %}
+          mdi:weather-sunny
+        {% endif %}

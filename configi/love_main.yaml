@@ -1,0 +1,209 @@
+title: Istotne
+panel: false
+icon: mdi:home
+id: love_main
+background: "#f3f3f3"
+cards:
+- type: vertical-stack
+  cards:
+  - type: horizontal-stack
+    cards:
+    - type: entity-filter
+      card: 
+        type: glance
+        show_state: false
+        show_name: false
+      show_empty: false
+      state_filter:
+      - "home"
+      - "na Rejtana"
+      entities:
+      - entity: person.johanna
+    - type: entity-filter
+      card: 
+        type: glance
+        show_state: false
+        show_name: false
+      show_empty: false
+      state_filter:
+      - "home"
+      - "na Rejtana"
+      entities:
+      - entity: person.chef
+    - type: entity-filter
+      card: 
+        type: glance
+        show_state: false
+        show_name: false
+      show_empty: false
+      state_filter:
+      - "na Turkusowej"
+      entities: 
+      - entity: person.tata
+  - type: horizontal-stack
+    cards:
+      - type: gauge
+        style: |
+          ha-card {background: none; box-shadow: none;}
+        entity: sensor.tempy
+        color_thresholds:
+        - value: 18.5
+          color: "#009de0"
+        - value: 21
+          color: "#abe24c"
+        - value: 23.5
+          color: "#ffc500"
+        - value: 26
+          color: "#c92116"
+        name: "Temperatura"
+        hour24: true
+        hours_to_show: 24
+        animate: true
+        points_per_hour: 0.5
+      - type: gauge
+        style: |
+          ha-card {background: none; box-shadow: none;}
+        entity: sensor.mokry
+        color_thresholds:
+        - value: 40
+          color: "#289548"
+        - value: 45
+          color: "#1d9772"
+        - value: 50
+          color: "#0e9aac"
+        - value: 55
+          color: "#019ddb"
+        name: "Wilgotność"
+        hour24: true
+        hours_to_show: 24
+        animate: true
+        points_per_hour: 0.5
+  - content: ŚWIATŁA
+    type: markdown
+    style: &header |
+      ha-card {background: none; box-shadow: none; color: #393939; font-size: 10pt; padding: 0px; margin: 0px; height: 30px;}
+  - type: horizontal-stack
+    cards:
+    - type: "custom:button-card" ##### ledy w kuchni
+      entity: light.ledy_w_kuchni
+      template: swiatla
+      icon: mdi:kettle-outline
+      name: Kuchnia
+    - type: "custom:button-card" ##### światło główne w salonie
+      name: Salon
+      entity: light.lampa_w_salonie
+      icon: mdi:lightbulb-group
+      template: swiatla
+      hold_action: 
+        action: call-service
+        service: scene.turn_on
+        service_data:
+          entity_id: scene.sc_salon_tryb_normalny
+    - type: "custom:button-card" ##### plafon w salonie
+      entity: light.plafon
+      hold_action: 
+        action: call-service
+        service: scene.turn_on
+        service_data:
+          entity_id: scene.sc_plafon_tryb_normalny
+      icon: mdi:lightbulb-multiple
+      name: Plafon
+      template: swiatla
+    - type: "custom:button-card" ##### światło u Bernarda
+      entity: light.yl_bernard
+      hold_action: 
+        action: call-service
+        service: scene.turn_on
+        service_data:
+          entity_id: scene.sc_bernard_tryb_normalny
+      template: swiatla
+      show_entity_picture: true
+      icon: custom:bear
+      name: BB
+    - type: "custom:button-card" ##### światło u Mai
+      entity: light.yl_maja
+      template: swiatla
+      show_entity_picture: true
+      icon: custom:bee
+      name: Maja
+  - type: horizontal-stack
+    cards: 
+    - type: "custom:button-card" 
+      entity: light.yl_wc
+      template: swiatla
+      icon: mdi:human-male-female
+      name: WC
+    - type: "custom:button-card" 
+      entity: light.yl_korytarz
+      icon: mdi:shoe-print
+      template: swiatla
+      name: Korytarz
+    - type: "custom:button-card" ##### światło górne w sypialni
+      entity: light.lampki_na_balkonie
+      template: swiatla
+      icon: bha:light-string
+      name: Lampki na balkonie
+  - type: entity-filter
+    show_empty: false
+    state_filter:
+      - "on"
+      - "playing"
+    card:
+      type: entities
+    entities:
+    - entity: media_player.kodi
+    - entity: media_player.lg_tv
+    - entity: media_player.googy
+    - entity: media_player.boogy
+    - entity: media_player.tic
+    - entity: media_player.chromcast
+    - entity: media_player.kitchen_display
+  - type: horizontal-stack
+    cards:
+    - name: BB Spanie ##### światło u Bernarda
+      type: "custom:button-card" 
+      tap_action: 
+        action: call-service
+        service: input_boolean.toggle
+        service_data:
+          entity_id: input_boolean.bernard_tryb_noc
+      template: sceny
+      icon: "custom:bear"
+    - type: "custom:button-card"
+      template: sceny
+      tap_action: 
+        action: call-service
+        service: input_boolean.turn_on
+        service_data:
+          entity_id: input_boolean.tryb_kinowy
+      icon: "custom:bee"
+      name: Tryb Kinowy
+    - type: "custom:button-card"
+      template: sceny
+      tap_action: 
+        action: call-service
+        service: input_boolean.turn_on
+        service_data:
+          entity_id: input_boolean.tryb_gry
+      name: Tryb Gry
+      icon: bha:light-string
+    - type: custom:button-card
+      icon: mdi:settings
+      # aspect_ratio: 3/1
+      tap_action:
+        action: navigate
+        navigation_path: '/states'
+  - type: horizontal-stack
+    cards:
+    - type: entities
+      entities:
+      - sensor.poland_coronavirus_confirmed
+      - sensor.poland_coronavirus_current
+      - sensor.poland_coronavirus_deaths
+      - sensor.poland_coronavirus_recovered
+    - type: entities
+      entities:
+      - sensor.worldwide_coronavirus_confirmed
+      - sensor.worldwide_coronavirus_current
+      - sensor.worldwide_coronavirus_deaths
+      - sensor.worldwide_coronavirus_recovered

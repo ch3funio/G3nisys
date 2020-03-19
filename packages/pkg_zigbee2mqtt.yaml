@@ -1,0 +1,15 @@
+homeassistant:
+sensor:
+  - platform: mqtt
+    name: Bridge state
+    state_topic: "zigbee/bridge/state"
+    icon: mdi:router-wireless
+group:
+  zigbee_group:
+    name: Zigbee
+    entities:
+    - sensor.bridge_state
+    - binary_sensor.zigbee_router
+    - sensor.zigbee_linkquality
+    - binary_sensor.zigbee_router_router
+    - sensor.zigbee_router_linkquality

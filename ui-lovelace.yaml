@@ -1,0 +1,10 @@
+custom_header:
+  compact_mode: true
+title: Home
+button_card_templates: !include configi/tmpl_button_card.yaml
+views:
+- !include configi/love_main.yaml
+- !include configi/love_klimat.yaml
+# - !include configi/love_klimat_szczegoly.yaml
+- !include configi/love_admin.yaml
+- !include configi/love_adguard.yaml

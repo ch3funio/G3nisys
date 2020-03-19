@@ -1,0 +1,14 @@
+spt_resetuj_swiatla:
+  sequence:
+  - service: light.turn_on
+    data:
+      entity_id: light.yl5
+      brightness: 230
+      color_temp: 288
+      transition: 5
+  - service: light.turn_on
+    data:
+      entity_id: light.yl6
+      brightness: 230
+      color_temp: 288
+      transition: 5

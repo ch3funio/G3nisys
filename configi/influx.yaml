@@ -1,0 +1,31 @@
+﻿host: a0d7b954-influxdb
+port: 8086
+database: !secret influx_base
+username: !secret influx_user
+password: !secret influx_pass
+max_retries: 3
+default_measurement: state
+include:
+  entities:
+  - sensor.czujnik_salon_humidity
+  - sensor.czujnik_salon_pressure
+  - sensor.czujnik_salon_temperature
+  - sensor.czujnik_bb_temperature
+  - sensor.czujnik_bb_humidity
+  - sensor.czujnik_bb_pressure
+  - sensor.czujnik_wc_temperature
+  - sensor.czujnik_wc_humidity
+  - sensor.czujnik_kuchnia_temperature
+  - sensor.czujnik_kuchnia_humidity
+  - sensor.czujnik_lazienka_temperature
+  - sensor.czujnik_lazienka_humidity
+  - sensor.czujnik_lazienka_pressure
+  - sensor.czujnik_maja_temperature
+  - sensor.czujnik_maja_humidity
+  - sensor.czujnik_schowek_temperature
+  - sensor.czujnik_schowek_humidity
+  - sensor.balkon_pm10
+  - sensor.balkon_pm2_5
+  - sensor.balkon_pressure
+  - sensor.balkon_temperatura
+  - sensor.balkon_wilgotnosc

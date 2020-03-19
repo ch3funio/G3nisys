@@ -1,0 +1,10 @@
+﻿broker: !secret mqtt_broker
+discovery: true
+username: !secret mqtt_user
+password: !secret mqtt_password
+birth_message:
+  topic: "hass/status"
+  payload: "online"
+will_message:
+  topic: "hass/status"
+  payload: "offline"

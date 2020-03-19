@@ -1,0 +1,17 @@
+# group:
+  # gr_anniversaries:
+  # - sensor.mb_urodziny
+  # - sensor.bb_urodziny
+  # - sensor.jb_urodziny
+  # - sensor.kb_urodziny
+
+# anniversaries:
+  # sensors:
+  # - name: MB Urodziny
+    # date: "2019-12-19"
+  # - name: BB Urodziny
+    # date: "2017-01-24"
+  # - name: JB Urodziny
+    # date: "1986-09-11"
+  # - name: KB Urodziny
+    # date: "1985-11-29"

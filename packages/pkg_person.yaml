@@ -1,0 +1,69 @@
+homeassistant:
+  customize:
+    person.chef:
+      entity_picture: "/local/kb_foto.jpg"
+    person.johanna:
+      entity_picture: "/local/jb_foto.jpg"
+    person.tata:
+      entity_picture: "/local/hb_foto.jpg"
+group:
+  gr_who:
+  - person.chef
+  - person.johanna
+  - person.tata
+  gr_tracker:
+  - device_tracker.chef_xl
+  - device_tracker.google_maps_112147391722547675474
+  - device_tracker.johanna_xl
+  - device_tracker.google_maps_107968207712593220766
+  - device_tracker.google_maps_110941774270035156789
+  gr_person_aplikacja:
+  - sensor.chef_xl_battery_level
+  - sensor.chef_xl_geocoded_location
+  - sensor.chef_xl_wifi_connection
+  - sensor.johanna_xl_battery_level
+  - sensor.johanna_xl_geocoded_location
+  - sensor.johanna_xl_wifi_connection
+device_tracker:
+- platform: google_maps
+  username: !secret hassio_google_login
+  interval_seconds: 300
+  max_gps_accuracy: 150
+  new_device_defaults:
+    track_new_devices: true
+person:
+- name: chef
+  id: chef
+  user_id: !secret userid_chef
+  device_trackers:
+  - device_tracker.chef_xl
+- name: johanna
+  id: johanna
+  user_id: !secret userid_johanna
+  device_trackers:
+  - device_tracker.johanna_xl
+- name: tata
+  id: tata
+  user_id: !secret userid_tata
+  device_trackers:
+  - device_tracker.google_maps_110941774270035156789
+  
+automation:
+- alias: tata_in
+  trigger:
+    platform: state
+    entity_id: person.tata
+    to: "na Turkusowej"
+    for: "30:00:00"
+  action:
+  - service: light.toggle
+    entity_id: "light.virtual_light"
+- alias: tata_out
+  trigger:
+    platform: state
+    entity_id: person.tata
+    to: "away"
+    for: "00:25:00"
+  action:
+  - service: light.toggle
+    entity_id: "light.virtual_light"

@@ -1,0 +1,83 @@
+homeassistant:
+  # customize:
+input_boolean:
+  bernard_tryb_noc:
+    name: Bernard - pora spania
+    initial: off
+    icon: mdi:sleep
+  tryb_kinowy:
+    name: Tryb kinowy
+    initial: off
+    icon: mdi:cinema
+  tryb_xbox:
+    name: Tryb gry
+    initial: off
+    icon: mdi:xbox
+input_select:
+  isl_pora_dnia:
+    name: isl_pora_dnia
+    options:
+    - dusk
+    - dawn
+    - night
+    - day
+    - bernard_tryb_noc
+    - sen
+    - kino
+    - xbox
+automation:
+  - alias: au_isl_pora_dnia_sceny
+    trigger:
+      - platform: state
+        entity_id: input_select.isl_pora_dnia
+    action:
+      - condition: state
+        entity_id: group.gr_who
+        state: home
+      - service: scene.turn_on
+        data_template:
+          entity_id: "{{ 'scene.sc_{}'.format(states.input_select.isl_pora_dnia.state) }}"
+  - alias: au_automatyczna_pora_dnia
+    trigger:
+      - platform: state
+        entity_id: sensor.pora_dnia
+      - platform: state
+        entity_id: input_boolean.bernard_tryb_noc
+        to: "off"
+    action:
+      - condition: or
+        conditions:
+        - condition: and
+          conditions:
+          - condition: state
+            entity_id: input_boolean.bernard_tryb_noc
+            state: "off"
+          - condition: state
+            entity_id: input_boolean.tryb_kinowy
+            state: "off"
+          - condition: state
+            entity_id: input_boolean.tryb_xbox
+            state: "off"
+        - condition: and
+          conditions:
+          - condition: state
+            entity_id: input_boolean.bernard_tryb_noc
+            state: "on"
+          - condition: state
+            entity_id: sensor.pora_dnia
+            state: "dawn"
+      - service: input_select.select_option
+        data_template:
+          entity_id: input_select.isl_pora_dnia
+          option: >
+            {% if  (states.sensor.pora_dnia.state == "night") %}
+            night
+            {%-elif (states.sensor.pora_dnia.state == "dawn") %}
+            dawn
+            {%-elif (states.sensor.pora_dnia.state == "dusk") %}
+            dusk
+            {% else %}
+            day
+            {% endif %}
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.bernard_tryb_noc

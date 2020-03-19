@@ -1,0 +1,4 @@
+purge_interval: 10
+purge_keep_days: 60
+db_url: !secret localmysql
+include: !include log_include.yaml

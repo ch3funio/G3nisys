@@ -1,0 +1,55 @@
+- name: sc_redlight_ruch
+  entities:
+    light.yl5: off
+    light.yl6:
+      state: on
+      rgb_color: [255,0,0]
+      brightness: 20
+      # transition: 5
+# sc_dusk zmierzch - włącza BB (yl4) i plafon (yl5-6)
+- name: sc_dusk
+  entities:
+    light.yl_bernard:
+      state: on
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+    light.yl5:
+      state: on
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+    light.yl6:
+      state: on
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+#świt sc_dawn
+- name: sc_dawn
+  entities:
+    input_boolean.bernard_tryb_noc: off
+    light.yl_bernard: off
+#noc sc_night
+- name: sc_night
+  entities:
+    light.yl1:
+      state: on
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+    light.yl2:
+      state: on
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+    light.yl3:
+      state: on
+      brightness: 230
+      color_temp: 288
+      # transition: 5
+#dzień sc_day
+# - name: sc_day
+#bernard idzie spać sc_bernard_tryb_noc:
+#sen sc_sen
+#tryb kinowy sc_kino
+#tryb xboxowy sc_xbox

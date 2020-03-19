@@ -1,0 +1,71 @@
+group:
+  gr_baterie:
+    entities:
+    - sensor.drzwi_wc_battery
+    - sensor.drzwi_balkon_battery
+    - sensor.ruch_korytarz_battery
+    - sensor.ruch_kuchnia_battery
+    - sensor.czujnik_bb_battery
+    - sensor.czujnik_salon_battery
+    - sensor.czujnik_maja_battery
+    - sensor.czujnik_lazienka_battery
+    - sensor.czujnik_wc_battery
+    - sensor.czujnik_kuchnia_battery
+    - sensor.czujnik_schowek_battery
+    - sensor.zalanie_kuchnia_battery
+    - sensor.btn_salon_battery
+    - sensor.tradfri_one_battery
+  gr_linkq: ### czujniki wilgotnosci w calym domu
+    entities:
+    - sensor.czujnik_salon_linkquality
+    - sensor.czujnik_bb_linkquality
+    - sensor.czujnik_maja_linkquality
+    - sensor.czujnik_kuchnia_linkquality
+    - sensor.czujnik_lazienka_linkquality
+    - sensor.czujnik_wc_linkquality
+    - sensor.czujnik_schowek_linkquality
+    - sensor.btn_salon_linkquality
+    - sensor.drzwi_wc_linkquality
+    - sensor.drzwi_balkon_linkquality
+    - sensor.ruch_kuchnia_linkquality
+    - sensor.ruch_korytarz_linkquality
+    - sensor.zalanie_kuchnia_linkquality
+    - sensor.tradfri_one_linkquality
+  gr_sensors: ### sensory rozne
+    entities:
+    - binary_sensor.drzwi_wc_contact
+    - binary_sensor.drzwi_balkon_contact
+    - binary_sensor.ruch_kuchnia_occupancy
+    - binary_sensor.ruch_korytarz_occupancy
+    - binary_sensor.zalanie_kuchnia_water_leak
+    - sensor.btn_salon
+    - sensor.czujnik_salon_pressure
+    - sensor.czujnik_bb_pressure
+    - sensor.czujnik_lazienka_pressure
+    - sensor.tradfri_one_action
+    - sensor.btn_salon_click
+    - sensor.google_keep_d69a6f8437
+  gr_various: ### linki, WOLe itp.
+    entities:
+    - sensor.potential_breaking_changes
+    - sensor.hacs
+    - sensor.date_time
+    - sensor.uptime
+    - sensor.last_boot
+    - sensor.disk_use_percent
+    - sensor.memory_use_percent
+    - sensor.processor_use
+    - sensor.rpi_power_status
+    - sensor.sns_ha_cpu_temp
+    - sensor.sns_ha_version
+    - binary_sensor.updater
+    - sensor.google_keep_1460afb4f2
+  gr_korona:
+    - sensor.poland_coronavirus_confirmed
+    - sensor.poland_coronavirus_current
+    - sensor.poland_coronavirus_deaths
+    - sensor.poland_coronavirus_recovered
+    - sensor.worldwide_coronavirus_confirmed
+    - sensor.worldwide_coronavirus_current
+    - sensor.worldwide_coronavirus_deaths
+    - sensor.worldwide_coronavirus_recovered

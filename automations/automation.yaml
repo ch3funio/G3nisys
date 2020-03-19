@@ -1,0 +1,32 @@
+- alias: Media stop
+  trigger:
+  - platform: state
+    entity_id: media_player.lg_tv
+    from: playing
+    to: paused
+  - platform: state
+    entity_id: media_player.kodi
+    from: playing
+    to: idle
+  action:
+  - condition: state
+    entity_id: sun.sun
+    state: "below_horizon"
+  - service: scene.turn_on
+    entity_id: scene.sc_kodi_paused
+- alias: Media start
+  trigger:
+  - platform: state
+    entity_id: media_player.lg_tv
+    from: paused
+    to: playing
+  - platform: state
+    entity_id: media_player.kodi
+    from: idle
+    to: playing
+  action:
+  - condition: state
+    entity_id: sun.sun
+    state: "below_horizon"
+  - service: scene.turn_on
+    entity_id: scene.sc_kodi_playing

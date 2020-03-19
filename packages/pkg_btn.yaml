@@ -1,0 +1,72 @@
+homeassistant:
+  # customize:
+automation:
+- alias: au_btn_salon_single
+  trigger:
+    platform: state
+    entity_id: sensor.btn_salon_click
+    to: "single"
+  condition:
+    condition: state
+    entity_id: group.gr_who
+    state: "home"
+  action:
+  - service: light.toggle
+    entity_id: light.lampa_w_salonie
+- alias: au_btn_salon_double
+  trigger:
+    platform: state
+    entity_id: sensor.btn_salon_click
+    to: "double"
+  condition:
+    condition: state
+    entity_id: group.gr_who
+    state: "home"
+  action:
+  - service: light.toggle
+    entity_id: light.plafon
+- alias: au_btn_salon_many
+  trigger:
+    platform: state
+    entity_id: sensor.btn_salon_click
+    to: "many"
+  condition:
+    condition: state
+    entity_id: group.gr_who
+    state: "home"
+  action:
+  - service: script.turn_on
+    entity_id: script.spt_resetuj_swiatla
+# - alias: tradfri_toggle
+- alias: tradfri_bright
+  trigger:
+    platform: state
+    entity_id: sensor.tradfri_one_action
+    to: "brightness_up_click"
+  action:
+  - service: light.toggle
+    entity_id: light.lampa_w_salonie
+- alias: tradfri_dimm
+  trigger:
+    platform: state
+    entity_id: sensor.tradfri_one_action
+    to: "brightness_down_click"
+  action:
+  - service: light.toggle
+    entity_id: light.plafon
+- alias: tradfri_left
+  trigger:
+    platform: state
+    entity_id: sensor.tradfri_one_action
+    to: "arrow_left_click"
+  action:
+  - service: light.toggle
+    entity_id: light.yl_maja
+- alias: tradfri_right
+  trigger:
+    platform: state
+    entity_id: sensor.tradfri_one_action
+    to: "arrow_right_click"
+  action:
+  - service: light.toggle
+    entity_id: light.yl_bernard
