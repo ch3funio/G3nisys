@@ -7,10 +7,12 @@ homeassistant:
   temperature_unit: C
   time_zone: Europe/Warsaw
   packages: !include_dir_named packages/
+  external_url: !secret external_url
+  internal_url: !secret internal_url
   auth_providers:
   - type: homeassistant
 http:
-  base_url: !secret base_url
+  # base_url: !secret base_url
   ssl_certificate: !secret ssl_cert
   ssl_key: !secret ssl_priv
 lovelace:
@@ -27,33 +29,29 @@ tts:
   language: "pl"
   time_memory: 300
 
-breaking_changes:
 config:
 conversation:
-custom_icons:
 hassio:
 mobile_app:
 sun:
-updater:
-wake_on_lan:
 system_health:
+updater:
 uilogs:
-virtual:
+wake_on_lan:
 
 ############# includy
 automation: !include_dir_merge_list automations/
+browser_mod: !include configi/browser_mod.yaml
 frontend: !include configi/frontend.yaml
 google_assistant: !include configi/google.yaml
 history:
   include: !include configi/log_include.yaml
+influxdb: !include configi/influx.yaml
 logbook:
   include: !include configi/log_include.yaml
 mqtt: !include configi/mqtt.yaml
+panel_iframe: !include configi/iframe.yaml
 recorder: !include configi/recorder.yaml
-scene: !include_dir_list scenes/
 script: !include_dir_merge_named scripts/
 sensor: !include configi/sensors.yaml
 zone: !include configi/zones.yaml
-influxdb: !include configi/influx.yaml
-
-panel_iframe: !include configi/iframe.yaml

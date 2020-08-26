@@ -1,5 +1,3 @@
-homeassistant:
-  # customize:
 automation:
 - alias: au_btn_salon_single
   trigger:
@@ -37,7 +35,6 @@ automation:
   action:
   - service: script.turn_on
     entity_id: script.spt_resetuj_swiatla
-# - alias: tradfri_toggle
 - alias: tradfri_bright
   trigger:
     platform: state

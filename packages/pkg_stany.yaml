@@ -1,4 +1,11 @@
 group:
+  gr_wstrzas:
+    entities:
+    - sensor.wstrzas_action
+    - sensor.wstrzas_battery
+    - sensor.wstrzas_linkquality
+    - sensor.wstrzas_sensitivity
+    - sensor.wstrzas_strength
   gr_baterie:
     entities:
     - sensor.drzwi_wc_battery
@@ -38,34 +45,15 @@ group:
     - binary_sensor.ruch_kuchnia_occupancy
     - binary_sensor.ruch_korytarz_occupancy
     - binary_sensor.zalanie_kuchnia_water_leak
-    - sensor.btn_salon
     - sensor.czujnik_salon_pressure
     - sensor.czujnik_bb_pressure
     - sensor.czujnik_lazienka_pressure
     - sensor.tradfri_one_action
+    - binary_sensor.tradfri_one_update_available
     - sensor.btn_salon_click
-    - sensor.google_keep_d69a6f8437
   gr_various: ### linki, WOLe itp.
     entities:
-    - sensor.potential_breaking_changes
     - sensor.hacs
     - sensor.date_time
-    - sensor.uptime
-    - sensor.last_boot
-    - sensor.disk_use_percent
-    - sensor.memory_use_percent
-    - sensor.processor_use
-    - sensor.rpi_power_status
-    - sensor.sns_ha_cpu_temp
     - sensor.sns_ha_version
     - binary_sensor.updater
-    - sensor.google_keep_1460afb4f2
-  gr_korona:
-    - sensor.poland_coronavirus_confirmed
-    - sensor.poland_coronavirus_current
-    - sensor.poland_coronavirus_deaths
-    - sensor.poland_coronavirus_recovered
-    - sensor.worldwide_coronavirus_confirmed
-    - sensor.worldwide_coronavirus_current
-    - sensor.worldwide_coronavirus_deaths
-    - sensor.worldwide_coronavirus_recovered

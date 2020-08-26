@@ -1,0 +1,49 @@
+- type: horizontal-stack
+  cards:
+  - type: entity-filter
+    card: 
+      type: glance
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;
+        }
+      show_state: false
+      show_name: false
+    show_empty: false
+    state_filter:
+    - "home"
+    - "na Rejtana"
+    entities:
+    - entity: person.johanna
+  - type: entity-filter
+    card: 
+      type: glance
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;
+        }
+      show_state: false
+      show_name: false
+    show_empty: false
+    state_filter:
+    - "home"
+    - "na Rejtana"
+    entities:
+    - entity: person.chef
+  - type: entity-filter
+    card: 
+      type: glance
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;
+        }
+      show_state: false
+      show_name: false
+    show_empty: false
+    state_filter:
+    - "na Turkusowej"
+    entities: 
+    - entity: person.tata

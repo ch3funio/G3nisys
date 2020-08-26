@@ -1,6 +1,8 @@
 title: AdGuard
 icon: mdi:police-badge
 cards:
+- type: horizontal-stack
+  cards: !include card_lokalizacja.yaml
 - type: entities
   entities:
   - sensor.adguard_average_processing_speed

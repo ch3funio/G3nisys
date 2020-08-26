@@ -8,107 +8,52 @@ title: ADM
 icon: mdi:toolbox
 background: radial-gradient(grey, skyblue)
 cards:
-- type: vertical-stack
-  cards:
-  - type: horizontal-stack
-    cards:
-    - type: entity-filter
-      card: 
-        type: glance
-        show_state: false
-        show_name: false
-      show_empty: false
-      state_filter:
-      - "home"
-      - "na Rejtana"
-      entities:
-      - entity: person.johanna
-    - type: entity-filter
-      card: 
-        type: glance
-        show_state: false
-        show_name: false
-      show_empty: false
-      state_filter:
-      - "home"
-      - "na Rejtana"
-      entities:
-      - entity: person.chef
-    - type: entity-filter
-      card: 
-        type: glance
-        show_state: false
-        show_name: false
-      show_empty: false
-      state_filter:
-      - "na Turkusowej"
-      entities: 
-      - entity: person.tata
-  - type: entities
-    name: Wirtualne
-    show_name: true
-    entities: 
-    - binary_sensor.virtual_binary
-    - switch.virtual_switch1
-    - switch.virtual_switch2
-    - sensor.virtual_temp
-    - light.virtual_light
-    - lock.virtual_lock
+
+- type: horizontal-stack
+  cards: !include card_lokalizacja.yaml
+- type: horizontal-stack
+  cards: !include card_porydnia.yaml
 ################################################################
 ################################################################ automatyzacje pory dnia i trybów
 ################################################################
-- type: vertical-stack
-  cards:
-  - type: entities
-    entities:
-    - sensor.pora_dnia
-    - sun.sun
-    - input_select.isl_pora_dnia
-    - input_boolean.bernard_tryb_noc
-    - input_boolean.tryb_kinowy
-    - input_boolean.tryb_xbox
+
+- type: entities
+  show_header_toggle: false
+  entities:
+  - sensor.pora_dnia
+  - sun.sun
+  - input_select.isl_pora_dnia
+  - input_boolean.tryb_spania
+  - input_boolean.tryb_kinowy
+  - input_boolean.tryb_xbox
+  - input_boolean.tryb_praca_w_kuchni
+  - switch.sonoff7
   ################################################################
   ################################################################ sensory ruchu i kontaktowe
   ################################################################
-  - type: entities
-    show_empty: true
-    entities:
-    - binary_sensor.drzwi_wc_contact
-    - binary_sensor.ruch_kuchnia_occupancy
-    - binary_sensor.ruch_korytarz_occupancy
-    - binary_sensor.zalanie_kuchnia_water_leak
-
-  - title: "My Calendar"
-    type: custom:calendar-card
-    hideHeader: true
-    progressBar: true
-    numberOfDays: 7
-    timeFormat: HH:mm
-    dateTopFormat: DD MMMM
-    dateBottomFormat: dddd
-    entities:
-    - calendar.domowy
-    - calendar.rodzinne_okazje
-    - calendar.znajomi_uro
-    - calendar.swieta_w_polsce
 - type: entities
+  show_empty: true
   entities:
-  - type: custom:paper-buttons-row
-    buttons: 
-    - - entity: light.ledy_w_kuchni
-        name: false
-        icon: mdi:kettle-outline
-      - entity: light.lampa_w_salonie
-        name: false
-        icon: mdi:lightbulb-multiple
-      - entity: light.plafon
-        name: false
-        icon: mdi:lightbulb-group
-    - - entity: light.yl_bernard
-        icon: custom:bear
-        name: false
-      - entity: light.yl_maja
-        icon: custom:bee
-        name: false
-  
-  
+  - binary_sensor.drzwi_wc_contact
+  - binary_sensor.drzwi_balkon_contact
+  - binary_sensor.ruch_kuchnia_occupancy
+  - binary_sensor.ruch_korytarz_occupancy
+  - binary_sensor.zalanie_kuchnia_water_leak
+- type: custom:auto-entities
+  card:
+    type: glance
+  filter:
+    include:
+      - domain: media_player
+- type: custom:auto-entities
+  card:
+    type: glance
+  filter:
+    include:
+      - domain: sensor
+- type: custom:auto-entities
+  card:
+    type: glance
+  filter:
+    include:
+      - domain: binary_sensor

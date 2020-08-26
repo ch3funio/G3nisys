@@ -29,3 +29,4 @@ include:
   - sensor.balkon_pressure
   - sensor.balkon_temperatura
   - sensor.balkon_wilgotnosc
+  - sensor.wstrzas_action

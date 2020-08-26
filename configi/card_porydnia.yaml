@@ -1,0 +1,149 @@
+- type: custom:mod-card
+  style: &round_card_force |
+    ha-card {
+      border-radius: 0px !important;
+      background-color: none; #var(--card-background-color);
+      box-shadow: none;
+        # {% if is_state('sun.sun', 'below_horizon') %}
+          # 0px 0px 5px 1px rgba(0,0,0,0.25);
+        # {% else %}
+          # 0px 0px 5px 1px rgba(0,0,0,0.25);
+        # {% endif %}
+      # }
+    ha-card div.card-content {
+      padding-top: 2px !important;
+      padding-left: 0 !important;
+      padding-bottom: 3px !important;
+    }
+    ha-card .card-content div div multiple-entity-row div.flex div.entity {
+      width: 20% !important;
+      background-color: #FF0000 !important;
+    }
+  card:
+    type: horizontal-stack
+    cards:
+    - name: "Świt" #dawn
+      type: custom:button-card
+      style: &roundstyle_slider |
+        ha-card {
+          border: none;
+          box-shadow: none;
+          background: none;
+          padding-top: 2px !important;
+          padding-bottom: 2px !important;
+        }
+      template: icon_daytime
+      entity: input_select.isl_pora_dnia
+      tap_action:
+        service_data:
+          option: "dawn"
+      icon: mdi:weather-sunset-up
+      state:
+      - value: "dawn"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)
+    - name: "Dzień" #day
+      type: custom:button-card
+      style: *roundstyle_slider
+      template: icon_daytime
+      entity: input_select.isl_pora_dnia
+      tap_action:
+        service_data:
+          option: "day"
+      icon: mdi:weather-sunny
+      state:
+      - value: "day"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)
+    - name: "Zmierzch" #dusk
+      type: custom:button-card
+      style: *roundstyle_slider
+      template: icon_daytime
+      entity: input_select.isl_pora_dnia
+      tap_action:
+        service_data:
+          option: "dusk"
+      icon: mdi:weather-sunset
+      state:
+      - value: "dusk"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)
+    - name: "Noc" #night
+      type: custom:button-card
+      style: *roundstyle_slider
+      template: icon_daytime
+      entity: input_select.isl_pora_dnia
+      tap_action:
+        service_data:
+          option: "night"
+      icon: mdi:weather-sunset-down
+      state:
+      - value: "night"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)
+    - name: "Tryb spania" #tryb_spania 
+      type: custom:button-card
+      style: *roundstyle_slider
+      template: icon_daytime
+      entity: input_select.isl_pora_dnia
+      tap_action:
+        service_data:
+          option: "tryb_spania"
+      icon: mdi:sleep
+      state:
+      - value: "tryb_spania"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)
+    - name: "Kino" #kino
+      type: custom:button-card
+      style: *roundstyle_slider
+      show_name: false
+      entity: input_boolean.tryb_kinowy
+      tap_action: 
+        action: call-service
+        service: input_boolean.toggle
+        service_data:
+          entity_id: input_boolean.tryb_kinowy
+      icon: mdi:theater
+      state:
+      - value: "on"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)
+      - value: "off"
+        styles:
+          icon:
+          - color: var(--state-icon-color)
+    - name: "Xbox" #xbox
+      type: custom:button-card
+      style: *roundstyle_slider
+      template: icon_daytime
+      entity: input_select.isl_pora_dnia
+      tap_action:
+        service_data:
+          option: "xbox"
+      icon: mdi:microsoft-xbox
+      state:
+      - value: "xbox"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)
+    - name: "Sen" #sen
+      type: custom:button-card
+      style: *roundstyle_slider
+      template: icon_daytime
+      entity: input_select.isl_pora_dnia
+      tap_action:
+        service_data:
+          option: "sen"
+      icon: mdi:weather-night
+      state:
+      - value: "Sen"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)

@@ -1,3 +1,18 @@
+#################### poziomy mały, tylko ikonka pory dnia
+icon_daytime:
+  show_name: false
+  tap_action:
+    action: call-service
+    entity: input_select.isl_pora_dnia
+    service: input_select.select_option
+    service_data:
+      entity_id: input_select.isl_pora_dnia
+  styles:
+    icon:
+    - color: var(--state-icon-color)
+
+############
+
 guzik:
   tap_action: 
     action: toggle
@@ -9,6 +24,7 @@ swiatla:
   show_name: false
   color_type: card
   color: auto
+  aspect_ratio: 1/1
   state:
   - value: "off"
     styles:
@@ -17,12 +33,34 @@ swiatla:
       card:
       - box-shadow: 0px 0px 0px 0px
       - background: "#393939"
+      - border-radius: 50%
   - value: "on"
     styles:
       icon:
       - color: var(--button-card-light-color)
       card:
-      - background: "#ffffff"
+      - background: none #"#ffffff"
+      - box-shadow: none #"2px 2px 2px 0px #dddddd"
+sceny_browser_mod:
+  template: guzik
+  show_state: false
+  show_name: true
+  color_type: auto
+  color: auto
+  state:
+  - value: "off"
+    styles:
+      icon:
+      - color: "#393939"
+      card:
+      - box-shadow: 0px 0px 0px 0px
+      - background: none
+  - value: "on"
+    styles:
+      icon:
+      - color: var(--button-card-light-color)
+      card:
+      - background: "#393939"
       - box-shadow: "2px 2px 2px 0px #dddddd"
 sceny:
   template: guzik
@@ -30,39 +68,222 @@ sceny:
   show_name: false
   color_type: auto
   color: auto
-klimat_w_domu:
+  state:
+  - value: "off"
+    styles:
+      icon:
+      - color: "#393939"
+      card:
+      - box-shadow: 0px 0px 0px 0px
+      - background: none
+  - value: "on"
+    styles:
+      icon:
+      - color: var(--button-card-light-color)
+      card:
+      - background: "#393939"
+      - box-shadow: "2px 2px 2px 0px #dddddd"
+klimat:
+  tap_action: 
+    action: call-service
+    service: browser_mod.popup
+    service_data:
+      deviceID: this
+      title: Klimat
+      card:
+        type: vertical-stack
+        cards:
+        - type: horizontal-stack
+          cards:
+          - name: Lokalizacja
+            type: "custom:button-card"
+            show_icon: false
+            show_name: false
+            icon: mdi:floor-plan
+            aspect_ratio: 3/1
+            styles:
+              card:
+              - background: none
+              - box-shadow: none
+              icon:
+              - color: "#393939"
+          - name: Temperatura
+            type: "custom:button-card"
+            show_icon: true
+            show_name: false
+            icon: mdi:home-thermometer
+            aspect_ratio: 3/1
+            styles:
+              card:
+              - background: none
+              - box-shadow: none
+              icon:
+              - color: "#393939"
+          - name: Wilgotność
+            type: "custom:button-card"
+            show_icon: true
+            show_name: false
+            icon: mdi:water-percent
+            aspect_ratio: 3/1
+            styles:
+              card:
+              - background: none
+              - box-shadow: none
+              icon:
+              - color: "#393939"
+        - type: horizontal-stack
+          cards:
+          - name: Salon
+            template: naglowek_klimat
+            type: "custom:button-card"
+          - name: Temperatura
+            template: tempy
+            type: "custom:button-card"
+            entity: sensor.czujnik_salon_temperature
+          - name: Wilgotność
+            type: "custom:button-card"
+            entity: sensor.czujnik_salon_humidity
+            template: mokry
+        - type: horizontal-stack
+          cards:
+          - name: Bernard
+            template: naglowek_klimat
+            type: "custom:button-card"
+          - name: Temperatura
+            template: tempy
+            type: "custom:button-card"
+            entity: sensor.czujnik_bb_temperature
+          - name: Wilgotność
+            type: "custom:button-card"
+            entity: sensor.czujnik_bb_humidity
+            template: mokry
+        - type: horizontal-stack
+          cards:
+          - name: Maja
+            template: naglowek_klimat
+            type: "custom:button-card"
+          - name: Temperatura
+            template: tempy
+            type: "custom:button-card"
+            entity: sensor.czujnik_maja_temperature
+          - name: Wilgotność
+            type: "custom:button-card"
+            entity: sensor.czujnik_maja_humidity
+            template: mokry
+        - type: horizontal-stack
+          cards:
+          - name: Kuchnia
+            template: naglowek_klimat
+            type: "custom:button-card"
+          - name: Temperatura
+            template: tempy
+            type: "custom:button-card"
+            entity: sensor.czujnik_kuchnia_temperature
+          - name: Wilgotność
+            type: "custom:button-card"
+            entity: sensor.czujnik_kuchnia_humidity
+            template: mokry
+        - type: horizontal-stack
+          cards:
+          - name: Schowek
+            template: naglowek_klimat
+            type: "custom:button-card"
+          - name: Temperatura
+            template: tempy
+            type: "custom:button-card"
+            entity: sensor.czujnik_schowek_temperature
+          - name: Wilgotność
+            type: "custom:button-card"
+            entity: sensor.czujnik_schowek_humidity
+            template: mokry
+        - type: horizontal-stack
+          cards:
+          - name: Łazienka
+            template: naglowek_klimat
+            type: "custom:button-card"
+          - name: Temperatura
+            template: tempy
+            type: "custom:button-card"
+            entity: sensor.czujnik_lazienka_temperature
+          - name: Wilgotność
+            type: "custom:button-card"
+            entity: sensor.czujnik_lazienka_humidity
+            template: mokry
+        - type: horizontal-stack
+          cards:
+          - name: WC
+            template: naglowek_klimat
+            type: "custom:button-card"
+          - name: Temperatura
+            template: tempy
+            type: "custom:button-card"
+            entity: sensor.czujnik_wc_temperature
+          - name: Wilgotność
+            type: "custom:button-card"
+            entity: sensor.czujnik_wc_humidity
+            template: mokry
+naglowek_klimat:
+  show_name: true
+  aspect_ratio: 3/1
   styles:
     card:
-    - background-color: 'white'
-    - border-radius: 5%
-    - padding: 2px
-    - font-size: 0.8em
-    grid:
-    - grid-template-areas: '"n n" "temp temp" "humi humi"'
-    - grid-template-columns: 40% 60%
-    - grid-template-rows: 1fr 1fr 1fr
-    - grid-gap: 1px
+    - background: none
+    - box-shadow: none
     name:
+    - font-size: 12pt
+    - font-weight: lite
+tempy:
+  show_icon: false
+  show_name: false
+  show_state: true
+  aspect_ratio: 3/1
+  styles:
+    state:
+    - font-size: 20pt
     - font-weight: bold
-    - font-size: 1.2em
-    - color: var(--secondary-text-color)
-    - align-self: center
-    - align-self: center
-    - justify-self: center
-    - padding-bottom: 4px
-    icon:
-    - color: var(--state-icon-color)
-    custom_fields:
-      humi:
-      - align-self: start
-      - justify-self: start
-      temp:
-      - align-self: start
-      - justify-self: start
-  custom_fields:
-    temp: >
-      [[[ 
-        var tempt = `${entity.state}`; 
-        if (isNaN(tempt)) tempt = '?'; 
-        return `<ha-icon icon="mdi:thermometer" style="color: var(--state-icon-color); width: 1.5em;"></ha-icon> <span>` + tempt + `°C</span>`; 
-      ]]]
+    - color: "#ffffff"
+    card: 
+    - background: "#D17545"
+    - box-shadow: none
+    - border-radius: 2%
+mokry:
+  template: tempy
+  styles:
+    card: 
+    - background: "#44739e"
+# klimat_w_domu:
+  # styles:
+    # card:
+    # - background-color: 'white'
+    # - border-radius: 5%
+    # - padding: 2px
+    # - font-size: 0.8em
+    # grid:
+    # - grid-template-areas: '"n n" "temp temp" "humi humi"'
+    # - grid-template-columns: 40% 60%
+    # - grid-template-rows: 1fr 1fr 1fr
+    # - grid-gap: 1px
+    # name:
+    # - font-weight: bold
+    # - font-size: 1.2em
+    # - color: var(--secondary-text-color)
+    # - align-self: center
+    # - align-self: center
+    # - justify-self: center
+    # - padding-bottom: 4px
+    # icon:
+    # - color: var(--state-icon-color)
+    # custom_fields:
+      # humi:
+      # - align-self: start
+      # - justify-self: start
+      # temp:
+      # - align-self: start
+      # - justify-self: start
+  # custom_fields:
+    # temp: >
+      # [[[ 
+        # var tempt = `${entity.state}`; 
+        # if (isNaN(tempt)) tempt = '?'; 
+        # return `<ha-icon icon="mdi:thermometer" style="color: var(--state-icon-color); width: 1.5em;"></ha-icon> <span>` + tempt + `°C</span>`; 
+      # ]]]

@@ -6,144 +6,236 @@ background: "#f3f3f3"
 cards:
 - type: vertical-stack
   cards:
+  - cards: !include card_porydnia.yaml
+    type: horizontal-stack
+  - cards: !include card_lokalizacja.yaml
+    type: horizontal-stack
   - type: horizontal-stack
     cards:
-    - type: entity-filter
-      card: 
-        type: glance
-        show_state: false
-        show_name: false
-      show_empty: false
-      state_filter:
-      - "home"
-      - "na Rejtana"
-      entities:
-      - entity: person.johanna
-    - type: entity-filter
-      card: 
-        type: glance
-        show_state: false
-        show_name: false
-      show_empty: false
-      state_filter:
-      - "home"
-      - "na Rejtana"
-      entities:
-      - entity: person.chef
-    - type: entity-filter
-      card: 
-        type: glance
-        show_state: false
-        show_name: false
-      show_empty: false
-      state_filter:
-      - "na Turkusowej"
-      entities: 
-      - entity: person.tata
+    - name: Temperatura
+      type: "custom:button-card"
+      entity: sensor.tempy
+      show_icon: false
+      show_name: false
+      show_state: true
+      styles:
+        state:
+        - font-size: 40pt
+        - font-weight: bold
+        - color: "#D17545"
+        card: 
+        - background: none
+        - box-shadow: none
+      template: klimat
+    - name: Wilgotność
+      type: "custom:button-card"
+      entity: sensor.mokry
+      show_icon: false
+      show_name: false
+      show_state: true
+      styles:
+        state:
+        - font-size: 40pt
+        - font-weight: bold
+        - color: "#44739e"
+        card: 
+        - background: none
+        - box-shadow: none
+      template: klimat
   - type: horizontal-stack
     cards:
-      - type: gauge
-        style: |
-          ha-card {background: none; box-shadow: none;}
-        entity: sensor.tempy
-        color_thresholds:
-        - value: 18.5
-          color: "#009de0"
-        - value: 21
-          color: "#abe24c"
-        - value: 23.5
-          color: "#ffc500"
-        - value: 26
-          color: "#c92116"
-        name: "Temperatura"
-        hour24: true
-        hours_to_show: 24
-        animate: true
-        points_per_hour: 0.5
-      - type: gauge
-        style: |
-          ha-card {background: none; box-shadow: none;}
-        entity: sensor.mokry
-        color_thresholds:
-        - value: 40
-          color: "#289548"
-        - value: 45
-          color: "#1d9772"
-        - value: 50
-          color: "#0e9aac"
-        - value: 55
-          color: "#019ddb"
-        name: "Wilgotność"
-        hour24: true
-        hours_to_show: 24
-        animate: true
-        points_per_hour: 0.5
-  - content: ŚWIATŁA
-    type: markdown
-    style: &header |
-      ha-card {background: none; box-shadow: none; color: #393939; font-size: 10pt; padding: 0px; margin: 0px; height: 30px;}
-  - type: horizontal-stack
-    cards:
-    - type: "custom:button-card" ##### ledy w kuchni
+    - name: Kuchnia
+      type: "custom:button-card" ##### ledy w kuchni
       entity: light.ledy_w_kuchni
       template: swiatla
       icon: mdi:kettle-outline
-      name: Kuchnia
-    - type: "custom:button-card" ##### światło główne w salonie
-      name: Salon
+    - name: Salon
+      type: "custom:button-card" ##### światło główne w salonie
       entity: light.lampa_w_salonie
       icon: mdi:lightbulb-group
       template: swiatla
       hold_action: 
         action: call-service
-        service: scene.turn_on
+        service: browser_mod.popup
         service_data:
-          entity_id: scene.sc_salon_tryb_normalny
-    - type: "custom:button-card" ##### plafon w salonie
+          deviceID: this
+          title: Salon
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              entity: light.yl1
+              template: sceny_browser_mod
+            - type: "custom:button-card"
+              entity: light.yl2
+              template: sceny_browser_mod
+            - type: "custom:button-card"
+              entity: light.yl3
+              template: sceny_browser_mod
+            - type: "custom:button-card"
+              entity: scene.sl_tryb_normalny
+              template: sceny_browser_mod
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data: 
+                  entity_id: scene.sl_tryb_normalny
+    - name: Plafon
+      type: "custom:button-card" ##### plafon w salonie
+      template: swiatla
+      icon: mdi:lightbulb-multiple
       entity: light.plafon
       hold_action: 
         action: call-service
-        service: scene.turn_on
+        service: browser_mod.popup
         service_data:
-          entity_id: scene.sc_plafon_tryb_normalny
-      icon: mdi:lightbulb-multiple
-      name: Plafon
+          deviceID: this
+          title: Plafon
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              entity: light.yl_plafon1
+              template: sceny
+            - type: "custom:button-card"
+              entity: light.yl_plafon2
+              template: sceny
+            - type: "custom:button-card"
+              entity: scene.plafon_tryb_normalny
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data:
+                  entity_id: scene.plafon_tryb_normalny
+            - type: "custom:button-card"
+              entity: scene.plafon_tryb_red
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data:
+                  entity_id: plafon_tryb_red
+    - name: Lampki na balkonie
+      type: "custom:button-card" 
+      entity: light.lampki_na_balkonie
       template: swiatla
-    - type: "custom:button-card" ##### światło u Bernarda
-      entity: light.yl_bernard
-      hold_action: 
-        action: call-service
-        service: scene.turn_on
-        service_data:
-          entity_id: scene.sc_bernard_tryb_normalny
-      template: swiatla
-      show_entity_picture: true
-      icon: custom:bear
-      name: BB
-    - type: "custom:button-card" ##### światło u Mai
-      entity: light.yl_maja
-      template: swiatla
-      show_entity_picture: true
-      icon: custom:bee
-      name: Maja
+      icon: mdi:string-lights #bha:light-string
   - type: horizontal-stack
     cards: 
-    - type: "custom:button-card" 
+    - name: BB
+      type: "custom:button-card" ##### światło u Bernarda
+      entity: light.yl_bernard
+      template: swiatla
+      show_entity_picture: true
+      icon: mdi:alpha-b-circle-outline #custom:bear
+      hold_action: 
+        action: call-service
+        service: browser_mod.popup
+        service_data:
+          deviceID: this
+          title: Berni
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              entity: scene.bb_tryb_normalny
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data: 
+                  entity_id: scene.bb_tryb_normalny
+            - type: "custom:button-card"
+              entity: scene.bb_tryb_spania
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data: 
+                  entity_id: scene.bb_tryb_spania
+    - name: Maja
+      type: "custom:button-card" ##### światło u Mai
+      entity: light.yl_maja
+      hold_action: 
+        action: call-service
+        service: browser_mod.popup
+        service_data:
+          deviceID: this
+          title: Maja
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              entity: scene.mb_tryb_normalny
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data: 
+                  entity_id: scene.mb_tryb_normalny
+            - type: "custom:button-card"
+              entity: scene.mb_tryb_spania
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data: 
+                  entity_id: scene.mb_tryb_spania
+      template: swiatla
+      show_entity_picture: true
+      icon: mdi:alpha-m-circle-outline #custom:bee
+    - name: WC
+      type: "custom:button-card" 
       entity: light.yl_wc
       template: swiatla
       icon: mdi:human-male-female
-      name: WC
-    - type: "custom:button-card" 
+      hold_action: 
+        action: call-service
+        service: browser_mod.popup
+        service_data:
+          deviceID: this
+          title: WC
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              entity: scene.wc_tryb_red
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data:
+                  entity_id: scene.wc_tryb_red
+            - type: "custom:button-card"
+              entity: scene.wc_tryb_normalny
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data:
+                  entity_id: scene.wc_tryb_normalny
+    - name: Korytarz
+      type: "custom:button-card" 
       entity: light.yl_korytarz
       icon: mdi:shoe-print
       template: swiatla
-      name: Korytarz
-    - type: "custom:button-card" ##### światło górne w sypialni
-      entity: light.lampki_na_balkonie
-      template: swiatla
-      icon: bha:light-string
-      name: Lampki na balkonie
-  - type: entity-filter
+      hold_action: 
+        action: call-service
+        service: browser_mod.popup
+        service_data:
+          deviceID: this
+          title: Korytarz
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              entity: scene.hw_tryb_red
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data:
+                  entity_id: scene.hw_tryb_red
+            - type: "custom:button-card"
+              entity: scene.hw_tryb_normalny
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data:
+                  entity_id: scene.hw_tryb_normalny
+  - type: entity-filter #media_player
     show_empty: false
     state_filter:
       - "on"
@@ -157,53 +249,47 @@ cards:
     - entity: media_player.boogy
     - entity: media_player.tic
     - entity: media_player.chromcast
-    - entity: media_player.kitchen_display
+    - entity: media_player.little_screen
   - type: horizontal-stack
     cards:
     - name: BB Spanie ##### światło u Bernarda
       type: "custom:button-card" 
+      entity: input_boolean.tryb_spania
       tap_action: 
         action: call-service
         service: input_boolean.toggle
         service_data:
-          entity_id: input_boolean.bernard_tryb_noc
+          entity_id: input_boolean.tryb_spania
       template: sceny
-      icon: "custom:bear"
-    - type: "custom:button-card"
+      icon: "mdi:sleep"
+    - name: Tryb Kinowy
+      type: "custom:button-card"
       template: sceny
+      entity: input_boolean.tryb_kinowy
       tap_action: 
         action: call-service
-        service: input_boolean.turn_on
+        service: input_boolean.toggle
         service_data:
           entity_id: input_boolean.tryb_kinowy
-      icon: "custom:bee"
-      name: Tryb Kinowy
-    - type: "custom:button-card"
+      icon: "mdi:theater"
+    - name: Tryb Gry
+      entity: input_boolean.tryb_xbox
+      type: "custom:button-card"
       template: sceny
       tap_action: 
         action: call-service
-        service: input_boolean.turn_on
+        service: input_boolean.toggle
         service_data:
-          entity_id: input_boolean.tryb_gry
-      name: Tryb Gry
-      icon: bha:light-string
-    - type: custom:button-card
-      icon: mdi:settings
-      # aspect_ratio: 3/1
-      tap_action:
-        action: navigate
-        navigation_path: '/states'
-  - type: horizontal-stack
-    cards:
-    - type: entities
-      entities:
-      - sensor.poland_coronavirus_confirmed
-      - sensor.poland_coronavirus_current
-      - sensor.poland_coronavirus_deaths
-      - sensor.poland_coronavirus_recovered
-    - type: entities
-      entities:
-      - sensor.worldwide_coronavirus_confirmed
-      - sensor.worldwide_coronavirus_current
-      - sensor.worldwide_coronavirus_deaths
-      - sensor.worldwide_coronavirus_recovered
+          entity_id: input_boolean.tryb_xbox
+      icon: mdi:microsoft-xbox
+    - name: Gotujemy
+      type: "custom:button-card"
+      entity: input_boolean.tryb_praca_w_kuchni
+      tap_action: 
+        action: call-service
+        service: input_boolean.toggle
+        service_data:
+          entity_id: input_boolean.tryb_praca_w_kuchni
+      show_name: false
+      icon: mdi:stove
+      template: sceny

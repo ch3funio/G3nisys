@@ -6,34 +6,15 @@ entities:
 - person.chef
 - person.johanna
 - person.tata
-# - sensor.weather_humidity
-# - sensor.weather_temperature
-# - sensor.mokry
-# - sensor.tempy
-# - sensor.czujnik_salon_humidity
-# - sensor.czujnik_salon_pressure
-# - sensor.czujnik_salon_temperature
-# - sensor.czujnik_bb_temperature
-# - sensor.czujnik_bb_humidity
-# - sensor.czujnik_bb_pressure
-# - sensor.czujnik_wc_temperature
-# - sensor.czujnik_wc_humidity
-# - sensor.czujnik_kuchnia_temperature
-# - sensor.czujnik_kuchnia_humidity
-# - sensor.czujnik_lazienka_temperature
-# - sensor.czujnik_lazienka_humidity
-# - sensor.czujnik_lazienka_pressure
-# - sensor.czujnik_maja_temperature
-# - sensor.czujnik_maja_humidity
-# - sensor.czujnik_schowek_temperature
-# - sensor.czujnik_schowek_humidity
 - light.lampa_w_salonie
 - light.ledy_w_kuchni
 - light.yl1
 - light.yl2
 - light.yl3
-- light.yl4
-- light.yl5
-- light.yl6
-# - media_player.lg_tv
-# - sensor.pora_dnia
+- light.yl_bernard
+- light.yl_maja
+- light.yl_plafon1
+- light.yl_plafon2
+- light.yl_wc
+- light.yl_korytarz
+- light.plafon

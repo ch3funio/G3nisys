@@ -8,7 +8,7 @@ device_tracker:
   - !secret ip_googy
   - !secret ip_boogy
   - !secret ip_tic
-  - !secret ip_kitchen_display
+  - !secret ip_little_screen
   - !secret ip_xbone
   - !secret ip_narnia
   - !secret ip_lgtv
@@ -20,19 +20,19 @@ device_tracker:
 group:
   gr_onoff: 
     entities:
+    - media_player.big_screen
+    - media_player.boogy
+    - media_player.googy
+    - media_player.little_screen
+    - media_player.kodi
     - media_player.lg_tv
+    - media_player.tic
     - device_tracker.lgwebostv
     - device_tracker.lgwebostvwifi
-    - device_tracker.chromecast
     - device_tracker.ipkamera
     - device_tracker.lestaro
-    - device_tracker.narniapi3
     - device_tracker.samsungtv
     - device_tracker.xboxone
-    - device_tracker.googy
-    - device_tracker.tic
-    - device_tracker.boogy
-    - device_tracker.kitchen_display
 webostv:
   host: !secret ip_lgtv
   name: LG TV
@@ -51,15 +51,15 @@ webostv:
 media_player:
 - platform: kodi
   host: !secret ip_narnia
-cast:
-  media_player:
-  - host: !secret ip_chromecast
-    mac: !secret mac_chromecast
-  - host: !secret ip_googy
-    mac: !secret mac_googy
-  - host: !secret ip_boogy
-    mac: !secret mac_boogy
-  - host: !secret ip_tic
-    mac: !secret mac_tic
-  - host: !secret ip_kitchen_display
-    mac: !secret mac_kitchen_display
+# cast:
+  # media_player:
+  # - host: !secret ip_chromecast
+    # mac: !secret mac_chromecast
+  # - host: !secret ip_googy
+    # mac: !secret mac_googy
+  # - host: !secret ip_boogy
+    # mac: !secret mac_boogy
+  # - host: !secret ip_tic
+    # mac: !secret mac_tic
+  # - host: !secret ip_little_screen
+    # mac: !secret mac_little_screen

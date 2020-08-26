@@ -11,8 +11,7 @@ group:
     - sensor.balkon_pm2_5_level
     - sensor.balkon_pressure
     - input_boolean.alert_air
-    - automation.au_alert_air
-    - script.air_notify
+    - automation.alert_stan_powietrza
 scene:
 - name: air_idealny
   entities:

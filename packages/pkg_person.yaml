@@ -19,18 +19,25 @@ group:
   - device_tracker.google_maps_110941774270035156789
   gr_person_aplikacja:
   - sensor.chef_xl_battery_level
+  - sensor.chef_xl_battery_state
   - sensor.chef_xl_geocoded_location
   - sensor.chef_xl_wifi_connection
+  - sensor.bro_chef_app
   - sensor.johanna_xl_battery_level
+  - sensor.johanna_xl_battery_state
   - sensor.johanna_xl_geocoded_location
   - sensor.johanna_xl_wifi_connection
+  - sensor.bro_prawy
+  - light.bro_prawy
+  - media_player.bro_prawy
+  - sensor.connected_clients
 device_tracker:
 - platform: google_maps
   username: !secret hassio_google_login
   interval_seconds: 300
   max_gps_accuracy: 150
   new_device_defaults:
-    track_new_devices: true
+    track_new_devices: false
 person:
 - name: chef
   id: chef
@@ -47,23 +54,3 @@ person:
   user_id: !secret userid_tata
   device_trackers:
   - device_tracker.google_maps_110941774270035156789
-  
-automation:
-- alias: tata_in
-  trigger:
-    platform: state
-    entity_id: person.tata
-    to: "na Turkusowej"
-    for: "30:00:00"
-  action:
-  - service: light.toggle
-    entity_id: "light.virtual_light"
-- alias: tata_out
-  trigger:
-    platform: state
-    entity_id: person.tata
-    to: "away"
-    for: "00:25:00"
-  action:
-  - service: light.toggle
-    entity_id: "light.virtual_light"

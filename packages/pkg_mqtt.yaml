@@ -1,0 +1,74 @@
+homeassistant:
+  customize:
+    switch.sonoff7:
+      friendly_name: "Gniazdko KODI"
+      icon: mdi:kodi
+light:
+  - platform: mqtt
+    name: Ledy w kuchni
+    state_topic: "stat/sonoff/4/POWER"
+    command_topic: "cmnd/sonoff/4/POWER"
+    availability_topic: "tele/sonoff/4/LWT"
+    optimistic: False
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: False
+  - platform: mqtt
+    name: Lampki na balkonie
+    state_topic: "stat/sonoff/5/POWER"
+    command_topic: "cmnd/sonoff/5/POWER"
+    availability_topic: "tele/sonoff/5/LWT"
+    optimistic: False
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: False
+  - platform: mqtt
+    name: Choinka
+    state_topic: "stat/sonoff/2/POWER"
+    command_topic: "cmnd/sonoff/2/POWER"
+    availability_topic: "tele/sonoff/2/LWT"
+    optimistic: False
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: False
+switch:
+  - platform: mqtt
+    name: Sonoff7
+    state_topic: "stat/sonoff/7/POWER"
+    command_topic: "cmnd/sonoff/7/POWER"
+    availability_topic: "tele/sonoff/7/LWT"
+    optimistic: False
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: False
+automation:
+- alias: au_tryb_kinowy
+  trigger:
+  - platform: state
+    entity_id: input_boolean.tryb_kinowy
+    to: "on"
+  action:
+  - service: switch.turn_on
+    entity_id: switch.sonoff7
+- alias: au_tryb_kinowy_off
+  trigger:
+  - platform: state
+    entity_id: input_boolean.tryb_kinowy
+    to: "off"
+  action:
+  # - service: switch.turn_off
+    # entity_id: switch.sonoff7
+  - service: script.turn_on
+    entity_id: script.kodioff

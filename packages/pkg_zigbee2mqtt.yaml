@@ -9,7 +9,6 @@ group:
     name: Zigbee
     entities:
     - sensor.bridge_state
-    - binary_sensor.zigbee_router
-    - sensor.zigbee_linkquality
+    - binary_sensor.zigbee_router_led
     - binary_sensor.zigbee_router_router
     - sensor.zigbee_router_linkquality

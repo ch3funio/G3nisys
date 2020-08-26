@@ -1,0 +1,10 @@
+﻿prefix: "bro_"
+devices:
+  14f92a05-d26084e4:
+    name: bro_lestaro
+  aabb25cf-eb56d00e:
+    name: bro_chef_app
+  5a2d1ffb-39e6a961:
+    name: bro_chef_chrom
+  60995d14-17d3af7d:
+    name: bro_prawy
