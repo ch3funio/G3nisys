@@ -6,12 +6,8 @@
   type: js
 - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
   type: module
-# - url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
-  # type: js
 - url: /hacsfiles/lovelace-card-mod/card-mod.js
-  type: js
-# - url: /hacsfiles/custom-header/custom-header.js
-  # type: module
+  type: module
 - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
   type: module
 - url: /hacsfiles/LG-WebOS-Remote-Control/lg-remote-control.js

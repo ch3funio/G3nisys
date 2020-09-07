@@ -51,6 +51,7 @@ group:
     - sensor.tradfri_one_action
     - binary_sensor.tradfri_one_update_available
     - sensor.btn_salon_click
+    - sensor.btn_salon_action
   gr_various: ### linki, WOLe itp.
     entities:
     - sensor.hacs

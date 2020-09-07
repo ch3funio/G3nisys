@@ -33,13 +33,11 @@ scene:
       brightness: 230
       color_temp: 288
       # transition: 5
-#świt sc_dawn
 - name: sc_dawn
   entities:
     input_boolean.tryb_spania: off
     light.yl_bernard: off
     light.yl_maja: off
-#noc sc_night
 - name: sc_night
   entities:
     light.yl1:

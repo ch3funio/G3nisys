@@ -1,5 +1,5 @@
 automation:
-- alias: au_btn_salon_single
+- alias: btn_salon_single # lampa w salonie
   trigger:
     platform: state
     entity_id: sensor.btn_salon_click
@@ -11,7 +11,7 @@ automation:
   action:
   - service: light.toggle
     entity_id: light.lampa_w_salonie
-- alias: au_btn_salon_double
+- alias: btn_salon_double # plafon 
   trigger:
     platform: state
     entity_id: sensor.btn_salon_click
@@ -23,19 +23,7 @@ automation:
   action:
   - service: light.toggle
     entity_id: light.plafon
-- alias: au_btn_salon_many
-  trigger:
-    platform: state
-    entity_id: sensor.btn_salon_click
-    to: "many"
-  condition:
-    condition: state
-    entity_id: group.gr_who
-    state: "home"
-  action:
-  - service: script.turn_on
-    entity_id: script.spt_resetuj_swiatla
-- alias: tradfri_bright
+- alias: tradfri_bright # lampa w salonie
   trigger:
     platform: state
     entity_id: sensor.tradfri_one_action
@@ -43,7 +31,7 @@ automation:
   action:
   - service: light.toggle
     entity_id: light.lampa_w_salonie
-- alias: tradfri_dimm
+- alias: tradfri_dimm # plafon
   trigger:
     platform: state
     entity_id: sensor.tradfri_one_action
@@ -51,7 +39,7 @@ automation:
   action:
   - service: light.toggle
     entity_id: light.plafon
-- alias: tradfri_left
+- alias: tradfri_left # swiatlo u MB
   trigger:
     platform: state
     entity_id: sensor.tradfri_one_action
@@ -59,7 +47,7 @@ automation:
   action:
   - service: light.toggle
     entity_id: light.yl_maja
-- alias: tradfri_right
+- alias: tradfri_right # swiatlo u BB
   trigger:
     platform: state
     entity_id: sensor.tradfri_one_action

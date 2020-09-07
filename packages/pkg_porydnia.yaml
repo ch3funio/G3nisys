@@ -1,18 +1,8 @@
-homeassistant:
-  # customize:
 input_boolean:
   tryb_spania:
     name: Tryb spania
     initial: off
     icon: mdi:sleep
-  tryb_kinowy:
-    name: Tryb kinowy
-    initial: off
-    icon: mdi:theater
-  tryb_xbox: 
-    name: Tryb gry
-    initial: off
-    icon: mdi:microsoft-xbox
   tryb_praca_w_kuchni:
     name: Praca w kuchni
     initial: off

@@ -3,7 +3,7 @@ sensor:
 - platform: version
   name: sns_ha_version
 automation: 
-- alias: au_snapshot
+- alias: snapshot
   trigger:
   - platform: time
     at: "04:00:00"

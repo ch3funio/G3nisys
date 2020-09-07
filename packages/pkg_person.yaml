@@ -22,12 +22,32 @@ group:
   - sensor.chef_xl_battery_state
   - sensor.chef_xl_geocoded_location
   - sensor.chef_xl_wifi_connection
+  - sensor.chef_xl_bluetooth_connection
+  - sensor.chef_xl_light_sensor
+  - sensor.chef_xl_next_alarm
+  - sensor.chef_xl_storage_sensor
+  - sensor.chef_xl_audio_sensor
+  - sensor.chef_xl_do_not_disturb_sensor
+  - sensor.chef_xl_last_reboot
+  - sensor.chef_xl_pressure_sensor
+  - sensor.chef_xl_proximity_sensor
   - sensor.bro_chef_app
   - sensor.johanna_xl_battery_level
   - sensor.johanna_xl_battery_state
   - sensor.johanna_xl_geocoded_location
   - sensor.johanna_xl_wifi_connection
+  - sensor.johanna_xl_bluetooth_connection
+  - sensor.johanna_xl_light_sensor
+  - sensor.johanna_xl_next_alarm
+  - sensor.johanna_xl_storage_sensor
+  - sensor.johanna_xl_audio_sensor
+  - sensor.johanna_xl_do_not_disturb_sensor
+  - sensor.johanna_xl_last_reboot
+  - sensor.johanna_xl_pressure_sensor
+  - sensor.johanna_xl_proximity_sensor
+  - sensor.bro_johanna_app
   - sensor.bro_prawy
+  - sensor.bro_lestaro
   - light.bro_prawy
   - media_player.bro_prawy
   - sensor.connected_clients

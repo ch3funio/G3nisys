@@ -1,4 +1,3 @@
-homeassistant:
 device_tracker:
 - platform: nmap_tracker
   track_new_devices: false
@@ -20,24 +19,11 @@ device_tracker:
 group:
   gr_onoff: 
     entities:
-    - media_player.big_screen
-    - media_player.boogy
-    - media_player.googy
-    - media_player.little_screen
-    - media_player.kodi
-    - media_player.lg_tv
-    - media_player.tic
     - device_tracker.lgwebostv
     - device_tracker.lgwebostvwifi
-    - device_tracker.ipkamera
-    - device_tracker.lestaro
-    - device_tracker.samsungtv
-    - device_tracker.xboxone
 webostv:
   host: !secret ip_lgtv
   name: LG TV
-  # filename: webostv.conf
-  # timeout: 5
   turn_on_action:
     service: wake_on_lan.send_magic_packet
     data:
@@ -51,15 +37,3 @@ webostv:
 media_player:
 - platform: kodi
   host: !secret ip_narnia
-# cast:
-  # media_player:
-  # - host: !secret ip_chromecast
-    # mac: !secret mac_chromecast
-  # - host: !secret ip_googy
-    # mac: !secret mac_googy
-  # - host: !secret ip_boogy
-    # mac: !secret mac_boogy
-  # - host: !secret ip_tic
-    # mac: !secret mac_tic
-  # - host: !secret ip_little_screen
-    # mac: !secret mac_little_screen

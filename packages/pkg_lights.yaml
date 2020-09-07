@@ -27,21 +27,21 @@ homeassistant:
       icon: mdi:bed
     scene.bb_tryb_normalny:
       friendly_name: "Bernard - tryb normalny"
-      icon: mdi:bed
+      icon: mdi:ceiling-light
 ### Maja
     scene.mb_tryb_spania:
       friendly_name: "Maja - tryb spania"
       icon: mdi:bed
     scene.mb_tryb_normalny:
       friendly_name: "Maja - tryb normalny"
-      icon: mdi:bed
+      icon: mdi:ceiling-light
 ### SALON
     scene.sl_tryb_normalny: #salon
       friendly_name: "Salon - tryb normalny"
       icon: mdi:ceiling-light
     scene.plafon_tryb_normalny:
       friendly_name: "Plafon - tryb normalny"
-      icon: mdi:bed
+      icon: mdi:ceiling-light
     scene.plafon_tryb_red:
       friendly_name: "Plafon - tryb nocny"
       icon: mdi:bed
@@ -51,7 +51,7 @@ homeassistant:
       icon: mdi:ceiling-light
     scene.hw_tryb_red:
       friendly_name: "Korytarz - tryb nocny"
-      icon: mdi:ceiling-light
+      icon: mdi:bed
 ### KUCHNIA
 ### WC
     scene.wc_tryb_normalny:
@@ -59,68 +59,68 @@ homeassistant:
       icon: mdi:ceiling-light
     scene.wc_tryb_red:
       friendly_name: "WC - tryb noc"
-      icon: mdi:ceiling-light
+      icon: mdi:bed
 
 yeelight:
   devices:
-    192.168.2.51:
-      name: yl1 # SALON
+    192.168.2.51: #yl1 salon
+      name: yl1
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: True #(defaults to True)
-    192.168.2.52:
-      name: yl2 # SALON
+    192.168.2.52: #yl2 salon
+      name: yl2
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: True #(defaults to True)
-    192.168.2.53:
-      name: yl3 # SALON
+    192.168.2.53: #yl3 salon
+      name: yl3
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: True #(defaults to True)
-    192.168.2.54:
-      name: yl_bernard #Bernard
+    192.168.2.54: #Bernard
+      name: yl_bernard
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: True #(defaults to True)
-    192.168.2.55:
-      name: yl_maja #sypialnia chef
+    192.168.2.55: #Maja
+      name: yl_maja
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: True #(defaults to True)
-    192.168.2.56:
-      name: yl_plafon1 #sypialnia JB
+    192.168.2.56: #yl plafon1
+      name: yl_plafon1
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: True #(defaults to True)
-    192.168.2.57:
+    192.168.2.57: #yl plafon2
       name: yl_plafon2
       transition: 1000
       save_on_change: True
-    192.168.2.58:
+    192.168.2.58: #yl wc
       name: yl_wc
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
-    192.168.2.59:
+    192.168.2.59: #yl korytarz
       name: yl_korytarz
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
 light:
-  - platform: group
-    name: Lampa w salonie
+  - name: Lampa w salonie
+    platform: group
     entities:
     - light.yl1
     - light.yl2
     - light.yl3
-  - platform: group
-    name: Plafon
+  - name: Plafon
+    platform: group
     entities:
     - light.yl_plafon1
     - light.yl_plafon2
 automation:
-  - alias: au_tryb_spania
+  - alias: tryb_spania
     trigger:
     - platform: time
       at: "19:50:00"
@@ -160,11 +160,18 @@ automation:
     - platform: state
       entity_id: binary_sensor.drzwi_wc_contact
       to: "on"
+    # condition:
+    # - condition: state
+      # entity_id: binary_sensor.drzwi_wc_contact
+      # state: "on"
     action:
     - choose:
       - conditions:
         - condition: and
           conditions:
+          # - condition: state
+            # entity_id: binary_sensor.drzwi_wc_contact
+            # state: "on"
           - condition: state
             entity_id: input_boolean.tryb_spania
             state: "off"
@@ -172,57 +179,67 @@ automation:
             after: "07:00:00"
             before: "22:59:00"
         sequence:
-        - service: scene.turn_on
-          entity_id: scene.wc_tryb_normalny
-        - delay: "00:03:00"
-        - service: light.turn_off
-          entity_id: light.yl_wc
+          - service: scene.turn_on
+            entity_id: scene.wc_tryb_normalny
+          - delay: "00:03:00"
+          - service: light.turn_off
+            entity_id: light.yl_wc
       - conditions: 
         - condition: or
           conditions:
           - condition: and
             conditions:
+            # - condition: state
+              # entity_id: binary_sensor.drzwi_wc_contact
+              # state: "on"
             - condition: state
               entity_id: input_select.isl_pora_dnia
               state: "tryb_spania"
             - condition: state
               entity_id: light.yl_wc
               state: "off"
-          - condition: time
-            after: "23:00:00"
-            before: "06:59:00"
+          - condition: and
+            conditions:
+            # - condition: state
+              # entity_id: binary_sensor.drzwi_wc_contact
+              # state: "on"
+            - condition: time
+              after: "23:00:00"
+              before: "06:59:00"
         sequence:
         - service: scene.turn_on
           entity_id: scene.wc_tryb_red
         - delay: "00:03:00"
         - service: light.turn_off
           entity_id: light.yl_wc
-      default:
-      - service: light.turn_off
-        entity_id: light.yl_wc
-# korytarz
-  - alias: hw_light
+      # default:
+      # - service: light.turn_off
+        # entity_id: light.yl_wc
+  - alias: hw_light # korytarz
     mode: restart
     trigger:
     - platform: state
       entity_id: binary_sensor.ruch_korytarz_occupancy
-      to: "on"
+    condition:
+    - condition: state
+      entity_id: group.gr_who
+      state: "home"
     action:
     - choose:
       - conditions:
         - condition: and
           conditions:
           - condition: state
-            entity_id: group.gr_who
-            state: "home"
+            entity_id: binary_sensor.ruch_korytarz_occupancy
+            state: "on"
+          # - condition: state
+            # entity_id: group.gr_who
+            # state: "home"
           - condition: state
             entity_id: input_boolean.tryb_spania
             state: "off"
-          - condition: state
-            entity_id: light.yl_korytarz
-            state: "off"
           - condition: time
-            after: "08:00:00"
+            after: "07:00:00"
             before: "23:59:00"
         sequence:
         - service: scene.turn_on
@@ -231,21 +248,33 @@ automation:
         - condition: and
           conditions:
           - condition: state
-            entity_id: group.gr_who
-            state: "home"
+            entity_id: binary_sensor.ruch_korytarz_occupancy
+            state: "on"
+          # - condition: state
+            # entity_id: group.gr_who
+            # state: "home"
           - condition: state
             entity_id: input_select.isl_pora_dnia
             state: "tryb_spania"
-          - condition: state
-            entity_id: light.yl_korytarz
-            state: "off"
         sequence:
         - service: scene.turn_on
           entity_id: scene.hw_tryb_red
-      default:
-      - service: light.turn_off
-        entity_id: light.yl_korytarz
-  - alias: kt_light
+      - conditions:
+        - condition: and
+          conditions:
+          - condition: state
+            entity_id: binary_sensor.ruch_korytarz_occupancy
+            state: "off"
+          - condition: state
+            entity_id: light.yl_korytarz
+            state: "on"
+        sequence:
+        - service: light.turn_off
+          entity_id: light.yl_korytarz
+      # default:
+      # - service: light.turn_off
+        # entity_id: light.yl_korytarz
+  - alias: kt_light # kuchnia
     mode: restart
     trigger:
     - platform: state
@@ -296,9 +325,6 @@ automation:
           - condition: state
             entity_id: binary_sensor.ruch_kuchnia_occupancy
             state: "off"
-          - condition: state
-            entity_id: group.gr_who
-            state: "home"
           - condition: time
             after: "06:00:00"
             before: "23:00:00"
@@ -311,20 +337,12 @@ automation:
           - condition: state
             entity_id: binary_sensor.ruch_kuchnia_occupancy
             state: "off"
-          - condition: state
-            entity_id: light.ledy_w_kuchni
-            state: "off"
-          - condition: state
-            entity_id: group.gr_who
-            state: "home"
           - condition: time
             after: "23:01:00"
             before: "05:59:00"
         sequence:
         - service: light.turn_off
           entity_id: light.yl_plafon1
-  # jeśli nie ma ruchu w kuchni - wyłącz ledy
-
 script:
   kuchnia_poczatek_pracy:
     sequence:

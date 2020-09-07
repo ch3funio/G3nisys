@@ -4,8 +4,8 @@ homeassistant:
       friendly_name: "Gniazdko KODI"
       icon: mdi:kodi
 light:
-  - platform: mqtt
-    name: Ledy w kuchni
+  - name: Ledy w kuchni
+    platform: mqtt
     state_topic: "stat/sonoff/4/POWER"
     command_topic: "cmnd/sonoff/4/POWER"
     availability_topic: "tele/sonoff/4/LWT"
@@ -16,8 +16,8 @@ light:
     payload_available: "Online"
     payload_not_available: "Offline"
     retain: False
-  - platform: mqtt
-    name: Lampki na balkonie
+  - name: Lampki na balkonie
+    platform: mqtt
     state_topic: "stat/sonoff/5/POWER"
     command_topic: "cmnd/sonoff/5/POWER"
     availability_topic: "tele/sonoff/5/LWT"
@@ -28,8 +28,8 @@ light:
     payload_available: "Online"
     payload_not_available: "Offline"
     retain: False
-  - platform: mqtt
-    name: Choinka
+  - name: Choinka
+    platform: mqtt
     state_topic: "stat/sonoff/2/POWER"
     command_topic: "cmnd/sonoff/2/POWER"
     availability_topic: "tele/sonoff/2/LWT"
@@ -41,8 +41,8 @@ light:
     payload_not_available: "Offline"
     retain: False
 switch:
-  - platform: mqtt
-    name: Sonoff7
+  - name: Sonoff7
+    platform: mqtt
     state_topic: "stat/sonoff/7/POWER"
     command_topic: "cmnd/sonoff/7/POWER"
     availability_topic: "tele/sonoff/7/LWT"
@@ -53,22 +53,3 @@ switch:
     payload_available: "Online"
     payload_not_available: "Offline"
     retain: False
-automation:
-- alias: au_tryb_kinowy
-  trigger:
-  - platform: state
-    entity_id: input_boolean.tryb_kinowy
-    to: "on"
-  action:
-  - service: switch.turn_on
-    entity_id: switch.sonoff7
-- alias: au_tryb_kinowy_off
-  trigger:
-  - platform: state
-    entity_id: input_boolean.tryb_kinowy
-    to: "off"
-  action:
-  # - service: switch.turn_off
-    # entity_id: switch.sonoff7
-  - service: script.turn_on
-    entity_id: script.kodioff

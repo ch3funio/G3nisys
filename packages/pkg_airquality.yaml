@@ -116,13 +116,12 @@ sensor:
         {% elif states('sensor.balkon_pm2_5_stat') | float<=110 %}SŁABY
         {% elif states('sensor.balkon_pm2_5_stat') | float>110 %}KIEPSKI
         {%- endif %} ({{ states('sensor.balkon_pm2_5') }} µg/m³)
-
 input_boolean:
   alert_air:
     name: "Powiadamiaj o stanie powietrza"
     icon: mdi:air-filter
 automation:
-- id: au_alert_air
+- id: alert_air
   alias: "ALERT: Stan powietrza"
   initial_state: on
   trigger:
