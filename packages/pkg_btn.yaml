@@ -55,3 +55,32 @@ automation:
   action:
   - service: light.toggle
     entity_id: light.yl_bernard
+- alias: praca w kuchnia
+  trigger:
+  - platform: state
+    entity_id: input_boolean.tryb_praca_w_kuchni
+    to: "on"
+  action:
+  - service: notify.mobile_app_chef_xl
+    data:
+      message: 'Hej Chef!'
+  - service: script.run_scene
+    data:
+      t_config: '---'
+script:
+  kuchnia_poczatek_pracy:
+    sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.ledy_w_kuchni
+    - service: automation.turn_off
+      data:
+        entity_id: automation.kt_light
+    - service: notify.mobile_app_chef2xl
+      data:
+        message: 'Hej Chef!'
+  kuchnia_koniec_pracy:
+    sequence:
+    - service: automation.turn_on
+      data:
+        entity_id: automation.kt_light

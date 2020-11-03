@@ -27,6 +27,7 @@ tts:
 - platform: google_translate
   language: "pl"
   time_memory: 300
+automation:
 config:
 conversation:
 hassio:
@@ -34,10 +35,8 @@ mobile_app:
 sun:
 system_health:
 updater:
-uilogs:
 wake_on_lan:
-############# includy
-automation: !include_dir_merge_list automations/
+
 browser_mod: !include configi/browser_mod.yaml
 frontend: !include configi/frontend.yaml
 google_assistant: !include configi/google.yaml

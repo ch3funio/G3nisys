@@ -1,0 +1,40 @@
+# group:
+  # gr_notify:
+    # entities:
+# automation:
+# - id: alert_air
+  # alias: "Stan powietrza chf"
+  # initial_state: on
+  # trigger:
+  # - platform: numeric_state
+    # entity_id: sensor.balkon_pm10_stat
+    # above: 49
+    # for:
+      # minutes: 5
+  # - platform: numeric_state
+    # entity_id: sensor.balkon_pm2_5_stat
+    # above: 29
+    # for:
+      # minutes: 5
+  # - platform: numeric_state
+    # entity_id: sensor.balkon_pm10_stat
+    # below: 50
+    # for:
+      # minutes: 5
+  # - platform: numeric_state
+    # entity_id: sensor.balkon_pm2_5_stat
+    # below: 30
+    # for:
+      # minutes: 5
+  # action:
+    # service: notify.mobile_app_chef2XL
+    # data_template:
+      # title: "Stan powietrza"
+      # message: >
+        # {% if ((states('sensor.balkon_pm10_stat') | float<=25) and (states('sensor.balkon_pm2_5_stat') | float<=15)) %}IDEALNY, warto przewietrzyć mieszkanie
+        # {% elif ((states('sensor.balkon_pm10_stat') | float<=50) and (states('sensor.balkon_pm2_5_stat') | float<=30)) %}DOBRY, można przewietrzyć mieszkanie
+        # {% elif ((states('sensor.balkon_pm10_stat') | float<=90) and (states('sensor.balkon_pm2_5_stat') | float<=55)) %}ŚREDNI, lepiej zamknąć okna
+        # {% elif ((states('sensor.balkon_pm10_stat') | float<=180) and (states('sensor.balkon_pm2_5_stat') | float<=110)) %}SŁABY, zamknij okna
+        # {% elif ((states('sensor.balkon_pm10_stat') | float<=250) and (states('sensor.balkon_pm2_5_stat') | float>110)) %}KIEPSKI, zamykaj szybko okna!
+        # {% elif (states('sensor.balkon_pm10_stat') | float>250) %}MASAKRA, apokalipsa!
+        # {% else %}False{%- endif %}

@@ -1,5 +1,5 @@
-custom_header:
-  compact_mode: true
+# custom_header:
+  # compact_mode: true
 title: Home
 button_card_templates: !include configi/tmpl_button_card.yaml
 views:

@@ -1,0 +1,66 @@
+input_boolean:
+  tryb_spania:
+    name: Tryb spania
+    initial: off
+    icon: mdi:sleep
+  tryb_praca_w_kuchni:
+    name: Praca w kuchni
+    initial: off
+    icon: mdi:stove
+input_select:
+  my_scene:
+    name: my_scene
+    options:
+      - 'normalnie'
+      - 'czerwony'
+      - 'tryb_spania'
+      - 'day'
+      - 'dawn'
+      - 'dusk'
+      - 'night'
+      - 'none'
+automation:
+- id: pora_dnia
+  alias: pora_dnia
+  mode: restart
+  trigger:
+  - platform: state
+    entity_id: sensor.pora_dnia
+  - platform: state
+    entity_id: input_boolean.tryb_spania
+    to: "off"
+  - platform: homeassistant
+    event: start
+  action:
+  - condition: or
+    conditions:
+    - condition: template
+      value_template: "{{ is_state('input_boolean.tryb_spania', 'off') }}"
+    - condition: template
+      value_template: "{{ is_state('input_boolean.tryb_spania', 'on') and is_state('sensor.pora_dnia', 'dawn') }}"
+  - service: input_select.select_option
+    data_template:
+      entity_id: input_select.my_scene
+      option: "{{ states('sensor.pora_dnia') }}"
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.tryb_spania
+- id: scene_change #profile
+  alias: scene_change
+  initial_state: on
+  mode: restart
+  trigger:
+  - platform: state
+    entity_id: input_select.my_scene
+  - platform: homeassistant
+    event: start
+  action:
+  - service: script.run_scene
+    data:
+      t_config: >
+        {% set t_scenes = {
+        'normalnie': '-22221-----',
+        'tryb_spania': '-00030-33--',
+        'czerwony': '-000404--4-',
+        'none': '-----'
+        } %}
+        {{ t_scenes[states('input_select.my_scene')] if states('input_select.my_scene') in t_scenes.keys() else t_scenes['none'] }}

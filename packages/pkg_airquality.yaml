@@ -11,7 +11,7 @@ group:
     - sensor.balkon_pm2_5_level
     - sensor.balkon_pressure
     - input_boolean.alert_air
-    - automation.alert_stan_powietrza
+    - automation.stan_powietrza_chf
 scene:
 - name: air_idealny
   entities:
@@ -122,7 +122,7 @@ input_boolean:
     icon: mdi:air-filter
 automation:
 - id: alert_air
-  alias: "ALERT: Stan powietrza"
+  alias: "Stan powietrza chf"
   initial_state: on
   trigger:
   - platform: numeric_state

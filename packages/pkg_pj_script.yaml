@@ -1,0 +1,180 @@
+#################### documentation #############################################
+#
+#################### configuration
+#
+# t_entities - list of all the entities you want to control. remember - order
+#              will be important when sendig the bits with configuration,
+#              so think how to organize/sort the entities. I suggest that ones
+#              used the most should be put first, so when you'll want to turn on
+#              or off just them - you'll be able to omit the rest of config bits
+# t_profile - list of your light profiles. each profile has required parameters
+#             and those that are optional. there are different lights and bulbs,
+#             some of them gives better output when set with color_temp, some of
+#             them work better with rgb_color. there are also RGBW lights, that
+#             need the white_value parameter if you want to turn it all white.
+#             script covers them all - profile schema below:
+#             [A (int), B (int or array of int), C (string), D (string)]
+#             A = brightness [0-255]
+#             B = color, set with color_temp [1 number] or rgb_color [3 numbers]
+#             C = transition time prefixed with "T" [seconds], defaults to 1
+#             D = white_value setting prefixed with "W" [0-255] defaults to 0
+#             required values are: A and B.
+#             the easiest way to describe it is by examples:
+#             1) "50% brightness" = [128]
+#             2) "100% brightness with color_temp set to 342" = [255, 342]
+#             3) "50% brightness red light with rgb_color" = [255, [255, 0, 0]]
+#             4) same as 3) + 10 sec. transition = [255, [255, 0, 0], 'T10']
+#             5) "full white, white_value set to 100%, and 5 sec. transition" =
+#                [255, [255, 255, 255], 'T5', 'W255']
+#            IMPORTANT: first two profiles are kinda standard "turn off", and
+#            "turn on" being on positions - respectively 0 and 1, so I strongly
+#            suggest to leave the first two just as they are - [0] and [255].
+# t_volume - list of volume profiles - those are used for media_player entities
+#            and by default are in 0-1 range, so any number you'll enter in the
+#            profile, would be divided by 100 to recalculate (0-100 int)
+# d_volume - default, failsafe volume (0-1 float)
+# t_config - argument given at the start of script, containing all (or just the
+#            first) bits of scene configuration. each bit (place in config)
+#            represents one entity in the same order that they are listed in the
+#            t_entities variable. value of 0 means "turn off", 1 means "turn on"
+#            a dash (-) means "do not change", and other values 0-9 and A-Z are
+#            for choosing light or volume profiles
+#
+#################### info
+#
+# script will evaluate all configuration bits, and will take some actions based
+# on entity and bit value. configuration bits are using numbers with base of 36.
+# that means, you can use numbers from 0 to 9, and letters from A to Z, to
+# represent states of your entities.
+#
+# most entities will be fine with just two states: 0 and 1 being "turn off" and
+# "turn on", but with all the RGB lighting at home, you can have up to 36
+# different light colors, temperatures, brightness' etc. configured and then you
+# can call them easily with number or letter.
+#
+# although order of the configuration bits must be corelated with entities order
+# given in t_entities variable, you can omit a part of the config - for example:
+# first 5 entities are lights in the living room, next 20 entities are not so
+# important - they could be anything. you can send only 5 bits of config to the
+# script, if you want to control all the living room lights - and then script
+# will stop. but because script uses bits order to control entities, if you want
+# to control those 20 next entities but not 5 living room lights - you will need
+# to give all 25 bits of config.
+#
+# if the entity is media player, and it is about to have it's volume changed,
+# script first checks if it is playing something. volume changes only if there's
+# no active playback. but if the scene is going to turn media player off - it
+# will, no matter what.
+#
+#################### running the script
+#
+# easy, similar as other scripts:
+# - service: script.run_scene
+#   data:
+#     t_config: 'STRING-WITH-CONFIGURATION-BITS'
+#
+# example:
+# - service: script.run_scene
+#   data:
+#     t_config: '--3-20-GH---'
+#
+#################### some more detailed examples
+#
+# based on example entities and profiles configured in the script:
+# 1. turn on kitchen light, turn off bathroom light, leave rgb_bulb intact, and
+#    turn xmas tree off, with no changes to party mode and media player:
+#    t_config: '10-0'
+# 2. turn all off:
+#    t_config: '000000'
+# 3. leave kitchen & bathroom intact, turn on rgb_bulb full white (last profile
+#    = [255,[255,255,255],'W255']), turn off xmas tree, turn on party mode and
+#    set media player to 50% (4th profile):
+#    t_config: '--5013'
+# ...and so on.
+#
+#################### important notes
+#
+# profiles are numbered from 0, so to choose first one, enter 0; to choose third
+# enter 2; to choose profile number 10 enter A, profile 16th enter G; etc.
+#
+# you can have as many entities as you want. script just checks all config bits
+# and as long as number of configuration bits is less or equal than number of
+# entities - all will work fine ;)
+#
+# you can use any entity you want - it is only important that it uses services
+# turn_on and turn_off - the rest is done automatically
+#
+#################### companion entity and automation
+#
+# not needed for script to run, but I included it as another example of using
+# the script and also to show how it is possible to manage scenes now - with
+# ease and all based in one place. (example automation has "example 2" set as
+# the default scene for failsafe configuration)
+#
+################################################################################
+ 
+script:
+  run_scene:
+    alias: run_scene
+    icon: "mdi:checkbox-multiple-marked-outline"
+    description: "scene switcher with n-bit configuration"
+    variables:
+      t_entities: ['light.ledy_w_kuchni', 'light.yl1', 'light.yl2', 'light.yl3', 'light.yl_plafon1', 'light.yl_plafon2', 'light.yl_korytarz', 'light.yl_bernard', 'light.yl_maja', 'light.yl_wc', 'light.lampki_na_balkonie', 'media_player.big_screen', 'media_player.little_screen', 'media_player.boogy', 'media_player.googy', 'media_player.tic', 'media_player.lg_tv']
+      t_profile: [[0], [255,T1], [230,288,T1], [10,[255,190,0],T1], [1,[255,0,0],T1]]
+      t_volume: [0, 5, 25, 50, 100]
+      d_volume: 0.25
+    fields:
+      t_config:
+        description: "scene configuration bits"
+        example: "0-0110--3330------0-0000111333130000--"
+    mode: restart
+    sequence:
+    #################### loopy loop
+    - repeat:
+        while: "{{ repeat.index <= t_config|length if t_config|length <= t_entities|length else t_entities|length }}"
+        sequence:
+        - variables:
+            t_bit: "{{ t_config[repeat.index-1]|int(base=36) }}"
+        - condition: template
+          value_template: "{{ (t_config|length > 0) and (t_config[repeat.index-1] != '-') }}"
+        - choose:
+          #################### media_players - change volume
+          - conditions: "{{ t_entities[repeat.index-1].split('.')[0] == 'media_player' and t_bit|int > 0 and not is_state(t_entities[repeat.index-1],'playing') }}"
+            sequence:
+            - service_template: media_player.volume_set
+              data:
+                entity_id: "{{ t_entities[repeat.index-1] }}"
+                volume_level: "{{ t_volume[t_config[repeat.index-1]|int]/100 if t_config[repeat.index-1]|int < t_volume|length else d_volume }}"
+          #################### media_players - don't break anything
+          - conditions: "{{ t_entities[repeat.index-1].split('.')[0] == 'media_player' and t_bit|int > 0 and is_state(t_entities[repeat.index-1], 'playing') }}"
+            sequence:
+            - delay:
+                miliseconds: 5
+          #################### turn on lights - with color_temp
+          - conditions: "{{ t_entities[repeat.index-1].split('.')[0] == 'light' and t_bit|int > 1 and t_profile[t_bit|int]|length > 1 and t_profile[t_bit|int][1][0] is not defined }}"
+            sequence:
+            - service_template: light.turn_on
+              data:
+                entity_id: "{{ t_entities[repeat.index-1] }}"
+                brightness: "{{ t_profile[t_bit|int][0] }}"
+                color_temp: "{{ t_profile[t_bit|int][1] }}"
+                transition: "{{ t_profile[t_bit|int][2]|regex_replace('T', '')|int if (t_profile[t_bit|int][2] is defined and t_profile[t_bit|int][2][0] == 'T') else 1 }}"
+                white_value: "{{ t_profile[t_bit|int][2]|regex_replace('W','')|int if (t_profile[t_bit|int][2] is defined and t_profile[t_bit|int][2][0] == 'W') else t_profile[t_bit|int][3]|regex_replace('W','')|int if (t_profile[t_bit|int][3] is defined and t_profile[t_bit|int][3][0] == 'W') else 0 }}"
+          #################### turn on lights - with rgb_color
+          - conditions: "{{ t_entities[repeat.index-1].split('.')[0] == 'light' and t_bit|int > 1 and t_profile[t_bit|int]|length > 1 and t_profile[t_bit|int][1][0] is defined }}"
+            sequence:
+            - service_template: light.turn_on
+              data_template:
+                entity_id: "{{ t_entities[repeat.index-1] }}"
+                brightness: "{{ t_profile[t_bit|int][0] }}"
+                rgb_color:
+                  - '{{ t_profile[t_bit|int][1][0]|int }}'
+                  - '{{ t_profile[t_bit|int][1][1]|int }}'
+                  - '{{ t_profile[t_bit|int][1][2]|int }}'
+                transition: "{{ t_profile[t_bit|int][2]|regex_replace('T', '')|int if (t_profile[t_bit|int][2] is defined and t_profile[t_bit|int][2][0] == 'T') else 1 }}"
+                white_value: "{{ t_profile[t_bit|int][2]|regex_replace('W','')|int if (t_profile[t_bit|int][2] is defined and t_profile[t_bit|int][2][0] == 'W') else t_profile[t_bit|int][3]|regex_replace('W','')|int if (t_profile[t_bit|int][3] is defined and t_profile[t_bit|int][3][0] == 'W') else 0 }}"
+          #################### turn the rest on or off
+          default:
+          - service_template: "{{ t_entities[repeat.index-1].split('.')[0] }}.{{ 'turn_on' if (t_config[repeat.index-1]|int == 1 and not is_state(t_entities[repeat.index-1],'playing')) else 'turn_off' }}"
+            data:
+              entity_id: "{{ t_entities[repeat.index-1] }}"

@@ -49,6 +49,15 @@ cards:
       entity: light.ledy_w_kuchni
       template: swiatla
       icon: mdi:kettle-outline
+      style: |
+        ha-card {
+          border: 
+            {% if is_state('binary_sensor.ruch_kuchnia_occupancy', 'on') %}
+              rgb(255, 217, 128) solid 5px !important;
+            {% else %}
+              none;
+            {% endif %}
+        }
     - name: Salon
       type: "custom:button-card" ##### światło główne w salonie
       entity: light.lampa_w_salonie
@@ -101,24 +110,67 @@ cards:
               entity: light.yl_plafon2
               template: sceny
             - type: "custom:button-card"
-              entity: scene.plafon_tryb_normalny
+              name: tryb normalny
+              show_name: true
               tap_action:
                 action: call-service
-                service: scene.turn_on
+                service: script.run_scene
                 service_data:
-                  entity_id: scene.plafon_tryb_normalny
+                  t_config: '----22'
             - type: "custom:button-card"
-              entity: scene.plafon_tryb_red
+              name: tryb spanie
+              show_name: true
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '----30'
+            - type: "custom:button-card"
+              name: tryb czerwony
+              show_name: true
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '----40'
+    - name: Korytarz
+      type: "custom:button-card" 
+      entity: light.yl_korytarz
+      icon: mdi:shoe-print
+      template: swiatla #border: ; w razie ruchuu 
+      style: |
+        ha-card {
+          border: 
+            {% if is_state('binary_sensor.ruch_korytarz_occupancy', 'on') %}
+              rgb(255, 217, 128) solid 5px !important;
+            {% else %}
+              none;
+            {% endif %}
+        }
+      hold_action: 
+        action: call-service
+        service: browser_mod.popup
+        service_data:
+          deviceID: this
+          title: Korytarz
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              entity: scene.hw_tryb_red
               tap_action:
                 action: call-service
                 service: scene.turn_on
                 service_data:
-                  entity_id: plafon_tryb_red
-    - name: Lampki na balkonie
-      type: "custom:button-card" 
-      entity: light.lampki_na_balkonie
-      template: swiatla
-      icon: mdi:string-lights #bha:light-string
+                  entity_id: scene.hw_tryb_red
+            - type: "custom:button-card"
+              entity: scene.hw_tryb_normalny
+              tap_action:
+                action: call-service
+                service: scene.turn_on
+                service_data:
+                  entity_id: scene.hw_tryb_normalny
+    
   - type: horizontal-stack
     cards: 
     - name: BB
@@ -207,34 +259,11 @@ cards:
                 service: scene.turn_on
                 service_data:
                   entity_id: scene.wc_tryb_normalny
-    - name: Korytarz
+    - name: Lampki na balkonie
       type: "custom:button-card" 
-      entity: light.yl_korytarz
-      icon: mdi:shoe-print
+      entity: light.lampki_na_balkonie
       template: swiatla
-      hold_action: 
-        action: call-service
-        service: browser_mod.popup
-        service_data:
-          deviceID: this
-          title: Korytarz
-          card:
-            type: horizontal-stack
-            cards:
-            - type: "custom:button-card"
-              entity: scene.hw_tryb_red
-              tap_action:
-                action: call-service
-                service: scene.turn_on
-                service_data:
-                  entity_id: scene.hw_tryb_red
-            - type: "custom:button-card"
-              entity: scene.hw_tryb_normalny
-              tap_action:
-                action: call-service
-                service: scene.turn_on
-                service_data:
-                  entity_id: scene.hw_tryb_normalny
+      icon: mdi:string-lights #bha:light-string
   - type: entity-filter #media_player
     show_empty: false
     state_filter:

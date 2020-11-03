@@ -11,8 +11,8 @@ cards:
 
 - type: horizontal-stack
   cards: !include card_lokalizacja.yaml
-- type: horizontal-stack
-  cards: !include card_porydnia.yaml
+# - type: horizontal-stack
+  # cards: !include card_porydnia.yaml
 ################################################################
 ################################################################ automatyzacje pory dnia i trybów
 ################################################################
@@ -22,10 +22,8 @@ cards:
   entities:
   - sensor.pora_dnia
   - sun.sun
-  - input_select.isl_pora_dnia
+  - input_select.my_scene
   - input_boolean.tryb_spania
-  - input_boolean.tryb_kinowy
-  - input_boolean.tryb_xbox
   - input_boolean.tryb_praca_w_kuchni
   - switch.sonoff7
   ################################################################
@@ -44,16 +42,38 @@ cards:
     type: glance
   filter:
     include:
-      - domain: media_player
+    - domain: media_player
 - type: custom:auto-entities
   card:
     type: glance
   filter:
     include:
-      - domain: sensor
+    - domain: binary_sensor
 - type: custom:auto-entities
   card:
     type: glance
   filter:
     include:
-      - domain: binary_sensor
+    - entity_id: "*battery"
+- type: custom:auto-entities
+  card:
+    type: glance
+  filter:
+    include:
+    - entity_id: "*balkon*"
+- type: custom:auto-entities
+  card:
+    type: glance
+  filter:
+    include:
+    - entity_id: "*linkquality"
+- type: custom:auto-entities
+  card:
+    type: glance
+  filter:
+    include:
+    - domain: sensor
+    exclude:
+    - entity_id: "*linkquality"
+    - entity_id: "*balkon*"
+    - entity_id: "*battery"

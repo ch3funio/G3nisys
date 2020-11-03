@@ -2,14 +2,8 @@
   style: &round_card_force |
     ha-card {
       border-radius: 0px !important;
-      background-color: none; #var(--card-background-color);
+      background-color: none;
       box-shadow: none;
-        # {% if is_state('sun.sun', 'below_horizon') %}
-          # 0px 0px 5px 1px rgba(0,0,0,0.25);
-        # {% else %}
-          # 0px 0px 5px 1px rgba(0,0,0,0.25);
-        # {% endif %}
-      # }
     ha-card div.card-content {
       padding-top: 2px !important;
       padding-left: 0 !important;

@@ -12,6 +12,9 @@ icon_daytime:
     - color: var(--state-icon-color)
 
 ############
+      # styles:
+        # - border: >
+          # [[[ if(states['binary_sensor.ruch_korytarz_occupancy'].state == 'on') return "#ffd980 solid 5px"; return "none" ]]]
 
 guzik:
   tap_action: 
@@ -31,7 +34,7 @@ swiatla:
       icon:
       - color: "#ffffff"
       card:
-      - box-shadow: 0px 0px 0px 0px
+      # - box-shadow: 0px 0px 0px 0px
       - background: "#393939"
       - border-radius: 50%
   - value: "on"
@@ -39,8 +42,9 @@ swiatla:
       icon:
       - color: var(--button-card-light-color)
       card:
-      - background: none #"#ffffff"
+      - background: none #"#ffffff" #ffd980 solid 5px
       - box-shadow: none #"2px 2px 2px 0px #dddddd"
+      - border-radius: 50%
 sceny_browser_mod:
   template: guzik
   show_state: false
