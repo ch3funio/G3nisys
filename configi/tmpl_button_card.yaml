@@ -2,20 +2,14 @@
 icon_daytime:
   show_name: false
   tap_action:
-    action: call-service
-    entity: input_select.isl_pora_dnia
-    service: input_select.select_option
-    service_data:
-      entity_id: input_select.isl_pora_dnia
+    action: none
+  #   entity: input_select.my_scene
+  #   service: input_select.select_option
+  #   service_data:
+  #     entity_id: input_select.my_scene
   styles:
     icon:
     - color: var(--state-icon-color)
-
-############
-      # styles:
-        # - border: >
-          # [[[ if(states['binary_sensor.ruch_korytarz_occupancy'].state == 'on') return "#ffd980 solid 5px"; return "none" ]]]
-
 guzik:
   tap_action: 
     action: toggle
@@ -45,6 +39,30 @@ swiatla:
       - background: none #"#ffffff" #ffd980 solid 5px
       - box-shadow: none #"2px 2px 2px 0px #dddddd"
       - border-radius: 50%
+sceny_hold:
+  template: guzik
+  show_state: false
+  show_name: true
+  color_type: card
+  color: auto
+  aspect_ratio: 1/1
+  # styles:
+  # - value: "off"
+  #   styles:
+  #     icon:
+  #     - color: "#ffffff"
+  #     card:
+  #     # - box-shadow: 0px 0px 0px 0px
+  #     - background: "#393939"
+  #     - border-radius: 50%
+  # - value: "on"
+  #   styles:
+  #     icon:
+  #     - color: var(--button-card-light-color)
+  #     card:
+  #     - background: none #"#ffffff" #ffd980 solid 5px
+  #     - box-shadow: none #"2px 2px 2px 0px #dddddd"
+  #     - border-radius: 50%
 sceny_browser_mod:
   template: guzik
   show_state: false
@@ -255,39 +273,3 @@ mokry:
   styles:
     card: 
     - background: "#44739e"
-# klimat_w_domu:
-  # styles:
-    # card:
-    # - background-color: 'white'
-    # - border-radius: 5%
-    # - padding: 2px
-    # - font-size: 0.8em
-    # grid:
-    # - grid-template-areas: '"n n" "temp temp" "humi humi"'
-    # - grid-template-columns: 40% 60%
-    # - grid-template-rows: 1fr 1fr 1fr
-    # - grid-gap: 1px
-    # name:
-    # - font-weight: bold
-    # - font-size: 1.2em
-    # - color: var(--secondary-text-color)
-    # - align-self: center
-    # - align-self: center
-    # - justify-self: center
-    # - padding-bottom: 4px
-    # icon:
-    # - color: var(--state-icon-color)
-    # custom_fields:
-      # humi:
-      # - align-self: start
-      # - justify-self: start
-      # temp:
-      # - align-self: start
-      # - justify-self: start
-  # custom_fields:
-    # temp: >
-      # [[[ 
-        # var tempt = `${entity.state}`; 
-        # if (isNaN(tempt)) tempt = '?'; 
-        # return `<ha-icon icon="mdi:thermometer" style="color: var(--state-icon-color); width: 1.5em;"></ha-icon> <span>` + tempt + `°C</span>`; 
-      # ]]]

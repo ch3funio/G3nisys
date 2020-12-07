@@ -4,7 +4,6 @@ homeassistant:
   longitude: !secret gps_home_lon
   elevation: 95
   unit_system: metric
-  temperature_unit: C
   time_zone: Europe/Warsaw
   packages: !include_dir_named packages/
   external_url: !secret external_url
@@ -27,7 +26,7 @@ tts:
 - platform: google_translate
   language: "pl"
   time_memory: 300
-automation:
+automation: 
 config:
 conversation:
 hassio:
@@ -50,4 +49,5 @@ panel_iframe: !include configi/iframe.yaml
 recorder: !include configi/recorder.yaml
 script: !include_dir_merge_named scripts/
 sensor: !include configi/sensors.yaml
+websocket_api:
 zone: !include configi/zones.yaml

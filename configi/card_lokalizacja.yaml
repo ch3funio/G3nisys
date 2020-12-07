@@ -45,5 +45,14 @@
     show_empty: false
     state_filter:
     - "na Turkusowej"
+    - "home"
     entities: 
     - entity: person.tata
+      style: |
+        state-badge {
+        {%- if is_state('person.tata', 'na Turkusowej') %}
+        border: solid #30d5c8 2px;
+        {%- elif is_state('person.tata', 'home') %}
+        border: solid red 1px;
+        {% endif %}
+        }

@@ -74,21 +74,37 @@ cards:
             cards:
             - type: "custom:button-card"
               entity: light.yl1
-              template: sceny_browser_mod
+              template: sceny
             - type: "custom:button-card"
               entity: light.yl2
-              template: sceny_browser_mod
+              template: sceny
             - type: "custom:button-card"
               entity: light.yl3
-              template: sceny_browser_mod
+              template: sceny
             - type: "custom:button-card"
-              entity: scene.sl_tryb_normalny
-              template: sceny_browser_mod
+              name: "Normalny"
+              template: sceny_hold
               tap_action:
                 action: call-service
-                service: scene.turn_on
-                service_data: 
-                  entity_id: scene.sl_tryb_normalny
+                service: script.run_scene
+                service_data:
+                  t_config: '-222'
+            - type: "custom:button-card"
+              name: Spanie
+              template: sceny_hold
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '-300'
+            - type: "custom:button-card"
+              name: "Czerwony"
+              template: sceny_hold
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '-400'
     - name: Plafon
       type: "custom:button-card" ##### plafon w salonie
       template: swiatla
@@ -110,24 +126,24 @@ cards:
               entity: light.yl_plafon2
               template: sceny
             - type: "custom:button-card"
-              name: tryb normalny
-              show_name: true
+              name: "Normalny"
+              template: sceny_hold
               tap_action:
                 action: call-service
                 service: script.run_scene
                 service_data:
                   t_config: '----22'
             - type: "custom:button-card"
-              name: tryb spanie
-              show_name: true
+              name: "Spanie"
+              template: sceny_hold
               tap_action:
                 action: call-service
                 service: script.run_scene
                 service_data:
                   t_config: '----30'
             - type: "custom:button-card"
-              name: tryb czerwony
-              show_name: true
+              name: "Czerwony"
+              template: sceny_hold
               tap_action:
                 action: call-service
                 service: script.run_scene
@@ -157,20 +173,29 @@ cards:
             type: horizontal-stack
             cards:
             - type: "custom:button-card"
-              entity: scene.hw_tryb_red
+              name: "Normalny"
+              template: sceny_hold
               tap_action:
                 action: call-service
-                service: scene.turn_on
+                service: script.run_scene
                 service_data:
-                  entity_id: scene.hw_tryb_red
+                  t_config: '------2'
             - type: "custom:button-card"
-              entity: scene.hw_tryb_normalny
+              name: "Spanie"
+              template: sceny_hold
               tap_action:
                 action: call-service
-                service: scene.turn_on
+                service: script.run_scene
                 service_data:
-                  entity_id: scene.hw_tryb_normalny
-    
+                  t_config: '------3'
+            - type: "custom:button-card"
+              name: "Czerwony"
+              template: sceny_hold
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '------4'    
   - type: horizontal-stack
     cards: 
     - name: BB
@@ -189,19 +214,29 @@ cards:
             type: horizontal-stack
             cards:
             - type: "custom:button-card"
-              entity: scene.bb_tryb_normalny
+              name: "Normalny"
+              template: sceny_hold
               tap_action:
                 action: call-service
-                service: scene.turn_on
-                service_data: 
-                  entity_id: scene.bb_tryb_normalny
+                service: script.run_scene
+                service_data:
+                  t_config: '-------2'
             - type: "custom:button-card"
-              entity: scene.bb_tryb_spania
+              name: "Spanie"
+              template: sceny_hold
               tap_action:
                 action: call-service
-                service: scene.turn_on
-                service_data: 
-                  entity_id: scene.bb_tryb_spania
+                service: script.run_scene
+                service_data:
+                  t_config: '-------3'
+            - type: "custom:button-card"
+              name: "Czerwony"
+              template: sceny_hold
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '-------4'
     - name: Maja
       type: "custom:button-card" ##### światło u Mai
       entity: light.yl_maja
@@ -215,19 +250,29 @@ cards:
             type: horizontal-stack
             cards:
             - type: "custom:button-card"
-              entity: scene.mb_tryb_normalny
+              name: "Normalny"
+              template: sceny_hold
               tap_action:
                 action: call-service
-                service: scene.turn_on
-                service_data: 
-                  entity_id: scene.mb_tryb_normalny
+                service: script.run_scene
+                service_data:
+                  t_config: '--------2'
             - type: "custom:button-card"
-              entity: scene.mb_tryb_spania
+              name: "Spanie"
+              template: sceny_hold
               tap_action:
                 action: call-service
-                service: scene.turn_on
-                service_data: 
-                  entity_id: scene.mb_tryb_spania
+                service: script.run_scene
+                service_data:
+                  t_config: '--------3'
+            - type: "custom:button-card"
+              name: "Czerwony"
+              template: sceny_hold
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '--------4'
       template: swiatla
       show_entity_picture: true
       icon: mdi:alpha-m-circle-outline #custom:bee
@@ -235,6 +280,15 @@ cards:
       type: "custom:button-card" 
       entity: light.yl_wc
       template: swiatla
+      style: |
+        ha-card {
+          border: 
+            {% if is_state('binary_sensor.drzwi_wc_contact', 'on') %}
+              rgb(255, 217, 128) solid 5px !important;
+            {% else %}
+              none;
+            {% endif %}
+        }
       icon: mdi:human-male-female
       hold_action: 
         action: call-service
@@ -246,24 +300,43 @@ cards:
             type: horizontal-stack
             cards:
             - type: "custom:button-card"
-              entity: scene.wc_tryb_red
+              template: sceny_hold
+              name: "Normalny"
               tap_action:
                 action: call-service
-                service: scene.turn_on
+                service: script.run_scene
                 service_data:
-                  entity_id: scene.wc_tryb_red
+                  t_config: '---------2'
             - type: "custom:button-card"
-              entity: scene.wc_tryb_normalny
+              template: sceny_hold
+              name: "Spanie"
               tap_action:
                 action: call-service
-                service: scene.turn_on
+                service: script.run_scene
                 service_data:
-                  entity_id: scene.wc_tryb_normalny
+                  t_config: '---------3'
+            - type: "custom:button-card"
+              name: "Czerwony"
+              template: sceny_hold
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '---------4'
     - name: Lampki na balkonie
       type: "custom:button-card" 
       entity: light.lampki_na_balkonie
       template: swiatla
       icon: mdi:string-lights #bha:light-string
+      style: |
+        ha-card {
+          border: 
+            {% if is_state('binary_sensor.drzwi_balkon_contact', 'on') %}
+              rgb(255, 217, 128) solid 5px !important;
+            {% else %}
+              none;
+            {% endif %}
+        }
   - type: entity-filter #media_player
     show_empty: false
     state_filter:
@@ -294,12 +367,12 @@ cards:
     - name: Tryb Kinowy
       type: "custom:button-card"
       template: sceny
-      entity: input_boolean.tryb_kinowy
+      entity: switch.sonoff7
       tap_action: 
         action: call-service
-        service: input_boolean.toggle
+        service: switch.toggle
         service_data:
-          entity_id: input_boolean.tryb_kinowy
+          entity_id: switch.sonoff7
       icon: "mdi:theater"
     - name: Tryb Gry
       entity: input_boolean.tryb_xbox

@@ -20,79 +20,39 @@ homeassistant:
     light.yl_korytarz:
       friendly_name: "Korytarz"
       icon: mdi:shoe-print
-################################ SCENY ################
-### Bernard
-    scene.bb_tryb_spania:
-      friendly_name: "Bernard - tryb spania"
-      icon: mdi:bed
-    scene.bb_tryb_normalny:
-      friendly_name: "Bernard - tryb normalny"
-      icon: mdi:ceiling-light
-### Maja
-    scene.mb_tryb_spania:
-      friendly_name: "Maja - tryb spania"
-      icon: mdi:bed
-    scene.mb_tryb_normalny:
-      friendly_name: "Maja - tryb normalny"
-      icon: mdi:ceiling-light
-### SALON
-    scene.sl_tryb_normalny: #salon
-      friendly_name: "Salon - tryb normalny"
-      icon: mdi:ceiling-light
-    scene.plafon_tryb_normalny:
-      friendly_name: "Plafon - tryb normalny"
-      icon: mdi:ceiling-light
-    scene.plafon_tryb_red:
-      friendly_name: "Plafon - tryb nocny"
-      icon: mdi:bed
-### Korytarz Hallway
-    scene.hw_tryb_normalny:
-      friendly_name: "Korytarz - tryb normalny"
-      icon: mdi:ceiling-light
-    scene.hw_tryb_red:
-      friendly_name: "Korytarz - tryb nocny"
-      icon: mdi:bed
-### KUCHNIA
-### WC
-    scene.wc_tryb_normalny:
-      friendly_name: "WC - tryb normalny"
-      icon: mdi:ceiling-light
-    scene.wc_tryb_red:
-      friendly_name: "WC - tryb noc"
-      icon: mdi:bed
 
 yeelight:
   devices:
     192.168.2.51: #yl1 salon
       name: yl1
       transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: True #(defaults to True)
+      use_music_mode: False
+      save_on_change: True
     192.168.2.52: #yl2 salon
       name: yl2
       transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: True #(defaults to True)
+      use_music_mode: False
+      save_on_change: True
     192.168.2.53: #yl3 salon
       name: yl3
       transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: True #(defaults to True)
+      use_music_mode: False
+      save_on_change: True
     192.168.2.54: #Bernard
       name: yl_bernard
       transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: True #(defaults to True)
+      use_music_mode: False
+      save_on_change: True
     192.168.2.55: #Maja
       name: yl_maja
       transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: True #(defaults to True)
+      use_music_mode: False
+      save_on_change: True
     192.168.2.56: #yl plafon1
       name: yl_plafon1
       transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: True #(defaults to True)
+      use_music_mode: False
+      save_on_change: True
     192.168.2.57: #yl plafon2
       name: yl_plafon2
       transition: 1000
@@ -100,13 +60,13 @@ yeelight:
     192.168.2.58: #yl wc
       name: yl_wc
       transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: False #(defaults to True)
+      use_music_mode: False
+      save_on_change: False
     192.168.2.59: #yl korytarz
       name: yl_korytarz
       transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: False #(defaults to True)
+      use_music_mode: False
+      save_on_change: False
 light:
 - name: Lampa w salonie
   platform: group
@@ -120,112 +80,64 @@ light:
   - light.yl_plafon1
   - light.yl_plafon2
 automation:
-- alias: tryb_spania
-  trigger:
-  - platform: time
-    at: "19:40:00"
-  - platform: state
-    entity_id: input_boolean.tryb_spania
-    to: "on"
-  action:
-  - condition: or
-    conditions:
-    - condition: and
-      conditions:
-      - condition: template
-        value_template: "{{ is_state('group.gr_who', 'home') and is_state('input_boolean.tryb_spania', 'off') }}"
-      - condition: time
-        before: "19:51:00"
-    - condition: template
-      value_template: "{{ is_state('group.gr_who', 'home') and is_state('input_boolean.tryb_spania', 'on') }}"
-  - service: input_select.select_option
-    data:
-      entity_id: input_select.my_scene
-      option: tryb_spania
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.tryb_spania
 - alias: wc_light
   mode: restart
   trigger:
   - platform: state
     entity_id: binary_sensor.drzwi_wc_contact
     to: "on"
-  condition:
-  - condition: template
-    value_template: "{{ is_state('group.gr_who', 'home') }}"
   action:
   - choose:
     - conditions:
-      - condition: and
-        conditions:
-        - condition: state
-          entity_id: input_boolean.tryb_spania
-          state: "off"
-        - condition: time
-          after: "07:00:00"
-          before: "22:59:00"
+      - condition: template
+        value_template: "{{ is_state('group.gr_who', 'home') and is_state('input_boolean.tryb_spania', 'off') and states('sensor.nr_dnia') <= '4' }}"  ######and 22 >= now().hour >= 7
       sequence:
-        - service: scene.turn_on
-          entity_id: scene.wc_tryb_normalny
+        - service: script.run_scene
+          data:
+            t_config: '---------2'
         - delay: "00:03:00"
-        - service: light.turn_off
-          entity_id: light.yl_wc
+        - service: script.run_scene
+          data:
+            t_config: '---------0'
     - conditions: 
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: input_select.my_scene
-          state: "tryb_spania"
-        - condition: time
-          after: "23:00:00"
-          before: "06:59:00"
+      - condition: template
+        value_template: "{{ is_state('group.gr_who', 'home') and is_state('input_boolean.tryb_spania', 'on') or is_state('group.gr_who', 'home') and states('sensor.nr_dnia') > '4' }}"
       sequence:
       - service: script.run_scene
         data:
           t_config: '---------4'
       - delay: "00:03:00"
-      - service: light.turn_off
-        entity_id: light.yl_wc
-    # default:
-    # - service: light.turn_off
-      # entity_id: light.yl_wc
+      - service: script.run_scene
+        data:
+          t_config: '---------0'
 - alias: hw_light # korytarz
   mode: restart
   trigger:
   - platform: state
     entity_id: binary_sensor.ruch_korytarz_occupancy
-  condition:
-  - condition: template
-    value_template: "{{ is_state('group.gr_who', 'home') }}"
   action:
   - choose:
     - conditions:
-      - condition: and
-        conditions: 
-        - condition: template
-          value_template: "{{ is_state('binary_sensor.ruch_korytarz_occupancy', 'on') and is_state('input_boolean.tryb_spania', 'off') }}"
-        - condition: time
-          after: "07:00:00"
-          before: "23:59:00"
+      - condition: template
+        value_template: "{{ is_state('group.gr_who', 'home') and is_state('binary_sensor.ruch_korytarz_occupancy', 'on') and is_state('input_boolean.tryb_spania', 'off') and states('sensor.nr_dnia') <= '4' }}"
       sequence:
-      - service: scene.turn_on
-        entity_id: scene.hw_tryb_normalny
+      - service: script.run_scene
+        data:
+          t_config: '------2'
     - conditions:
       - condition: template
-        value_template: "{{ is_state('binary_sensor.ruch_korytarz_occupancy', 'on') and is_state('input_select.my_scene', 'tryb_spania') }}"
+        value_template: "{{ is_state('group.gr_who', 'home') and is_state('binary_sensor.ruch_korytarz_occupancy', 'on') and states('sensor.nr_dnia') > '4' }}"
       sequence:
       - service: script.run_scene
         data:
           t_config: '------4'
     - conditions:
       - condition: template
-        value_template: "{{ is_state('binary_sensor.ruch_korytarz_occupancy', 'off') and is_state('light.yl_korytarz', 'on') }}"
+        value_template: "{{ is_state('binary_sensor.ruch_korytarz_occupancy', 'off') }}"
       sequence:
-      - service: light.turn_off
-        entity_id: light.yl_korytarz
-    # default:
-    # - service: light.turn_off
-      # entity_id: light.yl_korytarz
+      - service: script.run_scene
+        data:
+          t_config: '------0'
 - alias: kt_light # kuchnia
   mode: restart
   trigger:
@@ -233,52 +145,49 @@ automation:
     entity_id: binary_sensor.ruch_kuchnia_occupancy
   action:
   - choose:
-## gdy na 'on'
-    - conditions: # do wieczora
-      - condition: and
-        conditions:
-        - condition: template
-          value_template: "{{ is_state('group.gr_who', 'home') and is_state('binary_sensor.ruch_kuchnia_occupancy', 'on') }}"
-        - condition: time
-          after: "07:00:00"
-          before: "23:00:00"
+    - conditions: # do wieczora ON
+      - condition: template
+        value_template: "{{ is_state('group.gr_who', 'home') and is_state('binary_sensor.ruch_kuchnia_occupancy', 'on') and states('sensor.nr_dnia') < '6' }}"
       sequence:
       - service: light.turn_on
         entity_id: light.ledy_w_kuchni
-    - conditions: # w nocy
-      - condition: and
-        conditions:
-        - condition: template
-          value_template: "{{ is_state('group.gr_who', 'home') and is_state('binary_sensor.ruch_kuchnia_occupancy', 'on') and is_state('light.ledy_w_kuchni', 'off') and is_state('light.yl_plafon1', 'off') }}"
-        - condition: time
-          after: "23:01:00"
-          before: "06:59:00"
+    - conditions: # do wieczora OFF
+      - condition: template
+        value_template: "{{ is_state('binary_sensor.ruch_kuchnia_occupancy', 'off') and states('sensor.nr_dnia') <= '6' }}"
+      sequence:
+      - service: light.turn_off
+        entity_id: light.ledy_w_kuchni
+    - conditions: # w nocy ON
+      - condition: template
+        value_template: "{{ is_state('group.gr_who', 'home') and is_state('binary_sensor.ruch_kuchnia_occupancy', 'on') and states('sensor.nr_dnia') >= '6' }}"
       sequence:
       - service: script.run_scene
         data:
           t_config: '----4-'
-## gdy na 'off'
-    - conditions: # do wieczora
-      - condition: and
-        conditions:
-        - condition: state
-          entity_id: binary_sensor.ruch_kuchnia_occupancy
-          state: "off"
-        - condition: time
-          after: "07:00:00"
-          before: "23:00:00"
+    - conditions: # w nocy OFF
+      - condition: template
+        value_template: "{{ is_state('binary_sensor.ruch_kuchnia_occupancy', 'off') and states('sensor.nr_dnia') >= '6' }}"
       sequence:
-      - service: light.turn_off
-        entity_id: light.ledy_w_kuchni
-    - conditions: # w nocy
-      - condition: and
-        conditions:
-        - condition: state
-          entity_id: binary_sensor.ruch_kuchnia_occupancy
-          state: "off"
-        - condition: time
-          after: "23:01:00"
-          before: "06:59:00"
-      sequence:
-      - service: light.turn_off
-        entity_id: light.yl_plafon1
+      - service: script.run_scene
+        data:
+          t_config: '----0-'
+- alias: budzik
+  trigger:
+  - platform: time
+    at: "06:53:00"
+  action:
+    - service: script.run_scene
+      data:
+        t_config: '-505'
+    - delay: "00:00:30"
+    - service: script.run_scene
+      data:
+        t_config: '-6-6'  
+    - delay: "00:00:30"
+    - service: script.run_scene
+      data:
+        t_config: '-7-7'
+    - delay: "00:03:00"
+    - service: script.run_scene
+      data:
+        t_config: '-0-0'

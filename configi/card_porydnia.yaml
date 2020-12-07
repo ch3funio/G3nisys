@@ -16,7 +16,7 @@
   card:
     type: horizontal-stack
     cards:
-    - name: "Świt" #dawn
+    - name: "Ranek"
       type: custom:button-card
       style: &roundstyle_slider |
         ha-card {
@@ -27,13 +27,13 @@
           padding-bottom: 2px !important;
         }
       template: icon_daytime
-      entity: input_select.isl_pora_dnia
-      tap_action:
-        service_data:
-          option: "dawn"
+      entity: sensor.nowa_pora
+      # tap_action:
+      #   service_data:
+      #     option: "ranek"
       icon: mdi:weather-sunset-up
       state:
-      - value: "dawn"
+      - value: "ranek"
         styles:
           icon:
           - color: var(--state-icon-active-color)
@@ -41,13 +41,13 @@
       type: custom:button-card
       style: *roundstyle_slider
       template: icon_daytime
-      entity: input_select.isl_pora_dnia
-      tap_action:
-        service_data:
-          option: "day"
+      entity: sensor.nowa_pora
+      # tap_action:
+      #   service_data:
+      #     option: "day"
       icon: mdi:weather-sunny
       state:
-      - value: "day"
+      - value: "dzień"
         styles:
           icon:
           - color: var(--state-icon-active-color)
@@ -55,75 +55,66 @@
       type: custom:button-card
       style: *roundstyle_slider
       template: icon_daytime
-      entity: input_select.isl_pora_dnia
-      tap_action:
-        service_data:
-          option: "dusk"
+      entity: sensor.nowa_pora
+      # tap_action:
+      #   service_data:
+      #     option: "zmierzch"
       icon: mdi:weather-sunset
       state:
-      - value: "dusk"
+      - value: "zmierzch"
         styles:
           icon:
           - color: var(--state-icon-active-color)
-    - name: "Noc" #night
+    - name: "wieczór" #night
       type: custom:button-card
       style: *roundstyle_slider
       template: icon_daytime
-      entity: input_select.isl_pora_dnia
-      tap_action:
-        service_data:
-          option: "night"
+      entity: sensor.nowa_pora
+      # tap_action:
+      #   service_data:
+      #     option: "wieczór"
       icon: mdi:weather-sunset-down
       state:
-      - value: "night"
+      - value: "wieczór"
         styles:
           icon:
           - color: var(--state-icon-active-color)
-    - name: "Tryb spania" #tryb_spania 
+    - name: "Tryb_spania" #tryb_spania 
       type: custom:button-card
       style: *roundstyle_slider
       template: icon_daytime
-      entity: input_select.isl_pora_dnia
-      tap_action:
-        service_data:
-          option: "tryb_spania"
+      entity: sensor.nowa_pora
       icon: mdi:sleep
       state:
       - value: "tryb_spania"
         styles:
           icon:
           - color: var(--state-icon-active-color)
-    - name: "Kino" #kino
-      type: custom:button-card
-      style: *roundstyle_slider
-      show_name: false
-      entity: input_boolean.tryb_kinowy
-      tap_action: 
-        action: call-service
-        service: input_boolean.toggle
-        service_data:
-          entity_id: input_boolean.tryb_kinowy
-      icon: mdi:theater
-      state:
-      - value: "on"
-        styles:
-          icon:
-          - color: var(--state-icon-active-color)
-      - value: "off"
-        styles:
-          icon:
-          - color: var(--state-icon-color)
-    - name: "Xbox" #xbox
+    - name: "Noc" 
       type: custom:button-card
       style: *roundstyle_slider
       template: icon_daytime
-      entity: input_select.isl_pora_dnia
-      tap_action:
-        service_data:
-          option: "xbox"
-      icon: mdi:microsoft-xbox
+      entity: sensor.nowa_pora
+      # tap_action:
+      #   service_data:
+      #     option: "noc"
+      icon: mdi:brightness-2
       state:
-      - value: "xbox"
+      - value: "noc"
+        styles:
+          icon:
+          - color: var(--state-icon-active-color)
+    - name: "Noc 2" #tryb_spania 
+      type: custom:button-card
+      style: *roundstyle_slider
+      template: icon_daytime
+      entity: sensor.nowa_pora
+      # tap_action:
+      #   service_data:
+      #     option: "noc 2"
+      icon: mdi:brightness-3
+      state:
+      - value: "noc 2"
         styles:
           icon:
           - color: var(--state-icon-active-color)
@@ -131,13 +122,13 @@
       type: custom:button-card
       style: *roundstyle_slider
       template: icon_daytime
-      entity: input_select.isl_pora_dnia
-      tap_action:
-        service_data:
-          option: "sen"
+      entity: sensor.nowa_pora
+      # tap_action:
+      #   service_data:
+      #     option: "sen"
       icon: mdi:weather-night
       state:
-      - value: "Sen"
+      - value: "sen"
         styles:
           icon:
           - color: var(--state-icon-active-color)

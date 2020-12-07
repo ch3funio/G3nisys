@@ -4,52 +4,52 @@ homeassistant:
       friendly_name: "Gniazdko KODI"
       icon: mdi:kodi
 light:
-  - name: Ledy w kuchni
-    platform: mqtt
-    state_topic: "stat/sonoff/4/POWER"
-    command_topic: "cmnd/sonoff/4/POWER"
-    availability_topic: "tele/sonoff/4/LWT"
-    optimistic: False
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    retain: False
-  - name: Lampki na balkonie
-    platform: mqtt
-    state_topic: "stat/sonoff/5/POWER"
-    command_topic: "cmnd/sonoff/5/POWER"
-    availability_topic: "tele/sonoff/5/LWT"
-    optimistic: False
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    retain: False
-  - name: Choinka
-    platform: mqtt
-    state_topic: "stat/sonoff/2/POWER"
-    command_topic: "cmnd/sonoff/2/POWER"
-    availability_topic: "tele/sonoff/2/LWT"
-    optimistic: False
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    retain: False
+- name: Ledy w kuchni
+  platform: mqtt
+  state_topic: "stat/sonoff/4/POWER"
+  command_topic: "cmnd/sonoff/4/POWER"
+  availability_topic: "tele/sonoff/4/LWT"
+  optimistic: False
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: False
+- name: Lampki na balkonie
+  platform: mqtt
+  state_topic: "stat/sonoff/5/POWER"
+  command_topic: "cmnd/sonoff/5/POWER"
+  availability_topic: "tele/sonoff/5/LWT"
+  optimistic: False
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: False
+- name: Choinka
+  platform: mqtt
+  state_topic: "stat/sonoff/2/POWER"
+  command_topic: "cmnd/sonoff/2/POWER"
+  availability_topic: "tele/sonoff/2/LWT"
+  optimistic: False
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: False
 switch:
-  - name: Sonoff7
-    platform: mqtt
-    state_topic: "stat/sonoff/7/POWER"
-    command_topic: "cmnd/sonoff/7/POWER"
-    availability_topic: "tele/sonoff/7/LWT"
-    optimistic: False
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    retain: False
+- name: Sonoff7
+  platform: mqtt
+  state_topic: "stat/sonoff/7/POWER"
+  command_topic: "cmnd/sonoff/7/POWER"
+  availability_topic: "tele/sonoff/7/LWT"
+  optimistic: False
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: False

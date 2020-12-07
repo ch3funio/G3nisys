@@ -1,0 +1,134 @@
+# scene:
+# - name: hw_tryb_red
+#   entities:
+#     light.yl_korytarz:
+#       state: 'on'
+#       profile: nocny
+# - name: hw_tryb_normalny
+#   entities:
+#     light.yl_korytarz:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+# - name: sc_dusk
+#   entities:
+#     light.yl_bernard:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#     light.yl_maja:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#     light.yl_plafon1:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#     light.yl_plafon2:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+# - name: sc_dawn
+#   entities:
+#     input_boolean.tryb_spania: 
+#       state: 'off'
+#     light.yl_bernard: 
+#       state: 'off'
+#     light.yl_maja: 
+#       state: 'off'
+# - name: sc_night
+#   entities:
+#     light.yl1:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#       # transition: 5
+#     light.yl2:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#       # transition: 5
+#     light.yl3:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#       # transition: 5
+# - name: sc_tryb_spania
+#   entities:
+#     light.yl_bernard: #bb
+#       state: 'on'
+#       profile: do_spania
+#     light.yl_maja:
+#       state: 'on'
+#       profile: do_spania
+#     light.yl_plafon1: #jb plafon
+#       state: 'on'
+#       profile: do_spania
+#     light.lampa_w_salonie: 
+#       state: 'off'
+#     light.yl_plafon2: 
+#       state: 'off'
+# - name: bb_tryb_spania
+#   entities:
+#     light.yl_bernard: #bb
+#       state: 'on'
+#       profile: do_spania
+# - name: bb_tryb_normalny
+#   entities:
+#     light.yl_bernard:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+# - name: mb_tryb_spania
+#   entities:
+#     light.yl_maja:
+#       state: 'on'
+#       profile: do_spania
+# - name: mb_tryb_normalny
+#   entities:
+#     light.yl_maja:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+# - name: sl_tryb_normalny
+#   entities:
+#     light.yl1:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#     light.yl2:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#     light.yl3:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+# - name: wc_tryb_normalny
+#   entities:
+#     light.yl_wc:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+# - name: wc_tryb_red
+#   entities:
+#     light.yl_wc:
+#       state: 'on'
+#       profile: nocny
+# - name: plafon_tryb_normalny
+#   entities:
+#     light.yl_plafon1:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+#     light.yl_plafon2:
+#       state: 'on'
+#       brightness: 230
+#       color_temp: 288
+# - name: plafon_tryb_red
+#   entities:
+#     light.yl_plafon2: 
+#       state: 'off'
+#     light.yl_plafon1:
+#       state: 'on'
+#       profile: nocny

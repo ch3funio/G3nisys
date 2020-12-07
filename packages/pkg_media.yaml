@@ -34,6 +34,6 @@ webostv:
     - Netflix
     - YouTube
     - YouTube Kids
-media_player:
-- platform: kodi
-  host: !secret ip_narnia
+#media_player:
+#- platform: kodi
+#  host: !secret ip_narnia

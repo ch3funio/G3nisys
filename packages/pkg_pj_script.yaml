@@ -120,7 +120,7 @@ script:
     description: "scene switcher with n-bit configuration"
     variables:
       t_entities: ['light.ledy_w_kuchni', 'light.yl1', 'light.yl2', 'light.yl3', 'light.yl_plafon1', 'light.yl_plafon2', 'light.yl_korytarz', 'light.yl_bernard', 'light.yl_maja', 'light.yl_wc', 'light.lampki_na_balkonie', 'media_player.big_screen', 'media_player.little_screen', 'media_player.boogy', 'media_player.googy', 'media_player.tic', 'media_player.lg_tv']
-      t_profile: [[0], [255,T1], [230,288,T1], [10,[255,190,0],T1], [1,[255,0,0],T1]]
+      t_profile: [[0], [255,T1], [230,288,T1], [10,[255,190,0],T1], [1,[255,0,0],T1], [1,[255,0,0],T30], [25,[255,190,0],T30], [230,288,T30]]
       t_volume: [0, 5, 25, 50, 100]
       d_volume: 0.25
     fields:
@@ -141,7 +141,7 @@ script:
           #################### media_players - change volume
           - conditions: "{{ t_entities[repeat.index-1].split('.')[0] == 'media_player' and t_bit|int > 0 and not is_state(t_entities[repeat.index-1],'playing') }}"
             sequence:
-            - service_template: media_player.volume_set
+            - service: media_player.volume_set  # # # # # # # # #  # # #tutaj był service_template
               data:
                 entity_id: "{{ t_entities[repeat.index-1] }}"
                 volume_level: "{{ t_volume[t_config[repeat.index-1]|int]/100 if t_config[repeat.index-1]|int < t_volume|length else d_volume }}"
@@ -149,11 +149,11 @@ script:
           - conditions: "{{ t_entities[repeat.index-1].split('.')[0] == 'media_player' and t_bit|int > 0 and is_state(t_entities[repeat.index-1], 'playing') }}"
             sequence:
             - delay:
-                miliseconds: 5
+                milliseconds: 5
           #################### turn on lights - with color_temp
           - conditions: "{{ t_entities[repeat.index-1].split('.')[0] == 'light' and t_bit|int > 1 and t_profile[t_bit|int]|length > 1 and t_profile[t_bit|int][1][0] is not defined }}"
             sequence:
-            - service_template: light.turn_on
+            - service: light.turn_on # # # # # # # # #  # # #tutaj był service_template
               data:
                 entity_id: "{{ t_entities[repeat.index-1] }}"
                 brightness: "{{ t_profile[t_bit|int][0] }}"
@@ -163,7 +163,7 @@ script:
           #################### turn on lights - with rgb_color
           - conditions: "{{ t_entities[repeat.index-1].split('.')[0] == 'light' and t_bit|int > 1 and t_profile[t_bit|int]|length > 1 and t_profile[t_bit|int][1][0] is defined }}"
             sequence:
-            - service_template: light.turn_on
+            - service: light.turn_on # # # # # # # # #  # # #tutaj był service_template
               data_template:
                 entity_id: "{{ t_entities[repeat.index-1] }}"
                 brightness: "{{ t_profile[t_bit|int][0] }}"
@@ -175,6 +175,6 @@ script:
                 white_value: "{{ t_profile[t_bit|int][2]|regex_replace('W','')|int if (t_profile[t_bit|int][2] is defined and t_profile[t_bit|int][2][0] == 'W') else t_profile[t_bit|int][3]|regex_replace('W','')|int if (t_profile[t_bit|int][3] is defined and t_profile[t_bit|int][3][0] == 'W') else 0 }}"
           #################### turn the rest on or off
           default:
-          - service_template: "{{ t_entities[repeat.index-1].split('.')[0] }}.{{ 'turn_on' if (t_config[repeat.index-1]|int == 1 and not is_state(t_entities[repeat.index-1],'playing')) else 'turn_off' }}"
-            data:
+          - service: "{{ t_entities[repeat.index-1].split('.')[0] }}.{{ 'turn_on' if (t_config[repeat.index-1]|int == 1 and not is_state(t_entities[repeat.index-1],'playing')) else 'turn_off' }}"
+            data: # # # # # # # # #  # # #tutaj był service_template
               entity_id: "{{ t_entities[repeat.index-1] }}"

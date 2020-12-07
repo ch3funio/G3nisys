@@ -8,19 +8,15 @@ title: ADM
 icon: mdi:toolbox
 background: radial-gradient(grey, skyblue)
 cards:
-
 - type: horizontal-stack
   cards: !include card_lokalizacja.yaml
-# - type: horizontal-stack
-  # cards: !include card_porydnia.yaml
 ################################################################
 ################################################################ automatyzacje pory dnia i trybów
 ################################################################
-
 - type: entities
   show_header_toggle: false
   entities:
-  - sensor.pora_dnia
+  - sensor.nowa_pora
   - sun.sun
   - input_select.my_scene
   - input_boolean.tryb_spania
@@ -30,7 +26,6 @@ cards:
   ################################################################ sensory ruchu i kontaktowe
   ################################################################
 - type: entities
-  show_empty: true
   entities:
   - binary_sensor.drzwi_wc_contact
   - binary_sensor.drzwi_balkon_contact

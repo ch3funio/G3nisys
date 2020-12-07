@@ -64,6 +64,10 @@ automation:
   - service: notify.mobile_app_chef_xl
     data:
       message: 'Hej Chef!'
+      data:
+        ttl: 0
+        priority: high
+        tag: tag
   - service: script.run_scene
     data:
       t_config: '---'
@@ -78,7 +82,16 @@ script:
         entity_id: automation.kt_light
     - service: notify.mobile_app_chef2xl
       data:
+        message: clear_notification
+        data:
+          tag: tag
+    - service: notify.mobile_app_chef2xl
+      data:
         message: 'Hej Chef!'
+        data:
+          ttl: 0
+          priority: high
+    - service: notify.mobile_app_chef2xl
   kuchnia_koniec_pracy:
     sequence:
     - service: automation.turn_on

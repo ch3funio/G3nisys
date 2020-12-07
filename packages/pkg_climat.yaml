@@ -9,7 +9,7 @@ homeassistant:
 group:
   gr_weather: ### ogolnie pogoda
     entities:
-    - sensor.pora_dnia
+    - sensor.nowa_pora
     - sensor.moon
     - sun.sun
   gr_climat_srednia:
@@ -68,25 +68,55 @@ sensor:
   
 - platform: template
   sensors:
-    pora_dnia:
-      friendly_name: "Pora dnia"
+    nowa_pora:
+      friendly_name: "Nowa pora dnia"
       value_template: >-
-        {% if (as_timestamp(states.sun.sun.attributes.next_dusk)-900) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
-          dusk
-        {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
-          dawn
-        {% elif (states.sun.sun.attributes.elevation) < -4 %}
-          night
-        {% else %}
-          day
-        {% endif %}
+        {% set teraz = now().hour*60+now().minute %}
+        {# #################### pory dnia -#}
+        {%- set t_pory = {
+          0:{0:'# info ##########', 1:'# nazwa #########', 2:'# start #########'},
+          1:{0:'# 06:55 - 08:00 #', 1:'ranek',             2:6*60+55},
+          2:{0:'# 08:00 - zach. #', 1:'dzień',             2:8*60+0},
+          3:{0:'# 16:00 - 19:00 #', 1:'zmierzch',          2:16*60+0},
+          4:{0:'# 19:00 - 19:40 #', 1:'wieczór',           2:19*60+0},
+          5:{0:'# 19:40 - 23:00 #', 1:'tryb_spania',       2:19*60+40},
+          6:{0:'# 23:00 - 00:00 #', 1:'noc',               2:23*60+0},
+          7:{0:'# 01:00 - 06:55 #', 1:'sen',               2:1*60+0}
+        } -%}
+        {# #################### warunki -#}
+        {%- for t in range(1, t_pory|length) -%}
+          {%- set n = 1 if loop.last else t + 1 -%}
+          {%- set t_start = t_pory[t][2] -%}
+          {%- set t_stop = t_pory[n][2] -%}
+          {%- set t_temp = 1440 if (t_stop<t_start) else 0 -%}
+          {%- set t_stop = t_stop + t_temp - 1 -%}
+          {%- set teraz = teraz + t_temp if ((teraz < t_start) and (teraz < t_stop)) else teraz %}
+          {{ t_pory[t][1] if ((teraz >= t_start) and (teraz <= t_stop)) }}
+        {% endfor %}
       icon_template: >-
-        {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
-          mdi:weather-sunset-down
-        {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
-          mdi:weather-sunset-up
-        {% elif (states.sun.sun.attributes.elevation) < -4 %}
-          mdi:weather-night
-        {% else %}
-          mdi:weather-sunny
-        {% endif %}
+        {# #################### konfig ikon -#}
+        {%- set t_ikony = {
+          'ranek':      'mdi:weather-sunset-up',
+          'dzień':      'mdi:weather-sunny',
+          'zmierzch':   'mdi:weather-sunset',
+          'wieczór':    'mdi:weather-sunset-down',
+          'tryb_spania':'mdi:brightness-1',
+          'noc':        'mdi:brightness-2',
+          'sen':        'mdi:weather-night'
+        } -%}
+        {{ t_ikony[states('sensor.nowa_pora')] if states('sensor.nowa_pora') in t_ikony.keys() else 'mdi:weather-sunny' }}
+      attribute_templates:
+        tod_value: >-
+          {# #################### pora dnia liczbowo -#}
+          {%- set t_numery = {
+            'ranek': 1,
+            'dzień': 2,
+            'zmierzch':3,
+            'wieczór': 4,
+            'tryb_spania': 5,
+            'noc': 6,
+            'sen': 7
+          } -%}
+          {{ t_numery[states('sensor.nowa_pora')] if states('sensor.nowa_pora') in t_numery.keys() }}{#else 2#}
+    nr_dnia:
+      value_template: '{{ states.sensor.nowa_pora.attributes.tod_value }}'

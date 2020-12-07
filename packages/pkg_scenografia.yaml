@@ -13,19 +13,21 @@ input_select:
     options:
       - 'normalnie'
       - 'czerwony'
-      - 'tryb_spania'
-      - 'day'
-      - 'dawn'
-      - 'dusk'
-      - 'night'
+      - 'ranek' #1
+      - 'dzień' #2
+      - 'zmierzch' #3
+      - 'wieczór' #4
+      - 'tryb_spania' #5
+      - 'noc' #6
+      - 'sen' #7
       - 'none'
 automation:
-- id: pora_dnia
-  alias: pora_dnia
+- id: nowa_pora_dnia
+  alias: nowa_pora_dnia
   mode: restart
   trigger:
   - platform: state
-    entity_id: sensor.pora_dnia
+    entity_id: sensor.nowa_pora
   - platform: state
     entity_id: input_boolean.tryb_spania
     to: "off"
@@ -37,11 +39,11 @@ automation:
     - condition: template
       value_template: "{{ is_state('input_boolean.tryb_spania', 'off') }}"
     - condition: template
-      value_template: "{{ is_state('input_boolean.tryb_spania', 'on') and is_state('sensor.pora_dnia', 'dawn') }}"
+      value_template: "{{ is_state('input_boolean.tryb_spania', 'on') and is_state('sensor.nowa_pora', 'ranek') }}"
   - service: input_select.select_option
     data_template:
       entity_id: input_select.my_scene
-      option: "{{ states('sensor.pora_dnia') }}"
+      option: "{{ states('sensor.nowa_pora') }}"
   - service: input_boolean.turn_off
     entity_id: input_boolean.tryb_spania
 - id: scene_change #profile
@@ -53,14 +55,38 @@ automation:
     entity_id: input_select.my_scene
   - platform: homeassistant
     event: start
+  condition:
+  - condition: template
+    value_template: "{{ is_state('group.gr_who', 'home') }}"
   action:
   - service: script.run_scene
     data:
       t_config: >
         {% set t_scenes = {
         'normalnie': '-22221-----',
-        'tryb_spania': '-00030-33--',
         'czerwony': '-000404--4-',
-        'none': '-----'
+        'ranek': '-----------',
+        'dzień': '--------00--',
+        'zmierzch': '----22-2---',
+        'wieczór': '-----------',
+        'tryb_spania': '-0003003---',
+        'noc': '-',
+        'sen': '-',
+        'none': '-----------'
         } %}
         {{ t_scenes[states('input_select.my_scene')] if states('input_select.my_scene') in t_scenes.keys() else t_scenes['none'] }}
+- id: tryb_spania
+  alias: tryb_spania
+  trigger:
+  - platform: state
+    entity_id: input_boolean.tryb_spania
+    to: "on"
+  action:
+  - condition: template
+    value_template: "{{ is_state('group.gr_who', 'home') }}"
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.my_scene
+      option: tryb_spania
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.tryb_spania

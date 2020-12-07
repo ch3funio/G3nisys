@@ -11,27 +11,27 @@ group:
     - sensor.balkon_pm2_5_level
     - sensor.balkon_pressure
     - input_boolean.alert_air
-    - automation.stan_powietrza_chf
+    - automation.stan_powietrza
 scene:
 - name: air_idealny
   entities:
     light.yl1: 
-      state: on
+      state: 'on'
       rgb_color: [87,117,8]
 - name: air_sredni
   entities:
     light.yl1: 
-      state: on
+      state: 'on'
       rgb_color: [244,180,0]
 - name: air_tragedia
   entities:
     light.yl1: 
-      state: on
+      state: 'on'
       rgb_color: [198,51,30]
-sensor:
 #################################################
 ###             SENSORY zanieczyszczenia      ###
 ################################################# 
+sensor:
 - name: balkon_pm10
   platform: command_line
   scan_interval: 600
@@ -122,7 +122,7 @@ input_boolean:
     icon: mdi:air-filter
 automation:
 - id: alert_air
-  alias: "Stan powietrza chf"
+  alias: "Stan powietrza"
   initial_state: on
   trigger:
   - platform: numeric_state
