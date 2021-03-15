@@ -1,0 +1,448 @@
+button:
+  show_state: false
+  show_name: false
+  # tap_action: 
+  #   action: toggle
+  # double_tap_action:
+  #   action: more-info
+  # hold_action:
+  #   action: fire-dom-event
+  #   browser_mod:
+  #     command: popup
+
+button_round:
+  template: button
+  color_type: card
+  color: auto
+  aspect_ratio: 1/1
+  state:
+  - value: "off"
+    styles:
+      icon:
+      - color: var(--paper-listbox-color)
+      card:
+      - background: var(--primary-text-color)
+      - border-radius: 50%
+  - value: "on"
+    styles:
+      icon:
+      - color: var(--button-card-light-color)
+      card:
+      - background: none
+      - box-shadow: none
+      - border-radius: 50%
+
+scene:
+  template: button
+  aspect_ratio: 2/1
+  icon: >
+    [[[
+      if (variables.sc_what == "sleep") 
+        return "mdi:sleep";
+      else if (variables.sc_what == "night") 
+        return "mdi:weather-night";
+      else if (variables.sc_what == "normal") 
+        return "mdi:lightbulb-on";
+      else return "none";
+    ]]]
+  styles:
+    card:
+    - background-color: >
+        [[[
+          if (variables.sc_what == "sleep") 
+            return "#816000";
+          else if (variables.sc_what == "night") 
+            return "#7E0000";
+          else if (variables.sc_what == "normal") 
+            return "#F2B584";
+          else return "none";
+        ]]]
+  tap_action:
+    action: call-service
+    service: script.run_scene
+
+popup: #popup
+  hold_action:
+    action: fire-dom-event
+    browser_mod:
+      command: popup
+      card:
+        type: vertical-stack
+
+mt_where:
+  styles: 
+    card:
+    - border: >
+        [[[ 
+          if (states[variables.mt_where].state == "on") 
+            return "var(--accent-color) solid 5px"; 
+          else return "none";
+        ]]]
+
+person:
+  template: button
+  show_state: true
+  show_icon: false
+  aspect_ratio: 2/1
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      command: popup
+      title: Historia
+      card:
+        type: map
+        entities: 
+        - '[[[ return entity.entity_id ]]]'
+        default_zoom: 14
+        dark_mode: true
+        hours_to_show: 12
+  hold_action:
+    action: more-info
+  styles:
+    card:
+    - background-image: '[[[ return "url(/local/avatars/"+(entity.entity_id.split(".")[1])+".jpg)" ]]]'
+    - display: '[[[ if (entity.entity_id == "person.renata" && entity.state != "Koninko") return "none"; else return "block" ]]]'
+    - background-size: cover
+    - opacity: '[[[ if (entity.state == "home") return "1"; else return "0.55" ]]]'
+    - filter: '[[[ if (entity.state == "na Turkusowej") return "sepia(100%) saturate(200%) hue-rotate(126deg) brightness(100%) contrast(100%)"; else return "none" ]]]'
+    entity_picture:
+    - overflow: hidden
+    state:
+    - font-size: 0.65em
+    - letter-spacing: 100%
+    - font-weight: '[[[ if (entity.state == "home") return "bold"; else return "normal" ]]]'
+    - padding: 0.2em
+    - width: 100%
+    - background: rgba(0,0,0,0.5)
+    - color: rgb(255,255,255)
+    grid:
+    - grid-template-areas: '"i" "s"'
+    - grid-template-rows: 1fr min-content
+    - grid-template-columns: 1fr
+    - position: relative
+    custom_fields:
+      battery:
+      - color: rgb(255,255,255)
+      - border-radius: 33%
+      - padding: 2px
+      - background: rgba(0,0,0,0.5)
+      - position: absolute
+      - right: 7.5%
+      - top: 4%
+      - height: auto
+      - width: auto
+      - font-size: 0.75em
+      - font-weight: bold
+
+climat-grid: # na głównej
+  show_state: true
+  show_name: false
+  show_icon: false
+  styles:
+    card:
+    - font-size: 40pt
+    - font-weight: bold
+    - background: none
+    - box-shadow: none
+    - height: 10%
+    - padding: 0px
+    grid:
+    - grid-template-areas: '"one two three four"'
+    - grid-template-columns: 10% 40% 40% 10%
+    - grid-template-rows: 1fr 
+    custom_fields:
+      one:
+      - color: 'var(--label-badge-red)'
+      - opacity: 0.5
+      two:
+      - color: 'var(--label-badge-red)'
+      three:
+      - color: 'var(--label-badge-blue)'
+      four:
+      - color: 'var(--label-badge-blue)'
+      - opacity: 0.5
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      command: popup
+      card:
+        type: vertical-stack
+
+#################### poziomy mały, tylko ikonka pory dnia
+icon_daytime:
+  show_name: false
+  tap_action:
+    action: none
+  #   entity: input_select.my_scene
+  #   service: input_select.select_option
+  #   service_data:
+  #     entity_id: input_select.my_scene
+  styles:
+    icon:
+    - color: var(--state-icon-color)
+
+
+
+guzik: #####################################################
+  tap_action: 
+    action: toggle
+  double_tap_action:
+    action: more-info
+swiatla:
+  template: guzik
+  show_state: false
+  show_name: false
+  color_type: card
+  color: auto
+  aspect_ratio: 1/1
+  state:
+  - value: "off"
+    styles:
+      icon:
+      - color: "#ffffff"
+      card:
+      # - box-shadow: 0px 0px 0px 0px
+      - background: "#393939"
+      - border-radius: 50%
+  - value: "on"
+    styles:
+      icon:
+      - color: var(--button-card-light-color)
+      card:
+      - background: none #"#ffffff" #ffd980 solid 5px
+      - box-shadow: none #"2px 2px 2px 0px #dddddd"
+      - border-radius: 50%
+# sceny_hold:
+#   template: guzik
+#   show_state: false
+#   show_name: true
+#   color_type: card
+#   color: auto
+#   aspect_ratio: 1/1
+  # styles:
+  # - value: "off"
+  #   styles:
+  #     icon:
+  #     - color: "#ffffff"
+  #     card:
+  #     # - box-shadow: 0px 0px 0px 0px
+  #     - background: "#393939"
+  #     - border-radius: 50%
+  # - value: "on"
+  #   styles:
+  #     icon:
+  #     - color: var(--button-card-light-color)
+  #     card:
+  #     - background: none #"#ffffff" #ffd980 solid 5px
+  #     - box-shadow: none #"2px 2px 2px 0px #dddddd"
+  #     - border-radius: 50%
+sceny_browser_mod:
+  template: guzik
+  show_state: false
+  show_name: true
+  color_type: auto
+  color: auto
+  state:
+  - value: "off"
+    styles:
+      icon:
+      - color: "#393939"
+      card:
+      - box-shadow: 0px 0px 0px 0px
+      - background: none
+  - value: "on"
+    styles:
+      icon:
+      - color: var(--button-card-light-color)
+      card:
+      - background: "#393939"
+      - box-shadow: "2px 2px 2px 0px #dddddd"
+sceny:
+  template: guzik
+  show_state: false
+  show_name: false
+  color_type: auto
+  color: auto
+  state:
+  - value: "off"
+    styles:
+      icon:
+      - color: "#393939"
+      card:
+      - box-shadow: 0px 0px 0px 0px
+      - background: none
+  - value: "on"
+    styles:
+      icon:
+      - color: var(--button-card-light-color)
+      card:
+      - background: "#393939"
+      - box-shadow: "2px 2px 2px 0px #dddddd"
+# klimat:
+#   tap_action: 
+#     action: call-service
+#     service: browser_mod.popup
+#     service_data:
+#       deviceID: this
+#       title: Klimat
+#       card:
+#         type: vertical-stack
+#         cards:
+#         - type: horizontal-stack
+#           cards:
+#           - name: Lokalizacja
+#             type: "custom:button-card"
+#             show_icon: false
+#             show_name: false
+#             icon: mdi:floor-plan
+#             aspect_ratio: 3/1
+#             styles:
+#               card:
+#               - background: none
+#               - box-shadow: none
+#               icon:
+#               - color: "#393939"
+#           - name: Temperatura
+#             type: "custom:button-card"
+#             show_icon: true
+#             show_name: false
+#             icon: mdi:home-thermometer
+#             aspect_ratio: 3/1
+#             styles:
+#               card:
+#               - background: none
+#               - box-shadow: none
+#               icon:
+#               - color: "#393939"
+#           - name: Wilgotność
+#             type: "custom:button-card"
+#             show_icon: true
+#             show_name: false
+#             icon: mdi:water-percent
+#             aspect_ratio: 3/1
+#             styles:
+#               card:
+#               - background: none
+#               - box-shadow: none
+#               icon:
+#               - color: "#393939"
+#         - type: horizontal-stack
+#           cards:
+#           - name: Salon
+#             template: naglowek_klimat
+#             type: "custom:button-card"
+#           - name: Temperatura
+#             template: tempy
+#             type: "custom:button-card"
+#             entity: sensor.salon_temperature
+#           - name: Wilgotność
+#             type: "custom:button-card"
+#             entity: sensor.salon_humidity
+#             template: mokry
+#         - type: horizontal-stack
+#           cards:
+#           - name: Bernard
+#             template: naglowek_klimat
+#             type: "custom:button-card"
+#           - name: Temperatura
+#             template: tempy
+#             type: "custom:button-card"
+#             entity: sensor.bear_temperature
+#           - name: Wilgotność
+#             type: "custom:button-card"
+#             entity: sensor.bear_humidity
+#             template: mokry
+#         - type: horizontal-stack
+#           cards:
+#           - name: Maja
+#             template: naglowek_klimat
+#             type: "custom:button-card"
+#           - name: Temperatura
+#             template: tempy
+#             type: "custom:button-card"
+#             entity: sensor.bee_temperature
+#           - name: Wilgotność
+#             type: "custom:button-card"
+#             entity: sensor.bee_humidity
+#             template: mokry
+#         - type: horizontal-stack
+#           cards:
+#           - name: Kuchnia
+#             template: naglowek_klimat
+#             type: "custom:button-card"
+#           - name: Temperatura
+#             template: tempy
+#             type: "custom:button-card"
+#             entity: sensor.kitchen_temperature
+#           - name: Wilgotność
+#             type: "custom:button-card"
+#             entity: sensor.kitchen_humidity
+#             template: mokry
+#         - type: horizontal-stack
+#           cards:
+#           - name: Schowek
+#             template: naglowek_klimat
+#             type: "custom:button-card"
+#           - name: Temperatura
+#             template: tempy
+#             type: "custom:button-card"
+#             entity: sensor.lamus_temperature
+#           - name: Wilgotność
+#             type: "custom:button-card"
+#             entity: sensor.lamus_humidity
+#             template: mokry
+#         - type: horizontal-stack
+#           cards:
+#           - name: Łazienka
+#             template: naglowek_klimat
+#             type: "custom:button-card"
+#           - name: Temperatura
+#             template: tempy
+#             type: "custom:button-card"
+#             entity: sensor.bath_temperature
+#           - name: Wilgotność
+#             type: "custom:button-card"
+#             entity: sensor.bath_humidity
+#             template: mokry
+#         - type: horizontal-stack
+#           cards:
+#           - name: WC
+#             template: naglowek_klimat
+#             type: "custom:button-card"
+#           - name: Temperatura
+#             template: tempy
+#             type: "custom:button-card"
+#             entity: sensor.wc_temperature
+#           - name: Wilgotność
+#             type: "custom:button-card"
+#             entity: sensor.wc_humidity
+#             template: mokry
+naglowek_klimat:
+  show_name: true
+  aspect_ratio: 3/1
+  styles:
+    card:
+    - background: none
+    - box-shadow: none
+    name:
+    - font-size: 12pt
+    - font-weight: lite
+tempy:
+  show_icon: false
+  show_name: false
+  show_state: true
+  aspect_ratio: 3/1
+  styles:
+    state:
+    - font-size: 20pt
+    - font-weight: bold
+    - color: "#ffffff"
+    card: 
+    - background: "#D17545"
+    - box-shadow: none
+    - border-radius: 2%
+mokry:
+  template: tempy
+  styles:
+    card: 
+    - background: "#44739e"

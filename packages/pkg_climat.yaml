@@ -18,46 +18,39 @@ group:
     - sensor.tempy
   gr_temp: ### czujniki temperatury w calym domu
     entities:
-    - sensor.czujnik_salon_temperature
-    - sensor.czujnik_bb_temperature
-    - sensor.czujnik_maja_temperature
-    - sensor.czujnik_kuchnia_temperature
-    - sensor.czujnik_lazienka_temperature
-    - sensor.czujnik_wc_temperature
-    - sensor.czujnik_schowek_temperature
+    - sensor.salon_temperature
+    - sensor.bear_temperature
+    - sensor.bee_temperature
+    - sensor.kitchen_temperature
+    - sensor.bath_temperature
+    - sensor.wc_temperature
+    - sensor.lamus_temperature
   gr_humi: ### czujniki wilgotnosci w calym domu
     entities:
-    - sensor.czujnik_salon_humidity
-    - sensor.czujnik_bb_humidity
-    - sensor.czujnik_maja_humidity
-    - sensor.czujnik_kuchnia_humidity
-    - sensor.czujnik_lazienka_humidity
-    - sensor.czujnik_wc_humidity
-    - sensor.czujnik_schowek_humidity
+    - sensor.salon_humidity
+    - sensor.bear_humidity
+    - sensor.bee_humidity
+    - sensor.kitchen_humidity
+    - sensor.bath_humidity
+    - sensor.wc_humidity
+    - sensor.lamus_humidity
 sensor:
-#################################################
-###     ŚREDNIE - WILGOTNOŚĆ I TEMP W DOMU    ###
-#################################################
 - platform: min_max
   name: "Mokry"
   type: mean
   round_digits: 1
   entity_ids:
-  - sensor.czujnik_bb_humidity
-  - sensor.czujnik_salon_humidity
-  - sensor.czujnik_maja_humidity
+  - sensor.bear_humidity
+  - sensor.salon_humidity
+  - sensor.bee_humidity
 - platform: min_max
   name: "Tempy"
   type: mean
   round_digits: 1
   entity_ids:
-  - sensor.czujnik_bb_temperature
-  - sensor.czujnik_salon_temperature
-  - sensor.czujnik_maja_temperature
-
-#################################################
-###             DATA, FAZY KSIEZYCA           ###
-#################################################
+  - sensor.bear_temperature
+  - sensor.salon_temperature
+  - sensor.bee_temperature
 - platform: moon
 - platform: time_date
   display_options: "date_time"
@@ -65,7 +58,7 @@ sensor:
 #################################################
 ###             PORA DNIA                     ###
 #################################################
-  
+
 - platform: template
   sensors:
     nowa_pora:
@@ -75,13 +68,14 @@ sensor:
         {# #################### pory dnia -#}
         {%- set t_pory = {
           0:{0:'# info ##########', 1:'# nazwa #########', 2:'# start #########'},
-          1:{0:'# 06:55 - 08:00 #', 1:'ranek',             2:6*60+55},
-          2:{0:'# 08:00 - zach. #', 1:'dzień',             2:8*60+0},
+          1:{0:'# 06:40 - 07:30 #', 1:'ranek',             2:6*60+40},
+          2:{0:'# 07:30 - zach. #', 1:'dzień',             2:7*60+30},
           3:{0:'# 16:00 - 19:00 #', 1:'zmierzch',          2:16*60+0},
           4:{0:'# 19:00 - 19:40 #', 1:'wieczór',           2:19*60+0},
           5:{0:'# 19:40 - 23:00 #', 1:'tryb_spania',       2:19*60+40},
-          6:{0:'# 23:00 - 00:00 #', 1:'noc',               2:23*60+0},
-          7:{0:'# 01:00 - 06:55 #', 1:'sen',               2:1*60+0}
+          6:{0:'# 23:00 - 01:00 #', 1:'noc',               2:23*60+0},
+          7:{0:'# 01:00 - 05:00 #', 1:'sen',               2:1*60+0},
+          8:{0:'# 05:00 - 06:40 #', 1:'none',              2:5*60+0}
         } -%}
         {# #################### warunki -#}
         {%- for t in range(1, t_pory|length) -%}
@@ -115,8 +109,18 @@ sensor:
             'wieczór': 4,
             'tryb_spania': 5,
             'noc': 6,
-            'sen': 7
+            'sen': 7,
+            'none': 8
           } -%}
-          {{ t_numery[states('sensor.nowa_pora')] if states('sensor.nowa_pora') in t_numery.keys() }}{#else 2#}
+          {{ t_numery[states('sensor.nowa_pora')] if states('sensor.nowa_pora') in t_numery.keys() else '0' }}
     nr_dnia:
       value_template: '{{ states.sensor.nowa_pora.attributes.tod_value }}'
+binary_sensor:
+- platform: template
+  sensors:
+    weekend:
+      value_template: >
+        {% set t_today = states('sensor.time_date')[12:] %}
+        {% set t_holiday = ('01-01', '01-06', '05-01', '05-03', '08-15', '11-01', '11-11', '12-24', '12-25', '12-26') %}
+        {{ (((now().isoweekday() == 5) and (now().hour >= 15)) or ((now().isoweekday() == 7) and (now().hour < 22)) or now().isoweekday() == 6 or (t_today in t_holiday)) }}
+      icon_template: "{{ 'mdi:calendar-heart' if is_state('binary_sensor.0_cfg_weekend', 'on') else 'mdi:calendar-month' }}"

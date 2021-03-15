@@ -1,0 +1,6 @@
+title: Remote
+icon: mdi:remote
+background: radial-gradient(grey, skyblue)
+cards:
+- type: custom:lg-remote-control 
+  entity: media_player.salon_tv

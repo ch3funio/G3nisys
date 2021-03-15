@@ -1,9 +1,0 @@
-dialogflow:
-intent_script:
-  GetBBTemp:
-    speech:
-      text: W pokoju Bernarda jest {{ states.sensor.czujnik_bb_temperature.state }} stopni
-    action:
-      service: notify.notify
-      data_template:
-        message: In bb room is {{ states.sensor.czujnik_bb_temperature.state }} digrees

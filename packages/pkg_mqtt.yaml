@@ -1,10 +1,30 @@
 homeassistant:
   customize:
-    switch.sonoff7:
+    switch.salon_kodi:
       friendly_name: "Gniazdko KODI"
       icon: mdi:kodi
+    light.choinka:
+      icon: mdi:pine-tree
+    switch.loggia_prawe:
+      icon: mdi:string-lights
+    switch.loggia_airquality:
+      icon: mdi:air-filter
+    switch.loggia_lewe:
+      icon: mdi:power-socket-fr
+    switch.loggia_wolne:
+      icon: mdi:power-socket-fr
+    light.ledy_w_kuchni:
+      icon: mdi:kettle-outline
+group:
+  gr_gyro:
+    entities:
+    - sensor.gyro_action
+    - sensor.gyro_battery
+    - sensor.gyro_linkquality
+    - sensor.gyro_sensitivity
+    - sensor.gyro_strength
 light:
-- name: Ledy w kuchni
+- name: Ledy w kuchni # KUCHNIA #
   platform: mqtt
   state_topic: "stat/sonoff/4/POWER"
   command_topic: "cmnd/sonoff/4/POWER"
@@ -16,23 +36,23 @@ light:
   payload_available: "Online"
   payload_not_available: "Offline"
   retain: False
-- name: Lampki na balkonie
+# - name: sonoff5
+#   platform: mqtt
+#   state_topic: "stat/sonoff/5/POWER"
+#   command_topic: "cmnd/sonoff/5/POWER"
+#   availability_topic: "tele/sonoff/5/LWT"
+#   optimistic: False
+#   qos: 1
+#   payload_on: "ON"
+#   payload_off: "OFF"
+#   payload_available: "Online"
+#   payload_not_available: "Offline"
+#   retain: False
+- name: Choinka # CHOINKA #
   platform: mqtt
-  state_topic: "stat/sonoff/5/POWER"
-  command_topic: "cmnd/sonoff/5/POWER"
-  availability_topic: "tele/sonoff/5/LWT"
-  optimistic: False
-  qos: 1
-  payload_on: "ON"
-  payload_off: "OFF"
-  payload_available: "Online"
-  payload_not_available: "Offline"
-  retain: False
-- name: Choinka
-  platform: mqtt
-  state_topic: "stat/sonoff/2/POWER"
-  command_topic: "cmnd/sonoff/2/POWER"
-  availability_topic: "tele/sonoff/2/LWT"
+  state_topic: "stat/sonoff/1/POWER"
+  command_topic: "cmnd/sonoff/1/POWER"
+  availability_topic: "tele/sonoff/1/LWT"
   optimistic: False
   qos: 1
   payload_on: "ON"
@@ -41,11 +61,71 @@ light:
   payload_not_available: "Offline"
   retain: False
 switch:
-- name: Sonoff7
+- name: Salon Kodi # GNIAZDKO KODI #
   platform: mqtt
   state_topic: "stat/sonoff/7/POWER"
   command_topic: "cmnd/sonoff/7/POWER"
   availability_topic: "tele/sonoff/7/LWT"
+  optimistic: False
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: False
+# - name:  # Ciujnik pyu #
+#   platform: mqtt
+#   state_topic: "stat/sonoff/2/POWER"
+#   command_topic: "cmnd/sonoff/2/POWER"
+#   availability_topic: "tele/sonoff/2/LWT"
+#   optimistic: False
+#   qos: 1
+#   payload_on: "ON"
+#   payload_off: "OFF"
+#   payload_available: "Online"
+#   payload_not_available: "Offline"
+#   retain: False
+- name: Loggia Airquality # Ciujnik pyu na sonoff 4ch#
+  platform: mqtt
+  state_topic: "stat/sonoff/8/POWER1"
+  command_topic: "cmnd/sonoff/8/POWER1"
+  availability_topic: "tele/sonoff/8/LWT"
+  optimistic: False
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: False
+- name: Loggia Lewe # Lewe gniazdo na loggi na sonoff 4ch #
+  platform: mqtt
+  state_topic: "stat/sonoff/8/POWER2"
+  command_topic: "cmnd/sonoff/8/POWER2"
+  availability_topic: "tele/sonoff/8/LWT"
+  optimistic: False
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: False
+- name: Loggia Prawe # Lampki Prawe gniazdo na loggi na sonoff 4ch #
+  platform: mqtt
+  state_topic: "stat/sonoff/8/POWER3"
+  command_topic: "cmnd/sonoff/8/POWER3"
+  availability_topic: "tele/sonoff/8/LWT"
+  optimistic: False
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: False
+- name: Loggia Wolne # wolne na sonoff 4ch # #
+  platform: mqtt
+  state_topic: "stat/sonoff/8/POWER4"
+  command_topic: "cmnd/sonoff/8/POWER4"
+  availability_topic: "tele/sonoff/8/LWT"
   optimistic: False
   qos: 1
   payload_on: "ON"

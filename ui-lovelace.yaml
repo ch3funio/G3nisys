@@ -1,9 +1,8 @@
-# custom_header:
-  # compact_mode: true
 title: Home
-button_card_templates: !include configi/tmpl_button_card.yaml
+button_card_templates: !include lovelace/tmpl_button_card.yaml
 views:
-- !include configi/love_main.yaml
-- !include configi/love_admin.yaml
-- !include configi/love_remote.yaml
-- !include configi/love_adguard.yaml
+- !include lovelace/love_main.yaml
+- !include lovelace/love_cctv.yaml
+- !include lovelace/love_remote.yaml
+- !include lovelace/love_koninko.yaml
+- !include lovelace/love_admin.yaml

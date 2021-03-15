@@ -119,7 +119,7 @@ script:
     icon: "mdi:checkbox-multiple-marked-outline"
     description: "scene switcher with n-bit configuration"
     variables:
-      t_entities: ['light.ledy_w_kuchni', 'light.yl1', 'light.yl2', 'light.yl3', 'light.yl_plafon1', 'light.yl_plafon2', 'light.yl_korytarz', 'light.yl_bernard', 'light.yl_maja', 'light.yl_wc', 'light.lampki_na_balkonie', 'media_player.big_screen', 'media_player.little_screen', 'media_player.boogy', 'media_player.googy', 'media_player.tic', 'media_player.lg_tv']
+      t_entities: ['light.ledy_w_kuchni', 'light.yl1', 'light.yl2', 'light.yl3', 'light.yl_plafon1', 'light.yl_plafon2', 'light.yl_korytarz', 'light.yl_bernard', 'light.yl_maja', 'light.yl_wc', 'switch.loggia_prawe', 'light.choinka', 'media_player.salon_big_screen', 'media_player.salon_little_screen', 'media_player.bee_boogy', 'media_player.bear_googy', 'media_player.bath_tic', 'media_player.salon_tv']
       t_profile: [[0], [255,T1], [230,288,T1], [10,[255,190,0],T1], [1,[255,0,0],T1], [1,[255,0,0],T30], [25,[255,190,0],T30], [230,288,T30]]
       t_volume: [0, 5, 25, 50, 100]
       d_volume: 0.25

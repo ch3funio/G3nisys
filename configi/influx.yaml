@@ -1,32 +1,85 @@
-﻿host: a0d7b954-influxdb
-port: 8086
-database: !secret influx_base
-username: !secret influx_user
-password: !secret influx_pass
-max_retries: 3
-default_measurement: state
+﻿api_version: 2
+ssl: false
+host: !secret influx_host
+port: !secret influx_port
+token: !secret influx_token
+organization: !secret influx_orgid
+bucket: !secret influx_bucket
+max_retries: 5
+tags:
+  source: HA
+tags_attributes:
+  - friendly_name
+# default_measurement: state
+#exclude:
+#  entities:
+#    - zone.home
+#  domains:
+#    - persistent_notification
+#    - person
 include:
   entities:
-  - sensor.czujnik_salon_humidity
-  - sensor.czujnik_salon_pressure
-  - sensor.czujnik_salon_temperature
-  - sensor.czujnik_bb_temperature
-  - sensor.czujnik_bb_humidity
-  - sensor.czujnik_bb_pressure
-  - sensor.czujnik_wc_temperature
-  - sensor.czujnik_wc_humidity
-  - sensor.czujnik_kuchnia_temperature
-  - sensor.czujnik_kuchnia_humidity
-  - sensor.czujnik_lazienka_temperature
-  - sensor.czujnik_lazienka_humidity
-  - sensor.czujnik_lazienka_pressure
-  - sensor.czujnik_maja_temperature
-  - sensor.czujnik_maja_humidity
-  - sensor.czujnik_schowek_temperature
-  - sensor.czujnik_schowek_humidity
-  - sensor.balkon_pm10
-  - sensor.balkon_pm2_5
-  - sensor.balkon_pressure
-  - sensor.balkon_temperatura
-  - sensor.balkon_wilgotnosc
-  - sensor.wstrzas_action
+  - sensor.salon_humidity
+  - sensor.salon_pressure
+  - sensor.salon_temperature
+  - sensor.bear_temperature
+  - sensor.bear_humidity
+  - sensor.bear_pressure
+  - sensor.wc_temperature
+  - sensor.wc_humidity
+  - sensor.kitchen_temperature
+  - sensor.kitchen_humidity
+  - sensor.bath_temperature
+  - sensor.bath_humidity
+  - sensor.bath_pressure
+  - sensor.bee_temperature
+  - sensor.bee_humidity
+  - sensor.lamus_temperature
+  - sensor.lamus_humidity
+  - sensor.loggia_airq_pm10
+  - sensor.loggia_airq_pm2_5
+  - sensor.loggia_airq_pressure
+  - sensor.loggia_airq_temperature
+  - sensor.loggia_airq_humidity
+  - sensor.gyro_action
+  - climate.koninko_nest
+  - sensor.koninko_nest_humidity
+  - sensor.koninko_nest_temperature
+
+
+
+# host: !secret influx_host
+# port: !secret influx_port
+# database: !secret influx_base
+# username: !secret influx_user
+# password: !secret influx_pass
+# max_retries: 3
+# default_measurement: state
+# include:
+#   entities:
+#   - sensor.salon_humidity
+#   - sensor.salon_pressure
+#   - sensor.salon_temperature
+#   - sensor.bear_temperature
+#   - sensor.bear_humidity
+#   - sensor.bear_pressure
+#   - sensor.wc_temperature
+#   - sensor.wc_humidity
+#   - sensor.kitchen_temperature
+#   - sensor.kitchen_humidity
+#   - sensor.bath_temperature
+#   - sensor.bath_humidity
+#   - sensor.bath_pressure
+#   - sensor.bee_temperature
+#   - sensor.bee_humidity
+#   - sensor.lamus_temperature
+#   - sensor.lamus_humidity
+#   - sensor.loggia_airq_pm10
+#   - sensor.loggia_airq_pm2_5
+#   - sensor.loggia_airq_pressure
+#   - sensor.loggia_airq_temperature
+#   - sensor.loggia_airq_humidity
+#   - sensor.gyro_action
+#   - climate.koninko_nest
+#   - sensor.koninko_nest_humidity
+#   - sensor.koninko_nest_temperature

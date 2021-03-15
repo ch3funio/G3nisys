@@ -1,0 +1,40 @@
+script:
+  bernard_test:
+    sequence:
+    - service: tts.reversotts_say
+      entity_id: media_player.salon_little_screen
+      data:
+        message: ' '
+    - delay: "2"
+    - service: tts.reversotts_say
+      data: 
+        message: "Bernard, za dwadzieścia minut zmienię śwatło. Proszę, abyś wtedy grzecznie odłożył książeczki i przygotował się do spania. Słodkich snów."
+      entity_id: media_player.salon_little_screen
+    - wait_template: "{{ is_state('media_player.salon_little_screen', 'playing') }}"
+    - service: tts.clear_cache
+  swinki:
+    sequence:
+    - service: tts.reversotts_say
+      entity_id: media_player.salon_little_screen
+      data:
+        message: ' '
+    - delay: "2"
+    - service: tts.reversotts_say
+      data: 
+        message: "Najwyższy czas, aby każda z was poszła swoją drogą."
+      entity_id: media_player.salon_little_screen
+    - wait_template: "{{ is_state('media_player.salon_little_screen', 'playing') }}"
+    - service: tts.clear_cache
+  bb_tryb_spania:
+    sequence:
+    - service: tts.reversotts_say
+      entity_id: media_player.bear_googy
+      data:
+        message: ' '
+    - delay: "2"
+    - service: tts.reversotts_say
+      data: 
+        message: "Bernard, za dwadzieścia minut zmienię śwatło. Proszę, abyś wtedy grzecznie odłożył książeczki i przygotował się do spania. Słodkich snów."
+      entity_id: media_player.bear_googy
+    - wait_template: "{{ is_state('media_player.bear_googy', 'playing') }}"
+    - service: tts.clear_cache

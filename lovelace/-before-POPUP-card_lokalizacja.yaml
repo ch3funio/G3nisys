@@ -1,0 +1,83 @@
+- type: horizontal-stack
+  cards:
+  - type: entity-filter
+    card: 
+      type: glance
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;
+        }
+      show_state: false
+      show_name: false
+    show_empty: false
+    state_filter:
+    - "home"
+    - "na Rejtana"
+    entities:
+    - entity: person.johanna
+      tap_action:
+        action: call-service
+        service: browser_mod.popup
+        service_data:
+          deviceID: this
+          title: Historia
+          card:
+            type: map
+            entities:
+            - person.johanna
+            default_zoom: 14
+            dark_mode: false
+            hours_to_show: 10
+    - entity: person.chef
+      tap_action:
+        action: call-service
+        service: browser_mod.popup
+        service_data:
+          deviceID: 
+          - this
+          title: Historia
+          card:
+            type: map
+            entities:
+            - person.chef
+            default_zoom: 14
+            dark_mode: false
+            hours_to_show: 10
+  - type: entity-filter #HB
+    card: 
+      type: glance
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;
+        }
+      show_state: false
+      show_name: false
+    show_empty: false
+    state_filter:
+    - "na Turkusowej"
+    - "home"
+    entities: 
+    - entity: person.tata #border: solid #30d5c8 2px;
+      style: |
+        state-badge {
+        {%- if is_state('person.tata', 'na Turkusowej') %}
+        filter: sepia(100%) saturate(200%) hue-rotate(126deg) brightness(100%) contrast(100%);
+        {%- elif is_state('person.tata', 'home') %}
+        border: solid red 1px;
+        {% endif %}
+        }
+      tap_action:
+        action: call-service
+        service: browser_mod.popup
+        service_data:
+          deviceID: this
+          title: Historia
+          card:
+            type: map
+            entities:
+            - person.tata
+            default_zoom: 14
+            dark_mode: false
+            hours_to_show: 10

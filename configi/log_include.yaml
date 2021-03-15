@@ -1,11 +1,12 @@
 entities:
-- binary_sensor.drzwi_wc_contact
-- binary_sensor.drzwi_balkon_contact
-- binary_sensor.ruch_kuchnia_occupancy
-- binary_sensor.ruch_korytarz_occupancy
+- binary_sensor.wc_dr_contact
+- binary_sensor.loggia_dr_contact
+- binary_sensor.kitchen_mt_occupancy
+- binary_sensor.hall_mt_occupancy
 - person.chef
 - person.johanna
 - person.tata
+- person.renata
 - light.lampa_w_salonie
 - light.ledy_w_kuchni
 - light.yl1

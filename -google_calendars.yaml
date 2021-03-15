@@ -1,0 +1,63 @@
+- cal_id: n02asrvlp5boujouq2ocs7ob0s@group.calendar.google.com
+  entities:
+  - device_id: rodzinne_okazje
+    ignore_availability: true
+    name: Rodzinne okazje
+    track: true
+
+- cal_id: family04254369820324393850@group.calendar.google.com
+  entities:
+  - device_id: familijne
+    ignore_availability: true
+    name: Familijne
+    track: false
+
+- cal_id: przecinki@gmail.com
+  entities:
+  - device_id: firmowy
+    ignore_availability: true
+    name: Firmowy
+    track: false
+
+- cal_id: 7gi15t78pg4i1ls4g66mpr5l5o@group.calendar.google.com
+  entities:
+  - device_id: znajomi_uro
+    ignore_availability: true
+    name: Znajomi URO
+    track: true
+
+- cal_id: krisbartkowiak@gmail.com
+  entities:
+  - device_id: krisbartkowiak_gmail_com
+    ignore_availability: true
+    name: krisbartkowiak@gmail.com
+    track: false
+
+- cal_id: q1kn4lvh491jf2r4cru8p25npg@group.calendar.google.com
+  entities:
+  - device_id: faktury
+    ignore_availability: true
+    name: Faktury
+    track: false
+
+- cal_id: 4r7ac58v671cu1pmigbrs0r0n4@group.calendar.google.com
+  entities:
+  - device_id: domowy
+    ignore_availability: true
+    name: Domowy
+    track: true
+    max_results: 10
+
+- cal_id: addressbook#contacts@group.v.calendar.google.com
+  entities:
+  - device_id: contacts
+    ignore_availability: true
+    name: Contacts
+    track: false
+
+- cal_id: pl.polish#holiday@group.v.calendar.google.com
+  entities:
+  - device_id: swieta_w_polsce
+    ignore_availability: true
+    name: "\u015Awi\u0119ta w Polsce"
+    track: true

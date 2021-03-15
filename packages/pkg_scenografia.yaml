@@ -7,6 +7,9 @@ input_boolean:
     name: Praca w kuchni
     initial: off
     icon: mdi:stove
+  tryb_tv:
+  tryb_party:
+  tryb_guest:
 input_select:
   my_scene:
     name: my_scene
@@ -20,7 +23,7 @@ input_select:
       - 'tryb_spania' #5
       - 'noc' #6
       - 'sen' #7
-      - 'none'
+      - 'none' #8
 automation:
 - id: nowa_pora_dnia
   alias: nowa_pora_dnia
@@ -60,33 +63,18 @@ automation:
     value_template: "{{ is_state('group.gr_who', 'home') }}"
   action:
   - service: script.run_scene
-    data:
+    data: 
       t_config: >
         {% set t_scenes = {
-        'normalnie': '-22221-----',
-        'czerwony': '-000404--4-',
-        'ranek': '-----------',
-        'dzień': '--------00--',
-        'zmierzch': '----22-2---',
-        'wieczór': '-----------',
-        'tryb_spania': '-0003003---',
-        'noc': '-',
-        'sen': '-',
-        'none': '-----------'
+        'normalnie': '-22221------',
+        'czerwony': '-000404--4--',
+        'ranek': '--------------00',
+        'dzień': '-------00-----22',
+        'zmierzch': '-------2---1',
+        'wieczór': '--------3-1-1',
+        'tryb_spania': '-00030030--0---1',
+        'noc': '----0-----0-',
+        'sen': '------------',
+        'none': '-------0----'
         } %}
         {{ t_scenes[states('input_select.my_scene')] if states('input_select.my_scene') in t_scenes.keys() else t_scenes['none'] }}
-- id: tryb_spania
-  alias: tryb_spania
-  trigger:
-  - platform: state
-    entity_id: input_boolean.tryb_spania
-    to: "on"
-  action:
-  - condition: template
-    value_template: "{{ is_state('group.gr_who', 'home') }}"
-  - service: input_select.select_option
-    data:
-      entity_id: input_select.my_scene
-      option: tryb_spania
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.tryb_spania

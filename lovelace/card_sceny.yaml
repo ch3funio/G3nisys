@@ -1,0 +1,150 @@
+- type: horizontal-stack
+  cards:
+  - type: markdown
+    content: Salon
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "normal"
+    tap_action:
+      service_data:
+        t_config: '-222'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "sleep"
+    tap_action:
+      service_data:
+        t_config: '-300'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "night"
+    tap_action:
+      service_data:
+        t_config: '-400'
+- type: horizontal-stack
+  cards:
+  - type: markdown
+    content: Plafon
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "normal"
+    tap_action:
+      service_data:
+        t_config: '----22'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "sleep"
+    tap_action:
+      service_data:
+        t_config: '----30'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "night"
+    tap_action:
+      service_data:
+        t_config: '----40'
+- type: horizontal-stack
+  cards:
+  - type: markdown
+    content: Korytarz
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "normal"
+    tap_action:
+      service_data:
+        t_config: '------2'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "sleep"
+    tap_action:
+      service_data:
+        t_config: '------3'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "night"
+    tap_action:
+      service_data:
+        t_config: '------4'    
+- type: horizontal-stack
+  cards:
+  - type: markdown
+    content: BB
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "normal"
+    tap_action:
+      service_data:
+        t_config: '-------2'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "sleep"
+    tap_action:
+      service_data:
+        t_config: '-------3'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "night"
+    tap_action:
+      service_data:
+        t_config: '-------4'
+- type: horizontal-stack
+  cards:
+  - type: markdown
+    content: Maja
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "normal"
+    tap_action:
+      service_data:
+        t_config: '--------2'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "sleep"
+    tap_action:
+      service_data:
+        t_config: '--------3'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "night"
+    tap_action:
+      service_data:
+        t_config: '--------4'
+- type: horizontal-stack
+  cards:
+  - type: markdown
+    content: WC
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "normal"
+    tap_action:
+      service_data:
+        t_config: '---------2'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "sleep"
+    tap_action:
+      service_data:
+        t_config: '---------3'
+  - type: "custom:button-card"
+    template: [button, scene]
+    variables:
+      sc_what: "night"
+    tap_action:
+      service_data:
+        t_config: '---------4'

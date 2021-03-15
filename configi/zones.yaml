@@ -19,7 +19,7 @@
   longitude: !secret gps_pkp_lon
   icon: mdi:train
 - name: na Turkusowej
-  radius: 50
+  radius: 75
   icon: mdi:home
   latitude: !secret gps_turkusowa_lat
   longitude: !secret gps_turkusowa_lon

@@ -1,0 +1,18 @@
+﻿disable:
+  - all
+prefix: "bro_"
+# devices:
+#   14f92a05-d26084e4:
+#     name: bro_lestaro
+#   aabb25cf-eb56d00e:
+#     name: bro_chef_app
+#   5a2d1ffb-39e6a961:
+#     name: bro_chef_chrom
+#   60995d14-17d3af7d:
+#     name: bro_prawy
+#   01d7a8b7-b23eb38f:
+#     name: bro_johanna_app
+#   295bd25b_df11f802:
+#     name: bro_chef_comapnion
+#   9a62e812_ed3d626a:
+#     name: bro_work_poip

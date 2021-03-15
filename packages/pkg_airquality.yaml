@@ -1,147 +1,130 @@
 group:
   gr_airquality:
     entities:
-    - sensor.balkon_pm10
-    - sensor.balkon_pm10_stat
-    - sensor.balkon_pm2_5
-    - sensor.balkon_pm2_5_stat
-    - sensor.balkon_temperatura
-    - sensor.balkon_wilgotnosc
-    - sensor.balkon_pm10_level
-    - sensor.balkon_pm2_5_level
-    - sensor.balkon_pressure
-    - input_boolean.alert_air
-    - automation.stan_powietrza
-scene:
-- name: air_idealny
-  entities:
-    light.yl1: 
-      state: 'on'
-      rgb_color: [87,117,8]
-- name: air_sredni
-  entities:
-    light.yl1: 
-      state: 'on'
-      rgb_color: [244,180,0]
-- name: air_tragedia
-  entities:
-    light.yl1: 
-      state: 'on'
-      rgb_color: [198,51,30]
+    - sensor.loggia_airq_pm10
+    - sensor.loggia_airq_pm10_stat
+    - sensor.loggia_airq_pm2_5
+    - sensor.loggia_airq_pm2_5_stat
+    - sensor.loggia_airq_temperature
+    - sensor.loggia_airq_humidity
+    - sensor.loggia_airq_pm10_level
+    - sensor.loggia_airq_pm2_5_level
+    - sensor.loggia_airq_pressure
+    - input_boolean.loggia_airq_alert
 #################################################
 ###             SENSORY zanieczyszczenia      ###
 ################################################# 
 sensor:
-- name: balkon_pm10
+- name: loggia_airq_pm10
   platform: command_line
   scan_interval: 600
   command: !secret balkon_json
   value_template: >
     {%- for i in range(0, (value_json.sensordatavalues|count())) %}
       {%- if value_json.sensordatavalues[i].value_type == 'SDS_P1' %}
-        {% set temp = states('sensor.balkon_pm10') %}
+        {% set temp = states('sensor.loggia_airq_pm10') %}
         {%- if (value_json.sensordatavalues[i].value | round(2)) is number %}{{ value_json.sensordatavalues[i].value | round(2) }}{%- else %}{{ temp }}{%- endif %}
       {%- endif %}
     {%- endfor %}
-- name: balkon_pm2_5
+- name: loggia_airq_pm2_5
   platform: command_line
   scan_interval: 600
   command: !secret balkon_json
   value_template: >
     {%- for i in range(0, (value_json.sensordatavalues|count())) %}
       {%- if value_json.sensordatavalues[i].value_type == 'SDS_P2' %}
-        {% set temp = states('sensor.balkon_pm10') %}
+        {% set temp = states('sensor.loggia_airq_pm10') %}
         {%- if (value_json.sensordatavalues[i].value | round(2)) is number %}{{ value_json.sensordatavalues[i].value | round(2) }}{%- else %}{{ temp }}{%- endif %}
       {%- endif %}
     {%- endfor %}
-- name: balkon_temperatura
+- name: loggia_airq_temperature
   platform: command_line
   scan_interval: 600
   command: !secret balkon_json
   value_template: >
     {%- for i in range(0, (value_json.sensordatavalues|count())) %}
       {%- if value_json.sensordatavalues[i].value_type == 'BME280_temperature' %}
-        {% set temp = states('sensor.balkon_pm10') %}
+        {% set temp = states('sensor.loggia_airq_pm10') %}
         {%- if (value_json.sensordatavalues[i].value | round(2)) is number %}{{ value_json.sensordatavalues[i].value | round(1) }}{%- else %}{{ temp }}{%- endif %}
       {%- endif %}
     {%- endfor %}
-- name: balkon_wilgotnosc
+- name: loggia_airq_humidity
   platform: command_line
   scan_interval: 600
   command: !secret balkon_json
   value_template: >
     {%- for i in range(0, (value_json.sensordatavalues|count())) %}
       {%- if value_json.sensordatavalues[i].value_type == 'BME280_humidity' %}
-        {% set temp = states('sensor.balkon_pm10') %}
+        {% set temp = states('sensor.loggia_airq_pm10') %}
         {%- if (value_json.sensordatavalues[i].value | round(2)) is number %}{{ value_json.sensordatavalues[i].value | round(1) }}{%- else %}{{ temp }}{%- endif %}
       {%- endif %}
     {%- endfor %}
-- name: balkon_pressure
+- name: loggia_airq_pressure
   platform: command_line
   scan_interval: 600
   command: !secret balkon_json
   value_template: >
     {%- for i in range(0, (value_json.sensordatavalues|count())) %}
       {%- if value_json.sensordatavalues[i].value_type == 'BME280_pressure' %}
-        {% set temp = states('sensor.balkon_pm10') %}
+        {% set temp = states('sensor.loggia_airq_pm10') %}
         {%- if (value_json.sensordatavalues[i].value | round(2)) is number %}{{ value_json.sensordatavalues[i].value | int / 100 | round(0) }}{%- else %}{{ temp }}{%- endif %}
       {%- endif %}
     {%- endfor %}
-- name: balkon_pm10_stat
+- name: loggia_airq_pm10_stat
   platform: statistics
-  entity_id: sensor.balkon_pm10
+  entity_id: sensor.loggia_airq_pm10
   max_age:
     minutes: 60
-- name: balkon_pm2_5_stat
+- name: loggia_airq_pm2_5_stat
   platform: statistics
-  entity_id: sensor.balkon_pm2_5
+  entity_id: sensor.loggia_airq_pm2_5
   max_age:
     minutes: 60
 - platform: template
   sensors:
-    balkon_pm10_level:
+    loggia_airq_pm10_level:
       value_template: >-
-        {% if states('sensor.balkon_pm10_stat') | float<=25 %}IDEALNY
-        {% elif states('sensor.balkon_pm10_stat') | float<=50 %}DOBRY
-        {% elif states('sensor.balkon_pm10_stat') | float<=90 %}ŚREDNI
-        {% elif states('sensor.balkon_pm10_stat') | float<=180 %}SŁABY
-        {% elif states('sensor.balkon_pm10_stat') | float<=250 %}KIEPSKI
-        {% elif states('sensor.balkon_pm10_stat') | float>250 %}MASAKRA
-        {%- endif %} ({{ states('sensor.balkon_pm10') }} µg/m³)
-    balkon_pm2_5_level:
+        {% if states('sensor.loggia_airq_pm10_stat') | float<=25 %}IDEALNY
+        {% elif states('sensor.loggia_airq_pm10_stat') | float<=50 %}DOBRY
+        {% elif states('sensor.loggia_airq_pm10_stat') | float<=90 %}ŚREDNI
+        {% elif states('sensor.loggia_airq_pm10_stat') | float<=180 %}SŁABY
+        {% elif states('sensor.loggia_airq_pm10_stat') | float<=250 %}KIEPSKI
+        {% elif states('sensor.loggia_airq_pm10_stat') | float>250 %}MASAKRA
+        {%- endif %} ({{ states('sensor.loggia_airq_pm10') }} µg/m³)
+    loggia_airq_pm2_5_level:
       value_template: >-
-        {% if states('sensor.balkon_pm2_5_stat') | float<=15 %}IDEALNY
-        {% elif states('sensor.balkon_pm2_5_stat') | float<=30 %}DOBRY
-        {% elif states('sensor.balkon_pm2_5_stat') | float<=55 %}ŚREDNI
-        {% elif states('sensor.balkon_pm2_5_stat') | float<=110 %}SŁABY
-        {% elif states('sensor.balkon_pm2_5_stat') | float>110 %}KIEPSKI
-        {%- endif %} ({{ states('sensor.balkon_pm2_5') }} µg/m³)
+        {% if states('sensor.loggia_airq_pm2_5_stat') | float<=15 %}IDEALNY
+        {% elif states('sensor.loggia_airq_pm2_5_stat') | float<=30 %}DOBRY
+        {% elif states('sensor.loggia_airq_pm2_5_stat') | float<=55 %}ŚREDNI
+        {% elif states('sensor.loggia_airq_pm2_5_stat') | float<=110 %}SŁABY
+        {% elif states('sensor.loggia_airq_pm2_5_stat') | float>110 %}KIEPSKI
+        {%- endif %} ({{ states('sensor.loggia_airq_pm2_5') }} µg/m³)
 input_boolean:
-  alert_air:
+  loggia_airq_alert:
     name: "Powiadamiaj o stanie powietrza"
     icon: mdi:air-filter
 automation:
-- id: alert_air
+- id: loggia_airq_alert
   alias: "Stan powietrza"
   initial_state: on
   trigger:
   - platform: numeric_state
-    entity_id: sensor.balkon_pm10_stat
+    entity_id: sensor.loggia_airq_pm10_stat
     above: 49
     for:
       minutes: 5
   - platform: numeric_state
-    entity_id: sensor.balkon_pm2_5_stat
+    entity_id: sensor.loggia_airq_pm2_5_stat
     above: 29
     for:
       minutes: 5
   - platform: numeric_state
-    entity_id: sensor.balkon_pm10_stat
+    entity_id: sensor.loggia_airq_pm10_stat
     below: 50
     for:
       minutes: 5
   - platform: numeric_state
-    entity_id: sensor.balkon_pm2_5_stat
+    entity_id: sensor.loggia_airq_pm2_5_stat
     below: 30
     for:
       minutes: 5
@@ -150,10 +133,10 @@ automation:
     data_template:
       title: "Stan powietrza"
       message: >
-        {% if ((states('sensor.balkon_pm10_stat') | float<=25) and (states('sensor.balkon_pm2_5_stat') | float<=15)) %}IDEALNY, warto przewietrzyć mieszkanie
-        {% elif ((states('sensor.balkon_pm10_stat') | float<=50) and (states('sensor.balkon_pm2_5_stat') | float<=30)) %}DOBRY, można przewietrzyć mieszkanie
-        {% elif ((states('sensor.balkon_pm10_stat') | float<=90) and (states('sensor.balkon_pm2_5_stat') | float<=55)) %}ŚREDNI, lepiej zamknąć okna
-        {% elif ((states('sensor.balkon_pm10_stat') | float<=180) and (states('sensor.balkon_pm2_5_stat') | float<=110)) %}SŁABY, zamknij okna
-        {% elif ((states('sensor.balkon_pm10_stat') | float<=250) and (states('sensor.balkon_pm2_5_stat') | float>110)) %}KIEPSKI, zamykaj szybko okna!
-        {% elif (states('sensor.balkon_pm10_stat') | float>250) %}MASAKRA, apokalipsa!
+        {% if ((states('sensor.loggia_airq_pm10_stat') | float<=25) and (states('sensor.loggia_airq_pm2_5_stat') | float<=15)) %}IDEALNY, warto przewietrzyć mieszkanie
+        {% elif ((states('sensor.loggia_airq_pm10_stat') | float<=50) and (states('sensor.loggia_airq_pm2_5_stat') | float<=30)) %}DOBRY, można przewietrzyć mieszkanie
+        {% elif ((states('sensor.loggia_airq_pm10_stat') | float<=90) and (states('sensor.loggia_airq_pm2_5_stat') | float<=55)) %}ŚREDNI, lepiej zamknąć okna
+        {% elif ((states('sensor.loggia_airq_pm10_stat') | float<=180) and (states('sensor.loggia_airq_pm2_5_stat') | float<=110)) %}SŁABY, zamknij okna
+        {% elif ((states('sensor.loggia_airq_pm10_stat') | float<=250) and (states('sensor.loggia_airq_pm2_5_stat') | float>110)) %}KIEPSKI, zamykaj szybko okna!
+        {% elif (states('sensor.loggia_airq_pm10_stat') | float>250) %}MASAKRA, apokalipsa!
         {% else %}False{%- endif %}

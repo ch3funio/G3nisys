@@ -19,11 +19,11 @@ device_tracker:
 group:
   gr_onoff: 
     entities:
-    - device_tracker.lgwebostv
-    - device_tracker.lgwebostvwifi
+    - device_tracker.salon_tv_lan
+    - device_tracker.salon_tv_wifi
 webostv:
   host: !secret ip_lgtv
-  name: LG TV
+  name: Salon TV
   turn_on_action:
     service: wake_on_lan.send_magic_packet
     data:
@@ -34,6 +34,3 @@ webostv:
     - Netflix
     - YouTube
     - YouTube Kids
-#media_player:
-#- platform: kodi
-#  host: !secret ip_narnia

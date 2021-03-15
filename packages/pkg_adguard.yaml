@@ -8,7 +8,7 @@ group:
     - sensor.adguard_safe_browsing_blocked
     - sensor.adguard_safe_searches_enforced
     - switch.adguard_filtering
-    - switch.adguard_parental_control_2
-    - switch.adguard_protection_2
-    - switch.adguard_safe_browsing_2
-    - switch.adguard_safe_search_2
+    - switch.adguard_parental_control
+    - switch.adguard_protection
+    - switch.adguard_safe_browsing
+    - switch.adguard_safe_search

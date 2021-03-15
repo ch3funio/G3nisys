@@ -15,28 +15,35 @@ http:
   ssl_key: !secret ssl_priv
 lovelace:
   mode: yaml
-  resources: !include configi/love_resource.yaml
+  resources: !include lovelace/love_resource.yaml
 discovery:
   ignore:
   - yeelight
-google:
-  client_id: !secret g_cal_client_id
-  client_secret: !secret g_cal_key
+# google:
+#   client_id: !secret g_cal_client_id
+#   client_secret: !secret g_cal_key
 tts:
 - platform: google_translate
   language: "pl"
   time_memory: 300
+  base_url: !secret external_url
+- platform: reversotts
+  language: "Ania-Polish"
+  pitch: "100"
+  bitrate: "128k"
 automation: 
+binary_sensor: !include configi/binary_sensors.yaml
 config:
 conversation:
+device_tracker:
+ffmpeg:
 hassio:
 mobile_app:
 sun:
 system_health:
 updater:
 wake_on_lan:
-
-browser_mod: !include configi/browser_mod.yaml
+browser_mod: !include lovelace/browser_mod.yaml
 frontend: !include configi/frontend.yaml
 google_assistant: !include configi/google.yaml
 history:
@@ -45,9 +52,14 @@ influxdb: !include configi/influx.yaml
 logbook:
   include: !include configi/log_include.yaml
 mqtt: !include configi/mqtt.yaml
+nest: !include configi/koninkonest.yaml
 panel_iframe: !include configi/iframe.yaml
+proximity: !include configi/proximity.yaml
 recorder: !include configi/recorder.yaml
 script: !include_dir_merge_named scripts/
 sensor: !include configi/sensors.yaml
 websocket_api:
+xbox:
+  client_id: !secret xbone_client
+  client_secret: !secret xbone_value
 zone: !include configi/zones.yaml

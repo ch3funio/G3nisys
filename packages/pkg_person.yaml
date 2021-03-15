@@ -6,35 +6,31 @@ homeassistant:
       entity_picture: "/local/jb_foto.jpg"
     person.tata:
       entity_picture: "/local/hb_foto.jpg"
+    person.renata:
+      entity_picture: "/local/rm_foto.jpg"
 group:
-  gr_who: person.chef, person.johanna, person.tata
+  gr_who: person.chef, person.johanna, person.tata, person.renata
   gr_tracker: 
   - device_tracker.chef_xl
   - device_tracker.google_maps_112147391722547675474
   - device_tracker.johanna_xl
   - device_tracker.google_maps_107968207712593220766
   - device_tracker.google_maps_110941774270035156789
+  - device_tracker.google_maps_101691212499364406481
   gr_person_aplikacja:
   - sensor.chef_xl_battery_level
   - sensor.chef_xl_geocoded_location
   - sensor.chef_xl_wifi_connection
-  - sensor.bro_chef_app
   - sensor.johanna_xl_battery_level
   - sensor.johanna_xl_geocoded_location
   - sensor.johanna_xl_wifi_connection
-  - sensor.bro_johanna_app
-  - sensor.bro_prawy
-  - sensor.bro_lestaro
-  - light.bro_prawy
-  - media_player.bro_prawy
   - sensor.connected_clients
 device_tracker:
 - platform: google_maps
   username: !secret hassio_google_login
-  interval_seconds: 300
+  scan_interval: 300
   max_gps_accuracy: 150
-  new_device_defaults:
-    track_new_devices: true
+  track_new_devices: true
 person:
 - name: chef
   id: chef
@@ -51,3 +47,20 @@ person:
   user_id: !secret userid_tata
   device_trackers:
   - device_tracker.google_maps_110941774270035156789
+- name: renata
+  id: renata
+  user_id: !secret userid_renata
+  device_trackers:
+  - device_tracker.google_maps_101691212499364406481
+sensor:
+- name: to_koninko
+  platform: google_travel_time
+  api_key: !secret g_api_key
+  origin: person.renata
+  destination: zone.koninko
+  scan_interval: 600
+  options:
+    units: 'metric'
+    mode: 'driving'
+    language: 'pl'
+    avoid: 'tolls'

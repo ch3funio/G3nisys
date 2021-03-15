@@ -1,4 +1,4 @@
 ﻿tasmoadmin:
-    title: TasmoAdmin
-    icon: mdi:wrench
-    url: !secret tasmourl
+  title: TasmoAdmin
+  icon: mdi:wrench
+  url: !secret tasmourl

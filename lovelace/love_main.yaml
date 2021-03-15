@@ -1,0 +1,399 @@
+title: Istotne
+panel: false
+icon: mdi:home
+id: love_main
+cards:
+- type: vertical-stack
+  cards:
+  - cards: !include card_porydnia.yaml
+    type: horizontal-stack
+  - cards: !include card_lokalizacja.yaml
+    type: horizontal-stack
+  - name: Klimat w domu
+    type: "custom:button-card"
+    template: [climat-grid]
+    custom_fields:
+      one: "[[[ return '<ha-icon icon=mdi:thermometer></ha-icon>' ]]]"
+      two: "[[[ return states['sensor.tempy'].state + '°C' ]]]"
+      three: "[[[ return states['sensor.mokry'].state + ' %' ]]]"
+      four: "[[[ return '<ha-icon icon=mdi:water-percent></ha-icon>' ]]]"
+    tap_action:
+      browser_mod:
+        title: Klimat
+        card:
+          type: vertical-stack
+          cards: !include card_klimat.yaml
+  - type: horizontal-stack
+    cards:
+    - name: Kuchnia
+      type: "custom:button-card"
+      entity: light.ledy_w_kuchni
+      template: [button_round, popup, mt_where]
+      variables:
+        mt_where: "binary_sensor.kitchen_mt_occupancy"
+    - name: Salon
+      type: "custom:button-card"
+      entity: light.lampa_w_salonie
+      template: [button_round, popup]
+      hold_action: 
+        browser_mod:
+          title: Salon
+          card:
+            type: vertical-stack
+            cards:
+            - type: horizontal-stack
+              cards:
+              - type: "custom:button-card"
+                entity: light.yl1
+                template: button_round
+              - type: "custom:button-card"
+                entity: light.yl2
+                template: button_round
+              - type: "custom:button-card"
+                entity: light.yl3
+                template: button_round
+            - type: horizontal-stack
+              cards:  
+              - type: "custom:button-card"
+                icon: mdi:lightbulb-on
+                template: [button, scene]
+                variables:
+                  sc_what: "normal"
+                tap_action:
+                  action: call-service
+                  service: script.run_scene
+                  service_data:
+                    t_config: '-222'
+              - type: "custom:button-card"
+                icon: mdi:sleep
+                template: [button, scene]
+                variables:
+                  sc_what: "sleep"
+                tap_action:
+                  action: call-service
+                  service: script.run_scene
+                  service_data:
+                    t_config: '-300'
+              - type: "custom:button-card"
+                icon: mdi:weather-night
+                template: [button, scene]
+                variables:
+                  sc_what: "night"
+                tap_action:
+                  action: call-service
+                  service: script.run_scene
+                  service_data:
+                    t_config: '-400'
+    - name: Plafond
+      type: "custom:button-card" ##### plafon w salonie
+      template: [button_round, popup]
+      icon: mdi:lightbulb-multiple
+      entity: light.plafon
+      tap_action:
+        action: call-service
+        service: automation.trigger
+        service_data:
+          entity_id: automation.plafon_light
+      hold_action: 
+        browser_mod:
+          title: Plafond
+          card:
+            type: vertical-stack
+            cards:
+            - type: horizontal-stack
+              cards:
+              - type: "custom:button-card"
+                entity: light.yl_plafon1
+                template: [button_round]
+              - type: "custom:button-card"
+                entity: light.yl_plafon2
+                template: [button_round]
+            - type: horizontal-stack
+              cards:
+              - type: "custom:button-card"
+                icon: mdi:lightbulb-on
+                template: [button, scene]
+                variables:
+                  sc_what: "normal"
+                tap_action:
+                  action: call-service
+                  service: script.run_scene
+                  service_data:
+                    t_config: '----22'
+              - type: "custom:button-card"
+                icon: mdi:sleep
+                template: [button, scene]
+                variables:
+                  sc_what: "sleep"
+                tap_action:
+                  action: call-service
+                  service: script.run_scene
+                  service_data:
+                    t_config: '----30'
+              - type: "custom:button-card"
+                icon: mdi:weather-night
+                template: [button, scene]
+                variables:
+                  sc_what: "night"
+                tap_action:
+                  action: call-service
+                  service: script.run_scene
+                  service_data:
+                    t_config: '----40'
+    - name: Hallway
+      type: "custom:button-card" 
+      entity: light.yl_korytarz
+      icon: mdi:shoe-print
+      template: [button_round, popup, mt_where]  
+      variables:
+        mt_where: "binary_sensor.hall_mt_occupancy"
+      hold_action: 
+        browser_mod:
+          title: Hallway
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              icon: mdi:lightbulb-on
+              template: [button, scene]
+              variables:
+                sc_what: "normal"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '------2'
+            - type: "custom:button-card"
+              icon: mdi:sleep
+              template: [button, scene]
+              variables:
+                sc_what: "sleep"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '------3'
+            - type: "custom:button-card"
+              icon: mdi:weather-night
+              template: [button, scene]
+              variables:
+                sc_what: "night"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '------4'    
+  - type: horizontal-stack
+    cards: 
+    - name: Bear
+      type: "custom:button-card" ##### światło u Bernarda
+      entity: light.yl_bernard
+      tap_action:
+        action: call-service
+        service: automation.trigger
+        service_data:
+          entity_id: automation.bb_light
+      template: [button_round, popup] 
+      show_entity_picture: true
+      icon: chf:bear #custom:bear
+      hold_action: 
+        browser_mod:
+          title: Bear
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              icon: mdi:lightbulb-on
+              template: [button, scene]
+              variables:
+                sc_what: "normal"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '-------2'
+            - type: "custom:button-card"
+              icon: mdi:sleep
+              template: [button, scene]
+              variables:
+                sc_what: "sleep"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '-------3'
+            - type: "custom:button-card"
+              icon: mdi:weather-night
+              template: [button, scene]
+              variables:
+                sc_what: "night"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '-------4'
+    - name: Bee
+      type: "custom:button-card" ##### światło u Mai
+      entity: light.yl_maja
+      template: [button_round, popup]
+      icon: chf:bee #custom:bee
+      tap_action:
+        action: call-service
+        service: automation.trigger
+        service_data:
+          entity_id: automation.mj_light
+      hold_action: 
+        browser_mod:
+          title: Bee
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              icon: mdi:lightbulb-on
+              template: [button, scene]
+              variables:
+                sc_what: "normal"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '--------2'
+            - type: "custom:button-card"
+              icon: mdi:sleep
+              template: [button, scene]
+              variables:
+                sc_what: "sleep"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '--------3'
+            - type: "custom:button-card"
+              icon: mdi:weather-night
+              template: [button, scene]
+              variables:
+                sc_what: "night"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '--------4'
+    - name: WC
+      type: "custom:button-card" 
+      entity: light.yl_wc
+      template: [button_round, popup, mt_where]
+      variables:
+        mt_where: "binary_sensor.wc_dr_contact"
+      icon: mdi:human-male-female
+      hold_action: 
+        browser_mod:
+          title: WC
+          card:
+            type: horizontal-stack
+            cards:
+            - type: "custom:button-card"
+              template: [button, scene]
+              variables:
+                sc_what: "normal"
+              icon: mdi:lightbulb-on
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '---------2'
+            - type: "custom:button-card"
+              template: [button, scene]
+              variables:
+                sc_what: "sleep"
+              icon: mdi:sleep
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '---------3'
+            - type: "custom:button-card"
+              icon: mdi:weather-night
+              template: [button, scene]
+              variables:
+                sc_what: "night"
+              tap_action:
+                action: call-service
+                service: script.run_scene
+                service_data:
+                  t_config: '---------4'
+    - name: Lampki na balkonie
+      type: "custom:button-card" 
+      entity: switch.loggia_prawe
+      template: [button_round, popup, mt_where]
+      variables:
+        mt_where: "binary_sensor.loggia_dr_contact"
+  - cards: !include card_camera.yaml
+    type: horizontal-stack
+  - type: entity-filter #media_player
+    show_empty: false
+    state_filter:
+      - "on"
+      - "playing"
+    card:
+      type: entities
+    entities:
+    - entity: media_player.salon_tv
+    - entity: media_player.bear_googy
+    - entity: media_player.bee_boogy
+    - entity: media_player.bath_tic
+    - entity: media_player.salon_big_screen
+    - entity: media_player.salon_little_screen
+  - type: horizontal-stack
+    cards:
+    - name: Kodi On
+      type: "custom:button-card"
+      template: sceny
+      entity: switch.salon_kodi
+      lock:
+        enabled: true
+        unlock: tap
+      tap_action: 
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.salon_kodi
+    - name: Choinka
+      type: conditional
+      conditions:
+      - entity: light.choinka
+        state_not: unavailable
+      card:
+        type: "custom:button-card"
+        name: Choinka
+        template: sceny
+        entity: light.choinka
+        lock:
+          enabled: true
+          duration: 10
+          unlock: tap
+        tap_action: 
+          action: call-service
+          service: light.toggle
+          service_data:
+            entity_id: light.choinka
+    - name: AirQ
+      template: button_round
+      type: "custom:button-card"
+      aspect_ratio: 2/1
+      entity: switch.loggia_airquality
+      icon: mdi:air-filter
+      lock:
+        enabled: true
+        unlock: hold 
+      tap_action: 
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.loggia_airquality
+      style: |
+        ha-card {
+          background: 
+            {% if ((states('sensor.loggia_airq_pm10_stat') | float<=50) and (states('sensor.loggia_airq_pm2_5_stat') | float<=30)) %}var(--success-color) !important;
+            {% elif ((states('sensor.loggia_airq_pm10_stat') | float<=90) and (states('sensor.loggia_airq_pm2_5_stat') | float<=55)) %}var(--warning-color) !important;
+            {% else %}var(--error-color) !important;{%- endif %}
+          box-shadow: none !important;}

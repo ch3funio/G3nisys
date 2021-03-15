@@ -1,37 +1,36 @@
-################################################################
-################################################################
-################################################################ zakładka
-################################################################ administracyjna
-################################################################
-################################################################
 title: ADM
 icon: mdi:toolbox
 background: radial-gradient(grey, skyblue)
 cards:
+- type: vertical-stack
+  cards: !include card_sceny.yaml
 - type: horizontal-stack
-  cards: !include card_lokalizacja.yaml
-################################################################
-################################################################ automatyzacje pory dnia i trybów
-################################################################
+  cards: !include card_adguard.yaml       
+- type: button
+  name: Profile arkusz
+  tap_action:
+    action: url
+    url_path: "https://docs.google.com/spreadsheets/d/1VsYuqvx9a9H7FGLumrSPUt3_j_PjAtdwFIST4Mq4WxE/edit#gid=0"
 - type: entities
   show_header_toggle: false
-  entities:
-  - sensor.nowa_pora
-  - sun.sun
-  - input_select.my_scene
-  - input_boolean.tryb_spania
-  - input_boolean.tryb_praca_w_kuchni
-  - switch.sonoff7
+  entities: ['sensor.nowa_pora', 'sun.sun', 'input_select.my_scene', 'input_boolean.tryb_spania', 'input_boolean.tryb_praca_w_kuchni', 
+            'switch.salon_kodi', 'light.choinka', 'switch.loggia_prawe', 'binary_sensor.hall_entrance_motion']
   ################################################################
   ################################################################ sensory ruchu i kontaktowe
   ################################################################
+- type: map
+  aspect_ratio: 16:9
+  default_zoom: 14
+  hours_to_show: 12
+  entities: ['person.chef', 'person.johanna', 'person.tata', 'person.renata', 'zone.home']
 - type: entities
   entities:
-  - binary_sensor.drzwi_wc_contact
-  - binary_sensor.drzwi_balkon_contact
-  - binary_sensor.ruch_kuchnia_occupancy
-  - binary_sensor.ruch_korytarz_occupancy
-  - binary_sensor.zalanie_kuchnia_water_leak
+  - binary_sensor.wc_dr_contact
+  - binary_sensor.loggia_dr_contact
+  - binary_sensor.kitchen_mt_occupancy
+  - binary_sensor.hall_mt_occupancy
+  - binary_sensor.kitchen_fl_water_leak
+
 - type: custom:auto-entities
   card:
     type: glance
@@ -72,3 +71,8 @@ cards:
     - entity_id: "*linkquality"
     - entity_id: "*balkon*"
     - entity_id: "*battery"
+- type: entities
+  entities:
+  - script.bb_tryb_spania
+  - script.swinki
+  - script.bernard_test

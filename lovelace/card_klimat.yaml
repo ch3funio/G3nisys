@@ -1,0 +1,91 @@
+- type: horizontal-stack
+  cards:
+  - name: Salon
+    template: naglowek_klimat
+    type: "custom:button-card"
+  - name: Temperatura
+    template: tempy
+    type: "custom:button-card"
+    entity: sensor.salon_temperature
+  - name: Wilgotność
+    type: "custom:button-card"
+    entity: sensor.salon_humidity
+    template: mokry
+- type: horizontal-stack
+  cards:
+  - name: Bernard
+    template: naglowek_klimat
+    type: "custom:button-card"
+  - name: Temperatura
+    template: tempy
+    type: "custom:button-card"
+    entity: sensor.bear_temperature
+  - name: Wilgotność
+    type: "custom:button-card"
+    entity: sensor.bear_humidity
+    template: mokry
+- type: horizontal-stack
+  cards:
+  - name: Maja
+    template: naglowek_klimat
+    type: "custom:button-card"
+  - name: Temperatura
+    template: tempy
+    type: "custom:button-card"
+    entity: sensor.bee_temperature
+  - name: Wilgotność
+    type: "custom:button-card"
+    entity: sensor.bee_humidity
+    template: mokry
+- type: horizontal-stack
+  cards:
+  - name: Kuchnia
+    template: naglowek_klimat
+    type: "custom:button-card"
+  - name: Temperatura
+    template: tempy
+    type: "custom:button-card"
+    entity: sensor.kitchen_temperature
+  - name: Wilgotność
+    type: "custom:button-card"
+    entity: sensor.kitchen_humidity
+    template: mokry
+- type: horizontal-stack
+  cards:
+  - name: Schowek
+    template: naglowek_klimat
+    type: "custom:button-card"
+  - name: Temperatura
+    template: tempy
+    type: "custom:button-card"
+    entity: sensor.lamus_temperature
+  - name: Wilgotność
+    type: "custom:button-card"
+    entity: sensor.lamus_humidity
+    template: mokry
+- type: horizontal-stack
+  cards:
+  - name: Łazienka
+    template: naglowek_klimat
+    type: "custom:button-card"
+  - name: Temperatura
+    template: tempy
+    type: "custom:button-card"
+    entity: sensor.bath_temperature
+  - name: Wilgotność
+    type: "custom:button-card"
+    entity: sensor.bath_humidity
+    template: mokry
+- type: horizontal-stack
+  cards:
+  - name: WC
+    template: naglowek_klimat
+    type: "custom:button-card"
+  - name: Temperatura
+    template: tempy
+    type: "custom:button-card"
+    entity: sensor.wc_temperature
+  - name: Wilgotność
+    type: "custom:button-card"
+    entity: sensor.wc_humidity
+    template: mokry

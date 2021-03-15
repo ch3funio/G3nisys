@@ -2,7 +2,7 @@ automation:
 - alias: btn_salon_single # lampa w salonie
   trigger:
     platform: state
-    entity_id: sensor.btn_salon_click
+    entity_id: sensor.salon_btn1_click
     to: "single"
   condition:
     condition: state
@@ -14,7 +14,7 @@ automation:
 - alias: btn_salon_double # plafon 
   trigger:
     platform: state
-    entity_id: sensor.btn_salon_click
+    entity_id: sensor.salon_btn1_click
     to: "double"
   condition:
     condition: state
@@ -26,7 +26,7 @@ automation:
 - alias: tradfri_bright # lampa w salonie
   trigger:
     platform: state
-    entity_id: sensor.tradfri_one_action
+    entity_id: sensor.salon_trad1_action
     to: "brightness_up_click"
   action:
   - service: light.toggle
@@ -34,27 +34,37 @@ automation:
 - alias: tradfri_dimm # plafon
   trigger:
     platform: state
-    entity_id: sensor.tradfri_one_action
+    entity_id: sensor.salon_trad1_action
     to: "brightness_down_click"
   action:
-  - service: light.toggle
-    entity_id: light.plafon
+  - service: automation.trigger
+    entity_id: automation.plafon_light
 - alias: tradfri_left # swiatlo u MB
   trigger:
     platform: state
-    entity_id: sensor.tradfri_one_action
+    entity_id: sensor.salon_trad1_action
     to: "arrow_left_click"
   action:
-  - service: light.toggle
-    entity_id: light.yl_maja
+  - service: automation.trigger
+    entity_id: automation.mj_light
 - alias: tradfri_right # swiatlo u BB
   trigger:
     platform: state
-    entity_id: sensor.tradfri_one_action
+    entity_id: sensor.salon_trad1_action
     to: "arrow_right_click"
   action:
-  - service: light.toggle
-    entity_id: light.yl_bernard
+  - service: automation.trigger
+    entity_id: automation.bb_light
+- alias: tradfri_middle
+  trigger:
+    platform: state
+    entity_id: sensor.salon_trad1_action
+    to: "toggle"
+  action:
+  - service: automation.trigger
+    entity_id: automation.middle
+
+################################### poniżej do usuniecia
 - alias: praca w kuchnia
   trigger:
   - platform: state
@@ -63,37 +73,21 @@ automation:
   action:
   - service: notify.mobile_app_chef_xl
     data:
-      message: 'Hej Chef!'
+      message: 'Hej Chef! dog'
       data:
+        image: "https://www.sciencemag.org/sites/default/files/styles/article_main_image_-_1280w__no_aspect_/public/dogs_1280p_0.jpg"
         ttl: 0
         priority: high
         tag: tag
+        actions:
+        - action: "alarm" # The key you are sending for the event
+          title: "Title" # The button title
+        - action: "URI" # Must be set to URI if you plan to use a URI
+          title: "Open Url"
+          uri: "https://google.com" # URL to open when action is selected, can also be a lovelace view/dashboard
+        - action: "URI" # Must be set to URI if you plan to open an application
+          title: "Open Twitter"
+          uri: "app://com.twitter.android"
   - service: script.run_scene
     data:
       t_config: '---'
-script:
-  kuchnia_poczatek_pracy:
-    sequence:
-    - service: light.turn_on
-      data:
-        entity_id: light.ledy_w_kuchni
-    - service: automation.turn_off
-      data:
-        entity_id: automation.kt_light
-    - service: notify.mobile_app_chef2xl
-      data:
-        message: clear_notification
-        data:
-          tag: tag
-    - service: notify.mobile_app_chef2xl
-      data:
-        message: 'Hej Chef!'
-        data:
-          ttl: 0
-          priority: high
-    - service: notify.mobile_app_chef2xl
-  kuchnia_koniec_pracy:
-    sequence:
-    - service: automation.turn_on
-      data:
-        entity_id: automation.kt_light

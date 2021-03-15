@@ -62,7 +62,7 @@ entity_config:
     aliases:
     - hallway light
     - a10
-  media_player.lg_tv:
+  media_player.salon_tv:
     name: TV
     room: "Living room"
     expose: true

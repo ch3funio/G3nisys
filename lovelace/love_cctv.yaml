@@ -1,0 +1,16 @@
+title: CCTV
+icon: mdi:cctv
+cards:
+- type: picture-entity
+  entity: camera.bee
+  show_state: false
+- type: picture-entity
+  entity: camera.bear
+  show_state: false
+# - type: picture-entity
+#   entity: camera.yoo_cam
+- type: picture-entity
+  entity: camera.hall_entrance
+  camera_view: live
+  name: Judasz
+  show_state: false

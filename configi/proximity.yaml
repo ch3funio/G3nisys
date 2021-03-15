@@ -1,0 +1,12 @@
+home:
+  devices:
+  - person.chef
+  - person.johanna
+  tolerance: 50
+  unit_of_measurement: km
+koninko:
+  zone: koninko
+  devices:
+  - person.renata
+  tolerance: 150
+  unit_of_measurement: km

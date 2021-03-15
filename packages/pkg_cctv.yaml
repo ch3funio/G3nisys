@@ -1,0 +1,41 @@
+group:
+  entities: camera.bee, camera.bear, camera.hall_entrance
+camera:
+- name: bee #stream z YI
+  platform: ffmpeg
+  input: !secret bee_camera_ffmpeg
+- name: bear #stream z YI
+  platform: ffmpeg
+  input: !secret bear_camera_ffmpeg
+- name: hall entrance #stream z motion
+  platform: mjpeg
+  mjpeg_url: !secret entrance_mjpeg_url
+  still_image_url: !secret entrance_still
+  username: !secret cctv_username
+  password: !secret cctv_password
+# - name: yoo_cam #stream z motion
+#   platform: mjpeg
+#   mjpeg_url: !secret yoo_mjpeg_url
+#   still_image_url: !secret yoo_still
+#   username: !secret cctv_username
+#   password: !secret cctv_password
+binary_sensor:
+- name: hall entrance motion
+  platform: mqtt
+  state_topic: "kamera/entrance/motion"
+  payload_on: "motion_start"
+  payload_off: "motion_stop"
+  device_class: motion
+automation:
+- id: entrance_webhook
+  alias: entrance_webhook
+  trigger:
+    platform: webhook
+    webhook_id: !secret entrance_webhook
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: "kamera/entrance/motion"
+      payload_template: >-
+        {% set temp = trigger.json %}
+        {% if (temp | regex_search('start', ignorecase=True)) %}motion_start{% else %}motion_stop{% endif %}

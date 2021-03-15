@@ -1,3 +1,5 @@
+- url: /local/custom_icons.js?v=14
+  type: module
 - url: /hacsfiles/button-card/button-card.js
   type: module
 - url: /hacsfiles/lovelace-card-tools/card-tools.js
@@ -13,4 +15,6 @@
 - url: /hacsfiles/LG-WebOS-Remote-Control/lg-remote-control.js
   type: module
 - url: /hacsfiles/browser_mod/browser_mod.js
+  type: module
+- url: /hacsfiles/simple-thermostat/simple-thermostat.js
   type: module

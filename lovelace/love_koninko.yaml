@@ -1,0 +1,50 @@
+title: Koninko
+icon: mdi:thermostat
+cards:
+- type: entity-filter #renata
+  card: 
+    type: glance
+    style: |
+      ha-card {
+        background: none;
+        box-shadow: none;
+      }
+    show_state: false
+    show_name: false
+  show_empty: false
+  state_filter:
+  - "Koninko"
+  - "na Rejtana"
+  entities:
+  - entity: person.renata
+- type: entities
+  entities:
+  - sensor.to_koninko
+  - proximity.koninko
+- type: "custom:simple-thermostat"
+  entity: climate.koninko_nest
+  step_layout: column
+  show_header: false
+  control: 
+    hvac:
+      _name: Sezon grzewczy
+      heat:
+        name: false
+        icon: mdi:radiator
+      "off":
+        name: false
+        icon: mdi:radiator-off
+    preset:
+      _name: Tryb
+      none:
+        name: false
+        icon: mdi:radiator-disabled
+      eco:
+        icon: mdi:leaf
+        name: false
+  label:
+    temperature: Temperatura
+    state: Kocioł
+  sensors:
+  - entity: sensor.koninko_nest_humidity
+    name: Wilgotność

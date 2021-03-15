@@ -1,0 +1,97 @@
+- type: horizontal-stack
+  cards:
+  - name: "Ranek"
+    type: custom:button-card
+    style: &roundstyle_slider |
+      ha-card {
+        border: none;
+        box-shadow: none;
+        background: none;
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+      }
+    template: icon_daytime
+    entity: sensor.nowa_pora
+    icon: mdi:weather-sunset-up
+    state:
+    - value: "ranek"
+      styles:
+        icon:
+        - color: var(--state-icon-active-color)
+  - name: "Dzień" #day
+    type: custom:button-card
+    style: *roundstyle_slider
+    template: icon_daytime
+    entity: sensor.nowa_pora
+    icon: mdi:weather-sunny
+    state:
+    - value: "dzień"
+      styles:
+        icon:
+        - color: var(--state-icon-active-color)
+  - name: "Zmierzch" #dusk
+    type: custom:button-card
+    style: *roundstyle_slider
+    template: icon_daytime
+    entity: sensor.nowa_pora
+    icon: mdi:weather-sunset
+    state:
+    - value: "zmierzch"
+      styles:
+        icon:
+        - color: var(--state-icon-active-color)
+  - name: "wieczór" #night
+    type: custom:button-card
+    style: *roundstyle_slider
+    template: icon_daytime
+    entity: sensor.nowa_pora
+    icon: mdi:weather-sunset-down
+    state:
+    - value: "wieczór"
+      styles:
+        icon:
+        - color: var(--state-icon-active-color)
+  - name: "Tryb_spania" #tryb_spania 
+    type: custom:button-card
+    style: *roundstyle_slider
+    template: icon_daytime
+    entity: sensor.nowa_pora
+    icon: mdi:sleep
+    state:
+    - value: "tryb_spania"
+      styles:
+        icon:
+        - color: var(--state-icon-active-color)
+  - name: "Noc" 
+    type: custom:button-card
+    style: *roundstyle_slider
+    template: icon_daytime
+    entity: sensor.nowa_pora
+    icon: mdi:brightness-2
+    state:
+    - value: "noc"
+      styles:
+        icon:
+        - color: var(--state-icon-active-color)
+  - name: "Noc 2" #tryb_spania 
+    type: custom:button-card
+    style: *roundstyle_slider
+    template: icon_daytime
+    entity: sensor.nowa_pora
+    icon: mdi:brightness-3
+    state:
+    - value: "noc 2"
+      styles:
+        icon:
+        - color: var(--state-icon-active-color)
+  - name: "Sen" #sen
+    type: custom:button-card
+    style: *roundstyle_slider
+    template: icon_daytime
+    entity: sensor.nowa_pora
+    icon: mdi:weather-night
+    state:
+    - value: "sen"
+      styles:
+        icon:
+        - color: var(--state-icon-active-color)
